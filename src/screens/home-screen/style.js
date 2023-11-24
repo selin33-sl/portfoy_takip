@@ -25,8 +25,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   pieChart: {
-    width: 200,
-    height: 200,
+    width: 175,
+    height: 175,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: windowHeight * 0.03,
@@ -44,17 +44,17 @@ export default StyleSheet.create({
     fontWeight: '400',
     color: 'white',
   },
-  birimContainer: {
+  optionButton: {
     width: windowWidth * 0.1,
     height: windowWidth * 0.1,
     backgroundColor: '#DBADFF',
     borderRadius: 50,
-    marginTop: windowHeight * 0.02,
     elevation: 15,
     borderColor: '#10001D',
     borderWidth: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
+    marginHorizontal: 2,
   },
   birimText: {
     fontSize: windowHeight * 0.02,
@@ -62,6 +62,16 @@ export default StyleSheet.create({
     color: '#10001D',
   },
   listContainer: {
-    marginBottom: windowHeight * 0.2,
+    alignItems: 'center',
+    maxHeight: windowHeight * 0.32,
+    width: windowWidth,
+  },
+  optionContainer: {
+    width: windowWidth,
+    height: windowWidth * 0.1,
+    marginTop: windowHeight * 0.02,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

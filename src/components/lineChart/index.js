@@ -2,14 +2,14 @@ import {View, Text} from 'react-native';
 import {LineChart} from 'react-native-gifted-charts';
 import React from 'react';
 
-export const LineChartt = ({lcData}) => {
+export const LineChartt = ({lcData, width, height}) => {
   return (
     <LineChart
       areaChart
       data={lcData}
       rotateLabel={true}
-      width={330}
-      height={150}
+      width={width}
+      height={height}
       hideDataPoints
       spacing={10}
       color="#00ff83"

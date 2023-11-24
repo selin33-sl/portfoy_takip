@@ -14,16 +14,16 @@ export const VarliklarCard = ({
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <LinearGradient colors={['#10001D', '#44007A']} style={style.container}>
+      <LinearGradient colors={['#B65CFF', '#21003D']} style={style.container}>
         <View
           style={{
             ...style.iconContainer,
-            backgroundColor: backgroundColor,
+            borderColor: backgroundColor,
           }}>
           {doviz ? (
-            <FontistoIcon name={iconName} size={28} color={'white'} />
+            <FontistoIcon name={iconName} size={35} color={'white'} />
           ) : (
-            <Icon name={iconName} size={28} color={'white'} />
+            <Icon name={iconName} size={35} color={'white'} />
           )}
         </View>
         <Text style={style.text}>{text}</Text>

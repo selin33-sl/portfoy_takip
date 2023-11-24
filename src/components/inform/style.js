@@ -31,9 +31,9 @@ export default StyleSheet.create({
   },
 
   text: {
-    fontSize: windowHeight * 0.017,
+    fontSize: windowHeight * 0.015,
     color: 'white',
-    // fontWeight: '600',
+    fontWeight: '300',
     marginLeft: windowWidth * 0.02,
   },
   informContainer: {

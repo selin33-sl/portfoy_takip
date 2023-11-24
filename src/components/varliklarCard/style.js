@@ -4,29 +4,34 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   container: {
-    width: windowWidth * 0.92,
-    maxHeight: windowHeight * 0.09,
-    marginTop: windowHeight * 0.01,
-    paddingHorizontal: windowWidth * 0.04,
-    flexDirection: 'row',
-    alignItems: 'center',
+    borderColor: '#6500B8',
+    borderWidth: 1,
+    backgroundColor: 'transparent',
+    elevation: 5,
     borderRadius: 15,
-    flex: 1,
-  },
-
-  iconContainer: {
-    width: windowWidth * 0.09,
-    height: windowWidth * 0.09,
-    borderRadius: 10,
+    width: windowWidth * 0.42,
+    height: windowHeight * 0.2,
+    marginTop: windowHeight * 0.02,
+    marginBottom: windowHeight * 0.02,
+    marginHorizontal: windowWidth * 0.02,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
+  iconContainer: {
+    width: windowWidth * 0.17,
+    height: windowWidth * 0.17,
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: windowHeight * 0.02,
+    borderWidth: 1.5,
+  },
+
   text: {
-    fontSize: windowHeight * 0.03,
+    fontSize: windowHeight * 0.02,
     color: 'white',
-    fontWeight: '300',
-    marginLeft: windowWidth * 0.05,
+    fontWeight: '400',
     textAlign: 'center',
   },
 });

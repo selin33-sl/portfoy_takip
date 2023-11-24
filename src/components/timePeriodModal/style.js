@@ -11,11 +11,11 @@ export default StyleSheet.create({
   },
 
   innerContainer: {
-    width: windowWidth * 0.7,
-    height: windowHeight * 0.2,
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.3,
     borderRadius: 15,
     backgroundColor: '#DBADFF',
-    justifyContent: 'center',
+    padding: windowWidth * 0.03,
     alignItems: 'center',
     elevation: 15,
     borderColor: 'white',
@@ -24,11 +24,16 @@ export default StyleSheet.create({
     borderLeftWidth: 0.3,
   },
   iconsContainer: {
-    paddingHorizontal: windowWidth * 0.05,
     width: windowWidth * 0.7,
     height: windowHeight * 0.05,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  optionsContainer: {
+    height: windowHeight * 0.22,
+    width: windowWidth * 0.7,
+    paddingTop: windowHeight * 0.01,
     alignItems: 'center',
   },
   optionContainer: {
@@ -38,12 +43,6 @@ export default StyleSheet.create({
     borderBottomWidth: 0.3,
     borderBottomColor: 'white',
     justifyContent: 'center',
-  },
-  optionsContainer: {
-    height: windowHeight * 0.15,
-    width: windowWidth * 0.7,
-    paddingTop: windowHeight * 0.01,
-    alignItems: 'center',
   },
   text: {
     fontSize: windowHeight * 0.02,

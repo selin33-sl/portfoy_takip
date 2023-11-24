@@ -7,6 +7,22 @@ export default StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
   },
+  options: {
+    height: windowWidth * 0.1,
+    paddingHorizontal: windowWidth * 0.05,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  timePeriodContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: windowWidth * 0.04,
+    height: windowHeight * 0.04,
+    borderWidth: 1,
+    borderColor: '#3D4376',
+    borderRadius: 20,
+  },
 
   innerContainer: {
     flex: 1,
@@ -14,8 +30,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   lineChartContainer: {
-    width: windowWidth,
-    height: windowHeight * 0.35,
+    height: windowHeight * 0.26,
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingLeft: 20,
   },
   text: {
@@ -23,18 +40,24 @@ export default StyleSheet.create({
     color: '#3D4376',
   },
   infoContainer: {
-    marginHorizontal: windowWidth * 0.05,
-    width: windowWidth * 0.9,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
     height: windowHeight * 0.03,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
     elevation: 30,
+    backgroundColor: 'red',
   },
   inputAreaContainer: {
-    marginTop: windowHeight * 0.02,
+    elevation: 20,
+    position: 'absolute',
+    bottom: 0,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    paddingTop: 30,
     width: windowWidth,
-    height: windowHeight * 0.4,
+    height: windowHeight * 0.54,
     alignItems: 'center',
   },
   innerAreaContainer: {
@@ -96,6 +119,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   saveButtonContainer: {
+    marginTop: 30,
     width: windowWidth * 0.9,
     height: windowHeight * 0.08,
     justifyContent: 'center',

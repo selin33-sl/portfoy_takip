@@ -1,13 +1,9 @@
-import {View, Text} from 'react-native';
+import {DeviceEventEmitter} from 'react-native';
 import React from 'react';
-import {HomeScreen} from './screens/home-screen';
-import {BottomTabs} from './navigators/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
+import Orientation from 'react-native-orientation-locker';
+import AppStack from './navigators/app-stack';
 
 export const App = () => {
-  return (
-    <NavigationContainer>
-      <BottomTabs />
-    </NavigationContainer>
-  );
+  Orientation.lockToPortrait();
+  return <AppStack />;
 };

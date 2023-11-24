@@ -1,9 +1,10 @@
-import {View, Text} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, BackHandler} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Header, SearchBar, VarlikListCard} from '../../components';
+import Orientation from 'react-native-orientation-locker';
 
 export const VarliklarListScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');

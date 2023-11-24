@@ -4,3 +4,5 @@ export * from './varliklar-screen';
 export * from './varliklarList-screen';
 export * from './varlikDetay-screen';
 export * from './settings-screen';
+export * from './settingDetay-screen';
+export * from './auth-screen';

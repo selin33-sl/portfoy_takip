@@ -31,4 +31,8 @@ export default StyleSheet.create({
     fontSize: windowHeight * 0.02,
     color: '#3D4376',
   },
+  listContainer: {
+    flex: 1,
+    width: windowWidth * 0.92,
+  },
 });

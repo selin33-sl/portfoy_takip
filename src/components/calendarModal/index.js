@@ -12,8 +12,6 @@ export const CalendarModal = ({
     setDatePickerVisibility(true);
   };
 
-  console.log(selectedDate, 'formatlı');
-
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };

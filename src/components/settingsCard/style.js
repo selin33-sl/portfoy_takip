@@ -19,11 +19,11 @@ export default StyleSheet.create({
 
   row1: {
     alignItems: 'center',
-
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: windowWidth * 0.75,
     height: windowHeight * 0.04,
+    textAlign: 'auto',
   },
   row2: {
     alignItems: 'center',
