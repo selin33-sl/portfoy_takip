@@ -13,12 +13,14 @@ export default StyleSheet.create({
     color: 'black',
   },
   container: {
+    backgroundColor: 'transparent',
+
     justifyContent: 'center',
     minHeight: 48,
     marginHorizontal: windowWidth * 0.02,
   },
   clearIcon: {
     position: 'absolute',
-    right: windowWidth * 0.02,
+    right: windowWidth * 0.04,
   },
 });

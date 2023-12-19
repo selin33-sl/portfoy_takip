@@ -13,7 +13,6 @@ export default StyleSheet.create({
     marginTop: windowHeight * 0.01,
     paddingHorizontal: windowWidth * 0.035,
     flexDirection: 'row',
-    elevation: 30,
   },
   innerContainer: {},
 

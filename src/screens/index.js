@@ -6,3 +6,5 @@ export * from './varlikDetay-screen';
 export * from './settings-screen';
 export * from './settingDetay-screen';
 export * from './auth-screen';
+export * from './degerlendirmeler-screen';
+export * from './bildirimDetay-screen';

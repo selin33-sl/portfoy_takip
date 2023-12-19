@@ -1,14 +1,17 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {HomeScreen, VarlikDetayScreen} from '../screens';
+import {BottomTabs} from './bottom-tabs';
+import {DegerlendirmelerScreen} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
-export const HomeStack = () => {
+export const DegerlendirmelerStack = () => {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="home-screen" component={HomeScreen} />
-      <Stack.Screen name="varlikDetay-screen" component={VarlikDetayScreen} />
+      <Stack.Screen
+        name="degerlendirmeler-screen"
+        component={DegerlendirmelerScreen}
+      />
     </Stack.Navigator>
   );
 };

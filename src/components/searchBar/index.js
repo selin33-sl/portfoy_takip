@@ -17,7 +17,7 @@ export const SearchBar = ({value, onClear, onChangeText}) => {
         <Icon
           name="close"
           size={20}
-          color={'red'}
+          color={'grey'}
           onPress={onClear}
           style={style.clearIcon}
         />

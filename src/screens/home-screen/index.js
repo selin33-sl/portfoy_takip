@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, ScrollView, FlatList} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import style from './style';
 import PieChart from 'react-native-pie-chart';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,47 +11,58 @@ import {
   PortfoyListModal,
   ResizableCard,
 } from '../../components';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {getHisseSenediProcess} from '../../api';
+
+export const data = [
+  {
+    tür: 'Döviz',
+    name: 'THYAO1',
+    price: '2.230,00',
+    adet: '10.00',
+    _id: 1,
+  },
+  {
+    tür: 'Döviz',
+    name: 'THYAO2',
+    price: '2.230,00',
+    adet: '10.00',
+    _id: 2,
+  },
+  {
+    tür: 'Döviz',
+    name: 'THYAO3',
+    price: '2.230,00',
+    adet: '10.00',
+    _id: 3,
+  },
+  {
+    tür: 'Fon',
+    name: 'THYAO4',
+    price: '2.230,00',
+    adet: '10.00',
+    _id: 4,
+  },
+  {
+    tür: 'Fon',
+    name: 'THYAO5',
+    price: '2.230,00',
+    adet: '10.00',
+    _id: 5,
+  },
+  {
+    tür: 'Döviz',
+    name: 'THYAO6',
+    price: '2.230,00',
+    adet: '10.00',
+    _id: 6,
+  },
+];
 
 export const HomeScreen = () => {
-  const data = [
-    {
-      tür: 'Döviz',
-      name: 'THYAO1',
-      price: '2.230,00',
-      adet: '10.00',
-    },
-    {
-      tür: 'Döviz',
-      name: 'THYAO2',
-      price: '2.230,00',
-      adet: '10.00',
-    },
-    {
-      tür: 'Döviz',
-      name: 'THYAO3',
-      price: '2.230,00',
-      adet: '10.00',
-    },
-    {
-      tür: 'Fon',
-      name: 'THYAO4',
-      price: '2.230,00',
-      adet: '10.00',
-    },
-    {
-      tür: 'Fon',
-      name: 'THYAO5',
-      price: '2.230,00',
-      adet: '10.00',
-    },
-    {
-      tür: 'Döviz',
-      name: 'THYAO6',
-      price: '2.230,00',
-      adet: '10.00',
-    },
-  ];
-
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [hidden, setHidden] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isPortfoyListModalVisible, setIsPortfoyListModalVisible] =
@@ -60,7 +71,7 @@ export const HomeScreen = () => {
     useState(false);
 
   const widthAndHeight = 170;
-  const series = [0, 0, 10, 1, 1, 1];
+  const series = [99, 33, 1000, 300, 1, 2];
   const sliceColor = [
     '#3401FF',
     '#00EFFE',
@@ -99,6 +110,9 @@ export const HomeScreen = () => {
 
     return (
       <ResizableCard
+        onPress={() =>
+          navigation.navigate('varlikDetay-screen', {page: 'update'})
+        }
         borderColor={
           tür == 'Döviz' ? '#00EFFE' : tür == 'Fon' ? '#FF007A' : null
         }

@@ -7,6 +7,7 @@ import {HomeStack} from './home-stack';
 import {BildirimStack} from './bildirim-stack';
 import {VarliklarStack} from './varliklar-stack';
 import {SettingsStack} from './settings-stack';
+import {DegerlendirmelerStack} from './degerlendirme-stack';
 
 // Bottom Tabs oluştur
 const Tab = createBottomTabNavigator();
@@ -47,14 +48,14 @@ export const BottomTabs = () => {
         }}
       />
       <Tab.Screen
-        name="aa-stack"
-        component={HomeStack}
+        name="degerlendirmeler-stack"
+        component={DegerlendirmelerStack}
         options={{
           unmountOnBlur: true,
           tabBarIcon: ({focused}) => (
             <View>
               <Icon
-                name={'home'}
+                name={'clipboard-text-outline'}
                 size={30}
                 style={{
                   color: focused ? '#DB00FF' : '#958EBF',

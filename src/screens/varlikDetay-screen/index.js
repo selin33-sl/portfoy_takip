@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import {
   CalendarModal,
   FullScreenLineChartModal,
   Header,
+  InputContainer,
   LineChartt,
   TimePeriodModal,
 } from '../../components';
@@ -21,31 +22,17 @@ import style from './style';
 import Orientation from 'react-native-orientation-locker';
 
 export const VarlikDetayScreen = () => {
+  const {params: {page = 0} = {}} = useRoute();
+
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
-  const [fullScreen, setFullScreen] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [timePeriod, setTimePeriod] = useState('Bugün');
   const [timePeriodVisible, setTimePeriodVisible] = useState(false);
-
-  const InputContainer = ({text, typeText}) => {
-    return (
-      <View style={style.innerAreaContainer}>
-        <Text style={style.headerText}>{text}:</Text>
-        <View style={style.inputContainer}>
-          <TextInput
-            style={style.input1}
-            textAlign="right"
-            keyboardType="numeric"></TextInput>
-          <Text style={style.virgul}>,</Text>
-          <TextInput style={style.input2} keyboardType="numeric"></TextInput>
-          <View style={style.typeContainer}>
-            <Text style={style.typeText}>{typeText}</Text>
-          </View>
-        </View>
-      </View>
-    );
-  };
+  const [miktar1, setMiktar1] = useState('');
+  const [miktar2, setMiktar2] = useState('');
+  const [fiyat1, setFiyat1] = useState('');
+  const [fiyat2, setFiyat2] = useState('');
 
   const lcData = [
     {value: 160, date: '1 Apr 2022'},
@@ -112,6 +99,16 @@ export const VarlikDetayScreen = () => {
     {value: 210, date: '5 May 2022'},
   ];
 
+  useEffect(() => {
+    if (page == 'update') {
+      setMiktar1('111');
+      setMiktar2('222');
+      setFiyat1('111');
+      setFiyat2('00');
+      setSelectedDate('05-12-2023');
+    }
+  }, []);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
@@ -139,8 +136,22 @@ export const VarlikDetayScreen = () => {
         <LinearGradient
           colors={['#10001D', '#44007A']}
           style={style.inputAreaContainer}>
-          <InputContainer text={'Miktar'} typeText={'USDDFGD'} />
-          <InputContainer text={'Satın Alma Fiyatı'} typeText={'TL'} />
+          <InputContainer
+            text={'Miktar'}
+            typeText={'USDDFGD'}
+            value1={miktar1}
+            onChangeText1={setMiktar1}
+            value2={miktar2}
+            onChangeText2={setMiktar2}
+          />
+          <InputContainer
+            text={'Satın Alma Fiyatı'}
+            typeText={'TL'}
+            value1={fiyat1}
+            onChangeText1={setFiyat1}
+            value2={fiyat2}
+            onChangeText2={setFiyat2}
+          />
 
           <View style={style.innerAreaContainer}>
             <Text style={style.headerText}>Satın Alma Tarihi:</Text>

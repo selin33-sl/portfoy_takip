@@ -43,7 +43,6 @@ export const TimePeriodModal = ({
     },
   ];
 
-  console.log(selectedItem, 'selectedItem');
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity

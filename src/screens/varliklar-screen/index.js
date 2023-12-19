@@ -16,7 +16,7 @@ export const VarliklarScreen = () => {
       _id: 1,
     },
     {
-      text: 'Altın | Gümüş',
+      text: 'Altın | Gümüş | Emtia',
       iconName: 'gold',
       backgroundColor: '#FF7A00',
       _id: 2,
@@ -49,7 +49,6 @@ export const VarliklarScreen = () => {
   ];
 
   const renderItem = ({item}) => {
-    console.log(item.iconName);
     return (
       <VarliklarCard
         onPress={() =>

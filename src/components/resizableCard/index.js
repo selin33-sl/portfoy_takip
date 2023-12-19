@@ -5,7 +5,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 
 const windowHeight = Dimensions.get('window').height;
-export const ResizableCard = ({borderColor, tür, hidden, sendItem}) => {
+export const ResizableCard = ({
+  borderColor,
+  tür,
+  hidden,
+  sendItem,
+  onPress,
+}) => {
   const [isModalVisible2, setModalVisible2] = useState(false);
   const [modalHeight, setModalHeight] = useState(windowHeight * 0.08); // Modalın başlangıç yüksekliği
   const numItems = sendItem.length;
@@ -27,7 +33,7 @@ export const ResizableCard = ({borderColor, tür, hidden, sendItem}) => {
 
   const SmallCard = ({name, price, adet}) => {
     return (
-      <TouchableOpacity style={style.detailContainer}>
+      <TouchableOpacity style={style.detailContainer} onPress={onPress}>
         <View style={style.detail}>
           <Text style={style.textDetailName}>{name}</Text>
           <Text style={style.textDetailPrice}>
@@ -42,7 +48,6 @@ export const ResizableCard = ({borderColor, tür, hidden, sendItem}) => {
   };
 
   const renderItem = ({item}) => {
-    console.log(item, 'itemmmmmmmmm');
     return <SmallCard name={item.name} price={item.price} adet={item.adet} />;
   };
 

@@ -11,4 +11,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: windowHeight * 0.01,
   },
+  listContainer: {
+    paddingBottom: windowHeight * 0.13,
+  },
 });

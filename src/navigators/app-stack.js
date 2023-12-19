@@ -7,7 +7,7 @@ import Toast from 'react-native-toast-message';
 import {ToastCompError} from '../components';
 import {AuthStack} from './auth-stack';
 
-const AppStack = () => {
+export const AppStack = () => {
   const [isConnected, setIsConnected] = useState(true);
   const isAuthenticated = 0;
 
@@ -40,5 +40,3 @@ const AppStack = () => {
     </NavigationContainer>
   );
 };
-
-export default AppStack;

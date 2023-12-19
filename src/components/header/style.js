@@ -26,9 +26,9 @@ export default StyleSheet.create({
     backgroundColor: 'blue',
   },
   text: {
-    fontSize: windowHeight * 0.03,
+    fontSize: windowHeight * 0.025,
     color: 'white',
-    fontWeight: '600',
+    fontWeight: '300',
   },
   textContainer: {
     position: 'absolute',
