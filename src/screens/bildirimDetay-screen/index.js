@@ -2,7 +2,7 @@ import {View, Text, Image} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {Header} from '../../components';
+import {Header, LinearGradientContainer} from '../../components';
 import style from './style';
 
 export const BildirimDetayScreen = () => {
@@ -12,7 +12,7 @@ export const BildirimDetayScreen = () => {
   const image = route.params.image;
   const navigation = useNavigation();
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header backIcon text={'Bildirim Detay'} />
       <View style={style.innerContainer}>
         <Text style={style.text}>{body}</Text>
@@ -22,6 +22,6 @@ export const BildirimDetayScreen = () => {
           </View>
         ) : null}
       </View>
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

@@ -4,10 +4,6 @@ import {colors} from '../../theme';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
-  container: {
-    width: windowWidth,
-    height: windowHeight,
-  },
   innerRate: {
     width: windowWidth * 0.23,
     height: windowHeight * 0.05,

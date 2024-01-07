@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
-import {Header} from '../../components';
+import {Header, LinearGradientContainer} from '../../components';
 import style from './style';
 import {useRoute} from '@react-navigation/native';
 
@@ -9,7 +9,7 @@ export const SettingDetayScreen = () => {
   const route = useRoute();
   const {header} = route.params;
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header text={header} backIcon={true} />
       <View style={style.innerContainer}>
         <Text style={style.text}>
@@ -26,6 +26,6 @@ export const SettingDetayScreen = () => {
           from repetition, injected humour, or non-characteristic words etc.
         </Text>
       </View>
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

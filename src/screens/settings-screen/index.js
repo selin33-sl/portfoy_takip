@@ -1,7 +1,12 @@
 import {View, Text} from 'react-native';
 import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {Header, SettingsCard, UygulamaHakkindaModal} from '../../components';
+import {
+  Header,
+  LinearGradientContainer,
+  SettingsCard,
+  UygulamaHakkindaModal,
+} from '../../components';
 import style from './style';
 import {useNavigation} from '@react-navigation/native';
 
@@ -10,7 +15,7 @@ export const SettingsScreen = () => {
 
   const navigation = useNavigation();
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header text={'AYARLAR'} />
       <View style={style.innerContainer}>
         <SettingsCard text={'Bildirimler'} />
@@ -44,6 +49,6 @@ export const SettingsScreen = () => {
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
       />
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

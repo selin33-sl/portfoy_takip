@@ -2,7 +2,7 @@ import {View, Text, FlatList} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {Header, VarliklarCard} from '../../components';
+import {Header, LinearGradientContainer, VarliklarCard} from '../../components';
 import style from './style';
 
 export const VarliklarScreen = () => {
@@ -63,7 +63,7 @@ export const VarliklarScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header text={'VARLIKLAR'} backIcon={false} />
       <View style={style.innerContainer}>
         <View style={style.listContainer}>
@@ -77,6 +77,6 @@ export const VarliklarScreen = () => {
           />
         </View>
       </View>
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

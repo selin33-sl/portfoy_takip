@@ -4,7 +4,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {Header, SearchBar, VarlikListCard} from '../../components';
+import {
+  Header,
+  LinearGradientContainer,
+  SearchBar,
+  VarlikListCard,
+} from '../../components';
 import {
   getAltinProcess,
   getDovizProcess,
@@ -139,7 +144,7 @@ export const VarliklarListScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header text={text} backIcon />
       <View style={style.innerContainer}>
         <SearchBar
@@ -166,6 +171,6 @@ export const VarliklarListScreen = () => {
           onPress={() => navigation.navigate('varlikDetay-screen')}
         /> */}
       </View>
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

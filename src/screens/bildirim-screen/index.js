@@ -1,7 +1,7 @@
 import {View, Text, FlatList} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {BildirimCard, Header} from '../../components';
+import {BildirimCard, Header, LinearGradientContainer} from '../../components';
 import style from './style';
 import {useNavigation} from '@react-navigation/native';
 import {images} from '../../assets';
@@ -38,7 +38,7 @@ export const BildirimScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header text={'BİLDİRİMLERİM'} />
       <View style={style.innerContainer}>
         {data && data.length ? null : (
@@ -55,6 +55,6 @@ export const BildirimScreen = () => {
           />
         </View>
       </View>
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

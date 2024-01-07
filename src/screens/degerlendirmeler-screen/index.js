@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {
   CircleOptionCard,
   Header,
+  LinearGradientContainer,
   PortfoyListModal,
   ResizableCard,
 } from '../../components';
@@ -52,7 +53,7 @@ export const DegerlendirmelerScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header text={'DEĞERLENDİRMELER'} />
       <View style={style.innerContainer}>
         <View style={style.optionsContainer}>
@@ -131,6 +132,6 @@ export const DegerlendirmelerScreen = () => {
         isAddModalVisible={isPortfoyAddModalVisible}
         setIsAddModalVisible={setIsPortfoyAddModalVisible}
       />
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

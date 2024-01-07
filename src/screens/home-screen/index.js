@@ -8,6 +8,7 @@ import {
   CurrencyModal,
   Header,
   Inform,
+  LinearGradientContainer,
   PortfoyListModal,
   ResizableCard,
   ShareModal,
@@ -150,7 +151,7 @@ export const HomeScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <Header
         option
         text={'PORTFOY_1'}
@@ -227,6 +228,6 @@ export const HomeScreen = () => {
         isModalVisible={isShareModalVisible}
         setIsModalVisible={setIsShareModalVisible}
       />
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };

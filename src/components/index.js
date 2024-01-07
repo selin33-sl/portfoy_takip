@@ -1,5 +1,6 @@
 export * from './header';
 export * from './inform';
+export * from './linearGradient';
 export * from './cards/varliklarCard';
 export * from './modal/currencyModal';
 export * from './cards/resizableCard';

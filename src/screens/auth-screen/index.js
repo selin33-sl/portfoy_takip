@@ -2,7 +2,11 @@ import {View, Text, TouchableOpacity, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import React, {useState} from 'react';
 import style from './style';
-import {PatternDesign, TextinputCard} from '../../components';
+import {
+  LinearGradientContainer,
+  PatternDesign,
+  TextinputCard,
+} from '../../components';
 import {images} from '../../assets';
 import {useNavigation} from '@react-navigation/native';
 
@@ -23,7 +27,7 @@ export const AuthScreen = () => {
   };
 
   return (
-    <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
+    <LinearGradientContainer>
       <View style={style.innerContainer}>
         <View style={style.firstContainer}>
           <PatternDesign />
@@ -75,6 +79,6 @@ export const AuthScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </LinearGradient>
+    </LinearGradientContainer>
   );
 };
