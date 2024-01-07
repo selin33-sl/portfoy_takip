@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,7 +29,7 @@ export default StyleSheet.create({
   detailContainer: {
     paddingHorizontal: windowWidth * 0.02,
     marginHorizontal: windowWidth * 0.02,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     height: windowHeight * 0.08,
     marginTop: windowHeight * 0.005,
     borderRadius: 10,
@@ -42,23 +43,23 @@ export default StyleSheet.create({
   },
   textDetailName: {
     fontSize: windowHeight * 0.022,
-    color: '#10001D',
+    color: colors.primary2,
     fontWeight: '400',
   },
   textDetailPrice: {
     fontSize: windowHeight * 0.015,
-    color: '#10001D',
+    color: colors.primary2,
     textAlign: 'center',
   },
   textDetailNumber: {
     fontSize: windowHeight * 0.018,
-    color: '#10001D',
+    color: colors.primary2,
   },
 
   text: {
     fontSize: windowHeight * 0.02,
     fontWeight: '800',
-    color: 'white',
+    color: colors.white,
     textAlign: 'center',
   },
 });

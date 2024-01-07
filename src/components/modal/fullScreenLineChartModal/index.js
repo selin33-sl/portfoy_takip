@@ -1,14 +1,10 @@
 import {View, Text, Modal, Dimensions, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {LineChartt} from '../lineChart';
+import {LineChartt} from '../../cards/lineChart';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useFocusEffect} from '@react-navigation/native';
 import Orientation from 'react-native-orientation-locker';
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 export const FullScreenLineChartModal = ({
   isAddModalVisible,

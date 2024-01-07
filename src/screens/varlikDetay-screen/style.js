@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -20,7 +21,7 @@ export default StyleSheet.create({
     paddingHorizontal: windowWidth * 0.04,
     height: windowHeight * 0.04,
     borderWidth: 1,
-    borderColor: '#3D4376',
+    borderColor: colors.pale,
     borderRadius: 20,
   },
 
@@ -37,7 +38,7 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: windowHeight * 0.02,
-    color: '#3D4376',
+    color: colors.pale,
   },
   infoContainer: {
     borderTopRightRadius: 30,
@@ -67,7 +68,7 @@ export default StyleSheet.create({
   headerText: {
     fontSize: windowHeight * 0.017,
     fontWeight: '300',
-    color: 'white',
+    color: colors.white,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -78,33 +79,33 @@ export default StyleSheet.create({
   input1: {
     width: windowWidth * 0.4,
     height: windowHeight * 0.06,
-    backgroundColor: '#958EBF',
+    backgroundColor: colors.purpleLight,
     borderRadius: 10,
     fontSize: windowHeight * 0.021,
     textAlign: 'center',
     fontWeight: '500',
-    color: 'white',
+    color: colors.white,
   },
   input2: {
     width: windowWidth * 0.2,
     height: windowHeight * 0.06,
     borderRadius: 10,
-    backgroundColor: '#958EBF',
+    backgroundColor: colors.purpleLight,
     fontSize: windowHeight * 0.021,
     textAlign: 'center',
     fontWeight: '500',
-    color: 'white',
+    color: colors.white,
   },
 
   virgul: {
     fontSize: windowHeight * 0.04,
     fontWeight: '400',
-    color: 'white',
+    color: colors.white,
   },
   typeText: {
     fontSize: windowHeight * 0.018,
     fontWeight: '200',
-    color: 'white',
+    color: colors.white,
   },
   typeContainer: {
     marginLeft: windowWidth * 0.01,
@@ -135,7 +136,7 @@ export default StyleSheet.create({
   saveButtonText: {
     fontSize: windowHeight * 0.025,
     fontWeight: '400',
-    color: 'white',
+    color: colors.white,
     textAlign: 'center',
   },
   descContainer: {
@@ -147,6 +148,6 @@ export default StyleSheet.create({
   descText: {
     fontSize: windowHeight * 0.02,
     fontWeight: '200',
-    color: 'white',
+    color: colors.white,
   },
 });

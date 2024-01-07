@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -14,11 +15,11 @@ export default StyleSheet.create({
     width: windowWidth * 0.9,
     height: windowHeight * 0.3,
     borderRadius: 15,
-    backgroundColor: '#DBADFF',
+    backgroundColor: colors.lightLilac,
     padding: windowWidth * 0.03,
     alignItems: 'center',
     elevation: 15,
-    borderColor: 'white',
+    borderColor: colors.white,
     borderTopWidth: 0.6,
     borderRightWidth: 0.3,
     borderLeftWidth: 0.3,
@@ -34,16 +35,16 @@ export default StyleSheet.create({
   text1: {
     fontSize: windowHeight * 0.035,
     fontWeight: '700',
-    color: 'white',
+    color: colors.white,
   },
   text2: {
     fontSize: windowHeight * 0.025,
     fontWeight: '400',
-    color: 'white',
+    color: colors.white,
   },
   text3: {
     fontSize: windowHeight * 0.02,
-    color: 'white',
+    color: colors.white,
     marginTop: windowHeight * 0.01,
   },
   textContainer: {

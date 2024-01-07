@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -16,7 +17,7 @@ export default StyleSheet.create({
     width: windowWidth * 0.7,
     height: windowHeight * 0.2,
     borderRadius: 15,
-    backgroundColor: '#DBADFF',
+    backgroundColor: colors.lightLilac,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 15,

@@ -1,19 +1,23 @@
 import {View, Text, TouchableOpacity, ScrollView, FlatList} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import style from './style';
 import PieChart from 'react-native-pie-chart';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
+  CurrencyModal,
   Header,
   Inform,
-  MyModal,
   PortfoyListModal,
   ResizableCard,
+  ShareModal,
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getHisseSenediProcess} from '../../api';
+import {captureRef} from 'react-native-view-shot';
+import Share from 'react-native-share';
+import {colors} from '../../theme';
 
 export const data = [
   {
@@ -65,20 +69,38 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
   const [hidden, setHidden] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isShareModalVisible, setIsShareModalVisible] = useState(false);
   const [isPortfoyListModalVisible, setIsPortfoyListModalVisible] =
     useState(false);
   const [isPortfoyAddModalVisible, setIsPortfoyAddModalVisible] =
     useState(false);
 
+  const viewRef = useRef();
+
+  const captureScreen = async () => {
+    try {
+      const uri = await captureRef(viewRef, {
+        format: 'png',
+        quality: 0.8,
+      });
+
+      // Ekran görüntüsünü paylaşma
+      await Share.open({
+        url: `file://${uri}`,
+      });
+    } catch (error) {
+      console.error('Error capturing or sharing screen:', error);
+    }
+  };
   const widthAndHeight = 170;
-  const series = [99, 33, 1000, 300, 1, 2];
+  const series = [364.16, 302.4, 228.45, 103.02, 0, 0];
   const sliceColor = [
-    '#3401FF',
-    '#00EFFE',
-    '#FF007A',
-    '#BCFE00',
-    '#FF7A00',
-    '#DB00FF',
+    colors.nakit,
+    colors.doviz,
+    colors.fon,
+    colors.hisseSenedi,
+    colors.altin,
+    colors.kripto,
   ];
 
   const calculatePercentage = series => {
@@ -114,7 +136,7 @@ export const HomeScreen = () => {
           navigation.navigate('varlikDetay-screen', {page: 'update'})
         }
         borderColor={
-          tür == 'Döviz' ? '#00EFFE' : tür == 'Fon' ? '#FF007A' : null
+          tür == 'Döviz' ? colors.doviz : tür == 'Fon' ? colors.fon : null
         }
         tür={tür}
         sendItem={itemsWithSameTur.map(({name, price, adet}) => ({
@@ -130,6 +152,7 @@ export const HomeScreen = () => {
   return (
     <LinearGradient colors={['#44007A', '#10001D']} style={style.container}>
       <Header
+        option
         text={'PORTFOY_1'}
         backIcon={false}
         headerOnPress={() => setIsPortfoyListModalVisible(true)}
@@ -144,13 +167,22 @@ export const HomeScreen = () => {
           deger6={`${percentages[5]}`}
         />
 
-        <View style={style.pieChart}>
-          <PieChart
-            widthAndHeight={widthAndHeight}
-            series={series}
-            sliceColor={sliceColor}
-            coverRadius={0.5}
-          />
+        <View style={style.pieChartContainer}>
+          <TouchableOpacity
+            style={style.shareContainer}
+            onPress={captureScreen}
+            // onPress={() => setIsShareModalVisible(true)}
+          >
+            <Icon name={'share-variant-outline'} size={25} color={'white'} />
+          </TouchableOpacity>
+          <View ref={viewRef} style={style.pieChart}>
+            <PieChart
+              widthAndHeight={widthAndHeight}
+              series={series}
+              sliceColor={sliceColor}
+              coverRadius={0.5}
+            />
+          </View>
         </View>
 
         <View style={style.optionContainer}>
@@ -181,7 +213,7 @@ export const HomeScreen = () => {
         </View>
       </View>
 
-      <MyModal
+      <CurrencyModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
       />
@@ -190,6 +222,10 @@ export const HomeScreen = () => {
         setIsModalVisible={setIsPortfoyListModalVisible}
         isAddModalVisible={isPortfoyAddModalVisible}
         setIsAddModalVisible={setIsPortfoyAddModalVisible}
+      />
+      <ShareModal
+        isModalVisible={isShareModalVisible}
+        setIsModalVisible={setIsShareModalVisible}
       />
     </LinearGradient>
   );

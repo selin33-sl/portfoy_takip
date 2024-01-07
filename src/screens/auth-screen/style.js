@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -32,7 +33,7 @@ export default StyleSheet.create({
     textAlign: 'left',
     fontSize: windowHeight * 0.04,
     fontWeight: '800',
-    color: 'white',
+    color: colors.white,
   },
   subTitleContainer: {
     width: windowWidth,
@@ -44,12 +45,12 @@ export default StyleSheet.create({
   subTitle: {
     fontSize: windowHeight * 0.02,
     fontWeight: '200',
-    color: 'white',
+    color: colors.white,
   },
   optionText: {
     fontSize: windowHeight * 0.02,
     fontWeight: '500',
-    color: 'white',
+    color: colors.white,
   },
   inputContainer: {
     height: windowHeight * 0.4,
@@ -58,28 +59,28 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     width: windowWidth * 0.4,
     height: windowHeight * 0.06,
     marginTop: windowHeight * 0.02,
     borderRadius: 20,
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#9A1FFF',
+    borderColor: colors.lilac,
     alignItems: 'center',
   },
   buttonText: {
     fontSize: windowHeight * 0.03,
     fontWeight: '700',
-    color: '#17002A',
+    color: colors.dark,
   },
   image: {
     height: windowHeight * 0.25,
     width: windowWidth,
   },
 
-  text: {
-    fontSize: windowHeight * 0.02,
-    color: '#3D4376',
-  },
+  // text: {
+  //   fontSize: windowHeight * 0.02,
+  //   color: '#3D4376',
+  // },
 });

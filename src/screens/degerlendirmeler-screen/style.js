@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -31,7 +32,7 @@ export default StyleSheet.create({
   text1: {
     fontSize: windowHeight * 0.01,
     fontWeight: '200',
-    color: 'white',
+    color: colors.white,
   },
 
   innerContainer: {
@@ -39,7 +40,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   numberText: {
-    color: 'white',
+    color: colors.white,
     fontSize: windowHeight * 0.03,
   },
   innerElips: {
@@ -65,7 +66,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#D9D9D9',
+    backgroundColor: colors.grey,
     elevation: 10,
   },
   elipsContainer: {
@@ -82,7 +83,7 @@ export default StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(116, 111, 150, 0.5)',
+    backgroundColor: colors.rgbLight,
     width: windowWidth * 0.4,
     height: windowHeight * 0.05,
     elevation: 25,
@@ -93,7 +94,7 @@ export default StyleSheet.create({
     borderRadius: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(51, 1, 91, 0.5)',
+    backgroundColor: colors.rgbMid,
     elevation: 30,
   },
   image: {
@@ -103,7 +104,7 @@ export default StyleSheet.create({
 
   text: {
     fontSize: windowHeight * 0.02,
-    color: '#3D4376',
+    color: colors.pale,
   },
   listContainer: {
     alignItems: 'center',

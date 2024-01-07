@@ -4,7 +4,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from './style';
 
-export const MyModal = ({isModalVisible, setIsModalVisible}) => {
+export const CurrencyModal = ({isModalVisible, setIsModalVisible}) => {
   return (
     <Modal
       visible={isModalVisible}

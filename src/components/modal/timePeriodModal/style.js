@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -7,28 +8,33 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(16, 0, 29, 0.8)',
+    backgroundColor: colors.rgbDark,
   },
 
   innerContainer: {
-    width: windowWidth * 0.7,
-    height: windowHeight * 0.2,
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.3,
     borderRadius: 15,
-    backgroundColor: '#DBADFF',
-    justifyContent: 'center',
+    backgroundColor: colors.lightLilac,
+    padding: windowWidth * 0.03,
     alignItems: 'center',
     elevation: 15,
-    borderColor: 'white',
+    borderColor: colors.white,
     borderTopWidth: 0.6,
     borderRightWidth: 0.3,
     borderLeftWidth: 0.3,
   },
   iconsContainer: {
-    paddingHorizontal: windowWidth * 0.05,
     width: windowWidth * 0.7,
     height: windowHeight * 0.05,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  optionsContainer: {
+    height: windowHeight * 0.22,
+    width: windowWidth * 0.7,
+    paddingTop: windowHeight * 0.01,
     alignItems: 'center',
   },
   optionContainer: {
@@ -36,18 +42,12 @@ export default StyleSheet.create({
     height: windowHeight * 0.05,
     // borderWidth: 1,
     borderBottomWidth: 0.3,
-    borderBottomColor: 'white',
+    borderBottomColor: colors.white,
     justifyContent: 'center',
-  },
-  optionsContainer: {
-    height: windowHeight * 0.15,
-    width: windowWidth * 0.7,
-    paddingTop: windowHeight * 0.01,
-    alignItems: 'center',
   },
   text: {
     fontSize: windowHeight * 0.02,
-    color: 'white',
+    color: colors.white,
     textAlign: 'center',
   },
 });

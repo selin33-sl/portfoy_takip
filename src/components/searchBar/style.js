@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -9,8 +10,8 @@ export default StyleSheet.create({
     borderRadius: 40,
     paddingLeft: windowWidth * 0.03,
     fontSize: windowHeight * 0.02,
-    backgroundColor: 'white',
-    color: 'black',
+    backgroundColor: colors.white,
+    color: colors.black,
   },
   container: {
     backgroundColor: 'transparent',

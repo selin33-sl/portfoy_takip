@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -14,19 +15,19 @@ export default StyleSheet.create({
     width: windowWidth * 0.12,
     height: windowWidth * 0.12,
     borderWidth: 1,
-    borderColor: '#9A1FFF',
+    borderColor: colors.lilac,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
   },
   textInput: {
     fontSize: windowHeight * 0.02,
-    color: 'white',
+    color: colors.white,
     paddingHorizontal: windowWidth * 0.05,
     width: windowWidth * 0.65,
     height: windowWidth * 0.15,
     borderWidth: 1,
-    borderColor: '#9A1FFF',
+    borderColor: colors.lilac,
     borderRadius: 20,
   },
 });

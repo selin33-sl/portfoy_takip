@@ -29,11 +29,13 @@
     "react-native-safe-area-context": "^4.7.4",
     "react-native-screens": "^3.27.0",
     "react-native-shadow-2": "^7.0.8",
+    "react-native-share": "^10.0.2",
     "react-native-svg": "^13.14.0",
     "react-native-swiper": "^1.6.0",
     "react-native-toast-message": "^2.1.7",
     "react-native-vector-icons": "^10.0.1",
     "react-native-version-check": "^3.4.7",
+    "react-native-view-shot": "^3.8.0",
     "react-redux": "^8.1.1",
     "redux-logger": "^3.0.6"
   },

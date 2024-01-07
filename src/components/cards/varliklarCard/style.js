@@ -1,10 +1,11 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   container: {
-    borderColor: '#6500B8',
+    borderColor: colors.purple,
     borderWidth: 1,
     backgroundColor: 'transparent',
     elevation: 5,
@@ -30,7 +31,7 @@ export default StyleSheet.create({
 
   text: {
     fontSize: windowHeight * 0.02,
-    color: 'white',
+    color: colors.white,
     fontWeight: '400',
     textAlign: 'center',
   },

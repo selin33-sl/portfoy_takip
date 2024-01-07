@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import {colors} from '../../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -7,18 +8,18 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(16, 0, 29, 0.8)',
+    backgroundColor: colors.rgbDark,
   },
 
   innerContainer: {
     width: windowWidth * 0.9,
     height: windowHeight * 0.6,
     borderRadius: 15,
-    backgroundColor: '#DBADFF',
+    backgroundColor: colors.lightLilac,
     padding: windowWidth * 0.03,
     alignItems: 'center',
     elevation: 15,
-    borderColor: 'white',
+    borderColor: colors.white,
     borderWidth: 0.3,
   },
   addPortfoyContainer: {
@@ -30,7 +31,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   addPortfoyText: {
-    color: 'white',
+    color: colors.white,
     fontWeight: '300',
     fontSize: windowHeight * 0.03,
     textAlign: 'center',
@@ -39,7 +40,7 @@ export default StyleSheet.create({
   text: {
     fontSize: windowHeight * 0.03,
     fontWeight: '500',
-    color: 'white',
+    color: colors.white,
   },
   iconsContainer: {
     paddingHorizontal: windowWidth * 0.05,
@@ -56,7 +57,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   cartInnerContainer: {
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     width: windowWidth * 0.8,
     height: windowHeight * 0.07,
     borderRadius: 10,
@@ -65,7 +66,7 @@ export default StyleSheet.create({
   portfoyName: {
     fontSize: windowHeight * 0.025,
     fontWeight: 'bold',
-    color: 'black',
+    color: colors.black,
   },
   portfoyNameContainer: {
     width: windowWidth * 0.8,
