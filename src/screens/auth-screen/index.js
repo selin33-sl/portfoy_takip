@@ -39,7 +39,9 @@ export const AuthScreen = () => {
         <View style={style.secondContainer}>
           <View style={style.headerContainer}>
             <Text style={style.headerText}>
-              {register ? 'Yeni Kullanıcı Oluştur' : `${t('welcome')}\nGiriş`}
+              {register
+                ? 'Yeni Kullanıcı Oluştur'
+                : `${t('loginScreen.welcome')}\n${t('common.login')}`}
             </Text>
           </View>
 

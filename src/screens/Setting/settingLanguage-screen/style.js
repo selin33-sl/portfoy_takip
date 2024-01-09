@@ -6,7 +6,7 @@ export default StyleSheet.create({
   innerContainer: {
     flex: 1,
     alignItems: 'center',
-    width: windowWidth * 0.85,
+    width: windowWidth,
     marginTop: windowHeight * 0.05,
   },
 

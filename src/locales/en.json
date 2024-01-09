@@ -1,4 +1,88 @@
 {
-  "change-language": "Change language",
-  "welcome": "Welcome"
+  "loginScreen": {
+    "welcome": "Welcome",
+    "question": "Don't have an account yet?"
+  },
+  "registerScreen": {
+    "description": "Create New User",
+    "question": "Already have an account?",
+    "userName": "Username",
+    "repeatPasword": "Repeat Password"
+  },
+  "common": {
+    "login": "Login",
+    "register": "Register",
+    "password": "Password"
+  },
+  "assets": {
+    "turkisLira": "Turkish Lira",
+    "goldSilverCommodity": "Gold | Silver | Commodity",
+    "foreignCurrency": "Foreign Currency",
+    "fund": "Fund",
+    "stock": "Stock",
+    "cryptoCurrrency": "Cryptocurrency"
+  },
+  "assetDetailScreen": {
+    "amount": "Quantity",
+    "price": "Purchase Price",
+    "date": "Purchase Date",
+    "filterTime": {
+      "today": "Today",
+      "last7days": "Last 7 Days",
+      "last30days": "Last 30 Days",
+      "last90days": "Last 90 Days",
+      "last180days": "Last 180 Days",
+      "last360days": "Last 360 Days",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "allTime": "All Time"
+    }
+  },
+  "reviewsScreen": {
+    "profit/loss": "Profit/Loss",
+    "totalCost": "Total Cost",
+    "averageCost": "Average Cost",
+    "daily": "Daily",
+    "total": "Total",
+    "graph": "Graph"
+  },
+
+  "portfoyListModal": {
+    "myPortfolio": "My Portfolios",
+    "addPortfolio": "Add Portfolio"
+  },
+  "portfoyAddModal": {
+    "newPortfolio": "New Portfolio",
+    "namePortfolio": "Portfolio Name",
+    "writePortfolioName": "Write portfolio name",
+    "create": "Create"
+  },
+
+  "resizableCard": {
+    "quantity": "Quantity"
+  },
+
+  "headers": {
+    "reviews": "REVIEWS",
+    "assets": "ASSETS",
+    "notifications": "NOTIFICATIONS",
+    "notificationDetail": "Notification Detail",
+    "settings": "SETTINGS",
+    "settingsHeaders": {
+      "notifications": "Notifications",
+      "language": "Language",
+      "support": "Support",
+      "policy": "User Agreement and Privacy Policy",
+      "legalWarning": "Legal Warning",
+      "aboutApp": "About the App"
+    },
+    "assetsHeaders": {
+      "turkisLira": "Turkish Lira",
+      "goldSilverCommodity": "Gold | Silver | Commodity",
+      "foreignCurrency": "Foreign Currency",
+      "fund": "Fund",
+      "stock": "Stock",
+      "cryptoCurrrency": "Cryptocurrency"
+    }
+  }
 }

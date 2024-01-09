@@ -1,4 +1,88 @@
 {
-  "change-language": "Dili değiştir",
-  "welcome": "Hoşgeldiniz"
+  "loginScreen": {
+    "welcome": "Hoşgeldiniz",
+    "question": "Henüz bir hesabınız yok mu?"
+  },
+  "registerScreen": {
+    "description": "Yeni Kullanıcı Oluştur",
+    "question": "Zaten bir hesabınız var mı?",
+    "userName": "Kullanıcı Adı",
+    "repeatPasword": "Şifre Tekrar"
+  },
+  "common": {
+    "login": "Giriş",
+    "register": "Kayıt",
+    "password": "Şifre"
+  },
+  "assets": {
+    "turkisLira": "Türk Lirası",
+    "goldSilverCommodity": "Altın | Gümüş | Emtia",
+    "foreignCurrency": "Döviz",
+    "fund": "Fon",
+    "stock": "Hisse Senedi",
+    "cryptoCurrrency": "Kripto Para"
+  },
+  "assetDetailScreen": {
+    "amount": "Miktar",
+    "price": "Satın Alma Fiyatı",
+    "date": "Satın Alma Tarihi",
+    "filterTime": {
+      "today": "Bugün",
+      "last7days": "Son 7 Gün",
+      "last30days": "Son 30 Gün",
+      "last90days": "Son 90 Gün",
+      "last180days": "Son 180 Gün",
+      "last360days": "Son 360 Gün",
+      "thisWeek": "Bu Hafta",
+      "thisMonth": "Bu Ay",
+      "allTime": "Tüm Zamanlar"
+    }
+  },
+  "reviewsScreen": {
+    "profit/loss": "Kar/Zarar",
+    "totalCost": "Toplam Maliyet",
+    "averageCost": "Ortalama Maliyet",
+    "daily": "Günlük",
+    "total": "Toplam",
+    "graph": "Grafik"
+  },
+
+  "portfoyListModal": {
+    "myPortfolio": "portföylerim",
+    "addPortfolio": "Portföy Ekle"
+  },
+  "portfoyAddModal": {
+    "newPortfolio": "Yeni Portföy",
+    "namePortfolio": "Portföy İsmi",
+    "writePortfolioName": "Portföy ismi yazınız",
+    "create": "Oluştur"
+  },
+
+  "resizableCard": {
+    "quantity": "Adet"
+  },
+
+  "headers": {
+    "reviews": "DEĞERLENDİRMELER",
+    "assets": "VARLIKLAR",
+    "notifications": "BİLDİRİMLER",
+    "notificationDetail": "Bildirim Detay",
+    "settings": "AYARLAR",
+    "settingsHeaders": {
+      "notifications": "Bildirimler",
+      "language": "Dil",
+      "support": "Destek",
+      "policy": "Kullanıcı Sözleşmesi ve Gizlilik Politikası",
+      "legalWarning": "Yasal Uyarı",
+      "aboutApp": "Uygulama Hakkında"
+    },
+    "assetsHeaders": {
+      "turkisLira": "Türk Lirası",
+      "goldSilverCommodity": "Altın | Gümüş | Emtia",
+      "foreignCurrency": "Döviz",
+      "fund": "Fon",
+      "stock": "Hisse Senedi",
+      "cryptoCurrrency": "Kripto Para"
+    }
+  }
 }
