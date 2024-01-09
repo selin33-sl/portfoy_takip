@@ -6,7 +6,7 @@ import {
   LinearGradientContainer,
   SettingsCard,
   UygulamaHakkindaModal,
-} from '../../components';
+} from '../../../components';
 import style from './style';
 import {useNavigation} from '@react-navigation/native';
 
@@ -19,6 +19,12 @@ export const SettingsScreen = () => {
       <Header text={'AYARLAR'} />
       <View style={style.innerContainer}>
         <SettingsCard text={'Bildirimler'} />
+        <SettingsCard
+          text={'Dil'}
+          onPress={() =>
+            navigation.navigate('settingLanguage-screen', {header: 'Dil'})
+          }
+        />
         <SettingsCard
           text={'Destek'}
           onPress={() =>

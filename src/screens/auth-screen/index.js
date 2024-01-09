@@ -9,8 +9,10 @@ import {
 } from '../../components';
 import {images} from '../../assets';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export const AuthScreen = () => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
   const [register, setRegister] = useState(false);
 
@@ -37,7 +39,7 @@ export const AuthScreen = () => {
         <View style={style.secondContainer}>
           <View style={style.headerContainer}>
             <Text style={style.headerText}>
-              {register ? 'Yeni Kullanıcı\nOluştur' : 'Hoşgeldiniz\nGiriş'}
+              {register ? 'Yeni Kullanıcı Oluştur' : `${t('welcome')}\nGiriş`}
             </Text>
           </View>
 
