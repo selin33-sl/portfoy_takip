@@ -1,18 +1,19 @@
 {
   "loginScreen": {
     "welcome": "Welcome",
-    "question": "Don't have an account yet?"
+    "question": "Don't have an account yet?  "
   },
   "registerScreen": {
     "description": "Create New User",
-    "question": "Already have an account?",
+    "question": "Already have an account?  ",
     "userName": "Username",
     "repeatPasword": "Repeat Password"
   },
   "common": {
     "login": "Login",
     "register": "Register",
-    "password": "Password"
+    "password": "Password",
+    "search": "Search"
   },
   "assets": {
     "turkisLira": "Turkish Lira",
@@ -22,21 +23,23 @@
     "stock": "Stock",
     "cryptoCurrrency": "Cryptocurrency"
   },
+  "timePeriodModal": {
+    "today": "Today",
+    "last7days": "Last 7 Days",
+    "last30days": "Last 30 Days",
+    "last90days": "Last 90 Days",
+    "last180days": "Last 180 Days",
+    "last360days": "Last 360 Days",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "thisYear": "This Year",
+    "allTime": "All Time"
+  },
   "assetDetailScreen": {
     "amount": "Quantity",
     "price": "Purchase Price",
     "date": "Purchase Date",
-    "filterTime": {
-      "today": "Today",
-      "last7days": "Last 7 Days",
-      "last30days": "Last 30 Days",
-      "last90days": "Last 90 Days",
-      "last180days": "Last 180 Days",
-      "last360days": "Last 360 Days",
-      "thisWeek": "This Week",
-      "thisMonth": "This Month",
-      "allTime": "All Time"
-    }
+    "save": "Save"
   },
   "reviewsScreen": {
     "profit/loss": "Profit/Loss",
@@ -59,7 +62,7 @@
   },
 
   "resizableCard": {
-    "quantity": "Quantity"
+    "quantity": " Quantity"
   },
 
   "headers": {

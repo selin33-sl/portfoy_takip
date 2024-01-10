@@ -10,10 +10,59 @@ import {
 } from '../../components';
 import style from './style';
 import {images} from '../../assets';
-import {data} from '../home-screen';
+
+import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {colors} from '../../theme';
 
 export const DegerlendirmelerScreen = () => {
+  const {t} = useTranslation();
+
+  const data = [
+    {
+      tür: t('headers.assetsHeaders.foreignCurrency'),
+      name: 'THYAO1',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 1,
+    },
+    {
+      tür: t('headers.assetsHeaders.foreignCurrency'),
+      name: 'THYAO2',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 2,
+    },
+    {
+      tür: t('headers.assetsHeaders.foreignCurrency'),
+      name: 'THYAO3',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 3,
+    },
+    {
+      tür: t('headers.assetsHeaders.fund'),
+      name: 'THYAO4',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 4,
+    },
+    {
+      tür: t('headers.assetsHeaders.fund'),
+      name: 'THYAO5',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 5,
+    },
+    {
+      tür: t('headers.assetsHeaders.fund'),
+      name: 'THYAO6',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 6,
+    },
+  ];
+
   const [option, setOption] = useState('1');
   const [isPortfoyListModalVisible, setIsPortfoyListModalVisible] =
     useState(false);
@@ -40,7 +89,11 @@ export const DegerlendirmelerScreen = () => {
     return (
       <ResizableCard
         borderColor={
-          tür == 'Döviz' ? '#00EFFE' : tür == 'Fon' ? '#FF007A' : null
+          tür == t('headers.assetsHeaders.foreignCurrency')
+            ? colors.doviz
+            : tür == t('headers.assetsHeaders.fund')
+            ? colors.fon
+            : null
         }
         tür={tür}
         sendItem={itemsWithSameTur.map(({name, price, adet}) => ({
@@ -54,22 +107,22 @@ export const DegerlendirmelerScreen = () => {
 
   return (
     <LinearGradientContainer>
-      <Header text={'DEĞERLENDİRMELER'} />
+      <Header text={t('headers.reviews')} />
       <View style={style.innerContainer}>
         <View style={style.optionsContainer}>
           <CircleOptionCard
             color={option == '1' ? '#6D688C' : '#AEAEAE'}
-            text={'Kar/Zarar'}
+            text={t('reviewsScreen.profit/loss')}
             onPress={() => setOption('1')}
           />
           <CircleOptionCard
             color={option == '2' ? '#6D688C' : '#AEAEAE'}
-            text={'Toplam Maliyet'}
+            text={t('reviewsScreen.totalCost')}
             onPress={() => setOption('2')}
           />
           <CircleOptionCard
             color={option == '3' ? '#6D688C' : '#AEAEAE'}
-            text={'Ortalama Maliyet'}
+            text={t('reviewsScreen.averageCost')}
             onPress={() => setOption('3')}
           />
         </View>
@@ -88,7 +141,7 @@ export const DegerlendirmelerScreen = () => {
 
               <View style={style.rateContainer}>
                 <TouchableOpacity style={style.rateButton}>
-                  <Text style={style.text1}>Günlük</Text>
+                  <Text style={style.text1}>{t('reviewsScreen.daily')}</Text>
                   <LinearGradient
                     colors={['#746F96', '#AEAEAE']}
                     style={style.innerRate}>
@@ -97,7 +150,7 @@ export const DegerlendirmelerScreen = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={style.rateButton}>
-                  <Text style={style.text1}>Toplam</Text>
+                  <Text style={style.text1}>{t('reviewsScreen.total')}</Text>
                   <LinearGradient
                     colors={['#746F96', '#AEAEAE']}
                     style={style.innerRate}>
@@ -106,7 +159,7 @@ export const DegerlendirmelerScreen = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={style.rateButton}>
-                  <Text style={style.text1}>Grafik</Text>
+                  <Text style={style.text1}>{t('reviewsScreen.graph')}</Text>
                   <LinearGradient
                     colors={['#746F96', '#AEAEAE']}
                     style={style.innerRateGrafik}>

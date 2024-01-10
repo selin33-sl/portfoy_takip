@@ -18,54 +18,56 @@ import {useDispatch} from 'react-redux';
 import {getHisseSenediProcess} from '../../api';
 import {captureRef} from 'react-native-view-shot';
 import Share from 'react-native-share';
+import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
 
-export const data = [
-  {
-    tür: 'Döviz',
-    name: 'THYAO1',
-    price: '2.230,00',
-    adet: '10.00',
-    _id: 1,
-  },
-  {
-    tür: 'Döviz',
-    name: 'THYAO2',
-    price: '2.230,00',
-    adet: '10.00',
-    _id: 2,
-  },
-  {
-    tür: 'Döviz',
-    name: 'THYAO3',
-    price: '2.230,00',
-    adet: '10.00',
-    _id: 3,
-  },
-  {
-    tür: 'Fon',
-    name: 'THYAO4',
-    price: '2.230,00',
-    adet: '10.00',
-    _id: 4,
-  },
-  {
-    tür: 'Fon',
-    name: 'THYAO5',
-    price: '2.230,00',
-    adet: '10.00',
-    _id: 5,
-  },
-  {
-    tür: 'Döviz',
-    name: 'THYAO6',
-    price: '2.230,00',
-    adet: '10.00',
-    _id: 6,
-  },
-];
-
 export const HomeScreen = () => {
+  const {t} = useTranslation();
+  const data = [
+    {
+      tür: t('headers.assetsHeaders.foreignCurrency'),
+      name: 'THYAO1',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 1,
+    },
+    {
+      tür: t('headers.assetsHeaders.foreignCurrency'),
+      name: 'THYAO2',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 2,
+    },
+    {
+      tür: t('headers.assetsHeaders.foreignCurrency'),
+      name: 'THYAO3',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 3,
+    },
+    {
+      tür: t('headers.assetsHeaders.fund'),
+      name: 'THYAO4',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 4,
+    },
+    {
+      tür: t('headers.assetsHeaders.fund'),
+      name: 'THYAO5',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 5,
+    },
+    {
+      tür: t('headers.assetsHeaders.fund'),
+      name: 'THYAO6',
+      price: '2.230,00',
+      adet: '10.00',
+      _id: 6,
+    },
+  ];
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [hidden, setHidden] = useState(false);
@@ -137,7 +139,11 @@ export const HomeScreen = () => {
           navigation.navigate('varlikDetay-screen', {page: 'update'})
         }
         borderColor={
-          tür == 'Döviz' ? colors.doviz : tür == 'Fon' ? colors.fon : null
+          tür == t('headers.assetsHeaders.foreignCurrency')
+            ? colors.doviz
+            : tür == t('headers.assetsHeaders.fund')
+            ? colors.fon
+            : null
         }
         tür={tür}
         sendItem={itemsWithSameTur.map(({name, price, adet}) => ({

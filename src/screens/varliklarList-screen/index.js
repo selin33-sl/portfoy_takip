@@ -24,8 +24,10 @@ import {resetKripto} from '../../redux/slice/varliklar/get-kripto-slice';
 import {resetEmtia} from '../../redux/slice/varliklar/get-emtia-slice';
 import {resetGumus} from '../../redux/slice/varliklar/get-gumus-slice';
 import {resetAltin} from '../../redux/slice/varliklar/get-altin-slice';
+import {useTranslation} from 'react-i18next';
 
 export const VarliklarListScreen = () => {
+  const {t} = useTranslation();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   const navigation = useNavigation();
@@ -55,13 +57,13 @@ export const VarliklarListScreen = () => {
       : null;
 
   useEffect(() => {
-    if (text == 'Hisse Senedi') {
+    if (text == t('headers.assetsHeaders.stock')) {
       dispatch(getHisseSenediProcess());
-    } else if (text == 'Döviz') {
+    } else if (text == t('headers.assetsHeaders.foreignCurrency')) {
       dispatch(getDovizProcess());
-    } else if (text == 'Kripto Para') {
+    } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
       dispatch(getKriptoProcess());
-    } else if (text == 'Altın | Gümüş | Emtia') {
+    } else if (text == t('headers.assetsHeaders.goldSilverCommodity')) {
       dispatch(getEmtiaProcess());
       dispatch(getGumusProcess());
       dispatch(getAltinProcess());

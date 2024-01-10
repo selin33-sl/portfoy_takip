@@ -4,9 +4,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import {BildirimCard, Header, LinearGradientContainer} from '../../components';
 import style from './style';
 import {useNavigation} from '@react-navigation/native';
-import {images} from '../../assets';
+import {useTranslation} from 'react-i18next';
 
 export const BildirimScreen = () => {
+  const {t} = useTranslation();
   const data = [
     {
       title: 'Bildirim1',
@@ -39,7 +40,7 @@ export const BildirimScreen = () => {
 
   return (
     <LinearGradientContainer>
-      <Header text={'BİLDİRİMLERİM'} />
+      <Header text={t('headers.notifications')} />
       <View style={style.innerContainer}>
         {data && data.length ? null : (
           <Text style={style.text}>

@@ -1,18 +1,19 @@
 {
   "loginScreen": {
     "welcome": "Hoşgeldiniz",
-    "question": "Henüz bir hesabınız yok mu?"
+    "question": "Henüz bir hesabınız yok mu?  "
   },
   "registerScreen": {
     "description": "Yeni Kullanıcı Oluştur",
-    "question": "Zaten bir hesabınız var mı?",
+    "question": "Zaten bir hesabınız var mı?  ",
     "userName": "Kullanıcı Adı",
     "repeatPasword": "Şifre Tekrar"
   },
   "common": {
     "login": "Giriş",
     "register": "Kayıt",
-    "password": "Şifre"
+    "password": "Şifre",
+    "search": "Ara"
   },
   "assets": {
     "turkisLira": "Türk Lirası",
@@ -22,21 +23,25 @@
     "stock": "Hisse Senedi",
     "cryptoCurrrency": "Kripto Para"
   },
+
+  "timePeriodModal": {
+    "today": "Bugün",
+    "last7days": "Son 7 Gün",
+    "last30days": "Son 30 Gün",
+    "last90days": "Son 90 Gün",
+    "last180days": "Son 180 Gün",
+    "last360days": "Son 360 Gün",
+    "thisWeek": "Bu Hafta",
+    "thisMonth": "Bu Ay",
+    "thisYear": "Bu Yıl",
+    "allTime": "Tüm Zamanlar"
+  },
+
   "assetDetailScreen": {
     "amount": "Miktar",
     "price": "Satın Alma Fiyatı",
     "date": "Satın Alma Tarihi",
-    "filterTime": {
-      "today": "Bugün",
-      "last7days": "Son 7 Gün",
-      "last30days": "Son 30 Gün",
-      "last90days": "Son 90 Gün",
-      "last180days": "Son 180 Gün",
-      "last360days": "Son 360 Gün",
-      "thisWeek": "Bu Hafta",
-      "thisMonth": "Bu Ay",
-      "allTime": "Tüm Zamanlar"
-    }
+    "save": "Kaydet"
   },
   "reviewsScreen": {
     "profit/loss": "Kar/Zarar",
@@ -48,7 +53,7 @@
   },
 
   "portfoyListModal": {
-    "myPortfolio": "portföylerim",
+    "myPortfolio": "Portföylerim",
     "addPortfolio": "Portföy Ekle"
   },
   "portfoyAddModal": {
@@ -59,7 +64,7 @@
   },
 
   "resizableCard": {
-    "quantity": "Adet"
+    "quantity": " Adet"
   },
 
   "headers": {

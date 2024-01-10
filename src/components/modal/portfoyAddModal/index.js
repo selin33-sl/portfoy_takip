@@ -2,8 +2,12 @@ import {View, Text, Modal, TouchableOpacity, TextInput} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
+import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
+  const {t} = useTranslation();
+
   return (
     <Modal
       visible={isAddModalVisible}
@@ -27,15 +31,17 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
           </View>
 
           <View style={style.headerContainer}>
-            <Text style={style.text}>Yeni Portföy</Text>
+            <Text style={style.text}>{t('portfoyAddModal.newPortfolio')}</Text>
           </View>
           <View style={style.headerContainer}>
-            <Text style={style.text1}>Portföy İsmi: </Text>
+            <Text style={style.text1}>
+              {t('portfoyAddModal.namePortfolio')}:{' '}
+            </Text>
           </View>
           <View style={style.inputContainer}>
             <TextInput
               style={style.textInput}
-              placeholder="Portföy ismi yaz"
+              placeholder={t('portfoyAddModal.writePortfolioName')}
               placeholderTextColor={'#D3D3D3'}
             />
           </View>
@@ -44,7 +50,9 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
             colors={['#150193', '#6354BA']}
             style={style.addPortfoyContainer}>
             <TouchableOpacity>
-              <Text style={style.addPortfoyText}>Oluştur</Text>
+              <Text style={style.addPortfoyText}>
+                {t('portfoyAddModal.create')}
+              </Text>
             </TouchableOpacity>
           </LinearGradient>
         </LinearGradient>

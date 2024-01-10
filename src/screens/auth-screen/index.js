@@ -13,6 +13,7 @@ import {useTranslation} from 'react-i18next';
 
 export const AuthScreen = () => {
   const {t} = useTranslation();
+
   const navigation = useNavigation();
   const [register, setRegister] = useState(false);
 
@@ -40,7 +41,7 @@ export const AuthScreen = () => {
           <View style={style.headerContainer}>
             <Text style={style.headerText}>
               {register
-                ? 'Yeni Kullanıcı Oluştur'
+                ? t('registerScreen.description')
                 : `${t('loginScreen.welcome')}\n${t('common.login')}`}
             </Text>
           </View>
@@ -48,18 +49,21 @@ export const AuthScreen = () => {
           <View style={style.subTitleContainer}>
             <Text style={style.subTitle}>
               {register
-                ? 'Zaten hesabın var mı?  '
-                : 'Henüz bir hesabınız yok mu?  '}
+                ? t('registerScreen.question')
+                : t('loginScreen.question')}
             </Text>
             <TouchableOpacity onPress={handleRegisterScreen}>
               <Text style={style.optionText}>
-                {register ? 'Giriş' : 'Kayıt'}
+                {register ? t('common.login') : t('common.register')}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={style.inputContainer}>
             {register ? (
-              <TextinputCard placeholder={'Kullanıcı Adı'} name={'account'} />
+              <TextinputCard
+                placeholder={t('registerScreen.userName')}
+                name={'account'}
+              />
             ) : null}
 
             <TextinputCard
@@ -67,11 +71,14 @@ export const AuthScreen = () => {
               name={'email-outline'}
               keyboardType={'email-address'}
             />
-            <TextinputCard placeholder={'Şifre'} name={'lock-outline'} />
+            <TextinputCard
+              placeholder={t('common.password')}
+              name={'lock-outline'}
+            />
 
             {register ? (
               <TextinputCard
-                placeholder={'Şifre Tekrar'}
+                placeholder={t('registerScreen.repeatPasword')}
                 name={'lock-outline'}
               />
             ) : null}
@@ -79,7 +86,9 @@ export const AuthScreen = () => {
           <TouchableOpacity
             style={style.buttonContainer}
             onPress={register ? handlerRegister : handlerLogin}>
-            <Text style={style.buttonText}>{register ? 'KAYIT' : 'GİRİŞ'}</Text>
+            <Text style={style.buttonText}>
+              {register ? t('common.register') : t('common.login')}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -9,44 +9,52 @@ import {
 } from '../../../components';
 import style from './style';
 import {useNavigation} from '@react-navigation/native';
+import {useTranslation} from 'react-i18next';
 
 export const SettingsScreen = () => {
+  const {t} = useTranslation();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const navigation = useNavigation();
   return (
     <LinearGradientContainer>
-      <Header text={'AYARLAR'} />
+      <Header text={t('headers.settings')} />
       <View style={style.innerContainer}>
-        <SettingsCard text={'Bildirimler'} />
+        <SettingsCard text={t('headers.settingsHeaders.notifications')} />
         <SettingsCard
-          text={'Dil'}
+          text={t('headers.settingsHeaders.language')}
           onPress={() =>
-            navigation.navigate('settingLanguage-screen', {header: 'Dil'})
-          }
-        />
-        <SettingsCard
-          text={'Destek'}
-          onPress={() =>
-            navigation.navigate('settingDetay-screen', {header: 'Destek'})
-          }
-        />
-        <SettingsCard
-          text={'Kullanıcı Sözleşmesi ve Gizlilik Politikası'}
-          onPress={() =>
-            navigation.navigate('settingDetay-screen', {
-              header: 'Kullanıcı Sözleşmesi ve Gizlilik Politikası',
+            navigation.navigate('settingLanguage-screen', {
+              header: t('headers.settingsHeaders.language'),
             })
           }
         />
         <SettingsCard
-          text={'Yasal Uyarı'}
+          text={t('headers.settingsHeaders.support')}
           onPress={() =>
-            navigation.navigate('settingDetay-screen', {header: 'Yasal Uyarı'})
+            navigation.navigate('settingDetay-screen', {
+              header: t('headers.settingsHeaders.support'),
+            })
           }
         />
         <SettingsCard
-          text={'Uygulama Hakkında'}
+          text={t('headers.settingsHeaders.policy')}
+          onPress={() =>
+            navigation.navigate('settingDetay-screen', {
+              header: t('headers.settingsHeaders.policy'),
+            })
+          }
+        />
+        <SettingsCard
+          text={t('headers.settingsHeaders.legalWarning')}
+          onPress={() =>
+            navigation.navigate('settingDetay-screen', {
+              header: t('headers.settingsHeaders.legalWarning'),
+            })
+          }
+        />
+        <SettingsCard
+          text={t('headers.settingsHeaders.aboutApp')}
           onPress={() => setIsModalVisible(true)}
         />
       </View>

@@ -20,15 +20,16 @@ import {
 } from '../../components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from './style';
-import Orientation from 'react-native-orientation-locker';
+import {useTranslation} from 'react-i18next';
 
 export const VarlikDetayScreen = () => {
+  const {t} = useTranslation();
   const {params: {page = 0} = {}} = useRoute();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [timePeriod, setTimePeriod] = useState('Bugün');
+  const [timePeriod, setTimePeriod] = useState(t('timePeriodModal.today'));
   const [timePeriodVisible, setTimePeriodVisible] = useState(false);
   const [miktar1, setMiktar1] = useState('');
   const [miktar2, setMiktar2] = useState('');
@@ -138,7 +139,7 @@ export const VarlikDetayScreen = () => {
           colors={['#10001D', '#44007A']}
           style={style.inputAreaContainer}>
           <InputContainer
-            text={'Miktar'}
+            text={t('assetDetailScreen.amount')}
             typeText={'USDDFGD'}
             value1={miktar1}
             onChangeText1={setMiktar1}
@@ -146,7 +147,7 @@ export const VarlikDetayScreen = () => {
             onChangeText2={setMiktar2}
           />
           <InputContainer
-            text={'Satın Alma Fiyatı'}
+            text={t('assetDetailScreen.price')}
             typeText={'TL'}
             value1={fiyat1}
             onChangeText1={setFiyat1}
@@ -155,7 +156,7 @@ export const VarlikDetayScreen = () => {
           />
 
           <View style={style.innerAreaContainer}>
-            <Text style={style.headerText}>Satın Alma Tarihi:</Text>
+            <Text style={style.headerText}>{t('assetDetailScreen.date')}:</Text>
             <View style={style.calendarContainer}>
               <TextInput
                 style={{...style.input1, marginRight: 4}}
@@ -174,7 +175,9 @@ export const VarlikDetayScreen = () => {
             <LinearGradient
               colors={['#05A04D', '#007029']}
               style={style.saveButton}>
-              <Text style={style.saveButtonText}>Kaydet</Text>
+              <Text style={style.saveButtonText}>
+                {t('assetDetailScreen.save')}
+              </Text>
             </LinearGradient>
           </View>
         </LinearGradient>

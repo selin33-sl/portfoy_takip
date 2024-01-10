@@ -4,44 +4,46 @@ import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Header, LinearGradientContainer, VarliklarCard} from '../../components';
 import style from './style';
+import {useTranslation} from 'react-i18next';
 
 export const VarliklarScreen = () => {
+  const {t} = useTranslation();
   const navigation = useNavigation();
 
   const data = [
     {
-      text: 'Türk Lirası',
+      text: t('headers.assetsHeaders.turkisLira'),
       iconName: 'currency-try',
       backgroundColor: '#3401FF',
       _id: 1,
     },
     {
-      text: 'Altın | Gümüş | Emtia',
+      text: t('headers.assetsHeaders.goldSilverCommodity'),
       iconName: 'gold',
       backgroundColor: '#FF7A00',
       _id: 2,
     },
     {
-      text: 'Döviz',
+      text: t('headers.assetsHeaders.foreignCurrency'),
       iconName: 'money-symbol',
       backgroundColor: '#00EFFE',
       doviz: true,
       _id: 3,
     },
     {
-      text: 'Fon',
+      text: t('headers.assetsHeaders.fund'),
       iconName: 'file-multiple-outline',
       backgroundColor: '#FF007A',
       _id: 4,
     },
     {
-      text: 'Hisse Senedi',
+      text: t('headers.assetsHeaders.stock'),
       iconName: 'chart-line',
       backgroundColor: '#BCFE00',
       _id: 5,
     },
     {
-      text: 'Kripto Para',
+      text: t('headers.assetsHeaders.cryptoCurrrency'),
       iconName: 'currency-btc',
       backgroundColor: '#DB00FF',
       _id: 6,
@@ -64,7 +66,7 @@ export const VarliklarScreen = () => {
 
   return (
     <LinearGradientContainer>
-      <Header text={'VARLIKLAR'} backIcon={false} />
+      <Header text={t('headers.assets')} backIcon={false} />
       <View style={style.innerContainer}>
         <View style={style.listContainer}>
           <FlatList

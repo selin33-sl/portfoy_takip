@@ -2,6 +2,7 @@ import {View, Text, TouchableOpacity, Dimensions, FlatList} from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
+import {useTranslation} from 'react-i18next';
 import style from './style';
 
 const windowHeight = Dimensions.get('window').height;
@@ -12,6 +13,8 @@ export const ResizableCard = ({
   sendItem,
   onPress,
 }) => {
+  const {t} = useTranslation();
+
   const [isModalVisible2, setModalVisible2] = useState(false);
   const [modalHeight, setModalHeight] = useState(windowHeight * 0.08); // Modalın başlangıç yüksekliği
   const numItems = sendItem.length;
@@ -41,7 +44,8 @@ export const ResizableCard = ({
           </Text>
         </View>
         <Text style={style.textDetailNumber}>
-          {hidden ? '****' : adet} Adet
+          {hidden ? '****' : adet}
+          {t('resizableCard.quantity')}
         </Text>
       </TouchableOpacity>
     );

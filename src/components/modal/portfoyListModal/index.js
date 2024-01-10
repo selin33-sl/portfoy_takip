@@ -3,6 +3,7 @@ import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useTranslation} from 'react-i18next';
 import {PortfoyAddModal} from '../portfoyAddModal';
 
 export const PortfoyListModal = ({
@@ -11,6 +12,8 @@ export const PortfoyListModal = ({
   isAddModalVisible,
   setIsAddModalVisible,
 }) => {
+  const {t} = useTranslation();
+
   const Cart = () => {
     return (
       <TouchableOpacity style={style.cartContainer}>
@@ -55,7 +58,7 @@ export const PortfoyListModal = ({
           </View>
 
           <View style={style.headerContainer}>
-            <Text style={style.text}>Portföylerim</Text>
+            <Text style={style.text}>{t('portfoyListModal.myPortfolio')}</Text>
           </View>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Cart />
@@ -70,7 +73,10 @@ export const PortfoyListModal = ({
             colors={['#150193', '#6354BA']}
             style={style.addPortfoyContainer}>
             <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
-              <Text style={style.addPortfoyText}> + Portföy Ekle</Text>
+              <Text style={style.addPortfoyText}>
+                {' '}
+                + {t('portfoyListModal.addPortfolio')}
+              </Text>
             </TouchableOpacity>
           </LinearGradient>
         </LinearGradient>

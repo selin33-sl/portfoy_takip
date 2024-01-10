@@ -3,9 +3,11 @@ import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Header, LinearGradientContainer} from '../../components';
+import {useTranslation} from 'react-i18next';
 import style from './style';
 
 export const BildirimDetayScreen = () => {
+  const {t} = useTranslation();
   const route = useRoute();
   const body = route.params.body;
   const id = route.params.id;
@@ -13,7 +15,7 @@ export const BildirimDetayScreen = () => {
   const navigation = useNavigation();
   return (
     <LinearGradientContainer>
-      <Header backIcon text={'Bildirim Detay'} />
+      <Header backIcon text={t('headers.notificationDetail')} />
       <View style={style.innerContainer}>
         <Text style={style.text}>{body}</Text>
         {image && image.length ? (

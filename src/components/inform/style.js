@@ -45,6 +45,6 @@ export default StyleSheet.create({
   },
   inform: {
     flex: 1,
-    marginHorizontal: windowWidth * 0.04,
+    marginHorizontal: windowWidth * 0.02,
   },
 });

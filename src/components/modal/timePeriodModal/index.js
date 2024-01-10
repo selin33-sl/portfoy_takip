@@ -2,6 +2,7 @@ import {View, Text, Modal, TouchableOpacity, FlatList} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React, {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import style from './style';
 
 export const TimePeriodModal = ({
@@ -10,36 +11,38 @@ export const TimePeriodModal = ({
   selectedItem,
   setSelectedItem,
 }) => {
+  const {t} = useTranslation();
+
   const data = [
     {
-      text: 'Bugün',
+      text: t('timePeriodModal.today'),
     },
     {
-      text: 'Son 7 Gün',
+      text: t('timePeriodModal.last7days'),
     },
     {
-      text: 'Son 30 Gün',
+      text: t('timePeriodModal.last30days'),
     },
     {
-      text: 'Son 90 Gün',
+      text: t('timePeriodModal.last90days'),
     },
     {
-      text: 'Son 180 Gün',
+      text: t('timePeriodModal.last180days'),
     },
     {
-      text: 'Son 360 Gün',
+      text: t('timePeriodModal.last360days'),
     },
     {
-      text: 'Bu hafta',
+      text: t('timePeriodModal.thisWeek'),
     },
     {
-      text: 'Bu Ay',
+      text: t('timePeriodModal.thisMonth'),
     },
     {
-      text: 'Bu Yıl',
+      text: t('timePeriodModal.thisYear'),
     },
     {
-      text: 'Tüm Zamanlar',
+      text: t('timePeriodModal.allTime'),
     },
   ];
 
