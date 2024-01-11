@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL = 'https://api.collectapi.com/economy/';
 axios.defaults.baseURL = 'https://api.collectapi.com/economy/';
 
-const baseURL1 = 'https://apigw.vakifbank.com.tr:8443';
+const baseURL1 = 'https://portfoy-takip.onrender.com/';
 
 const axiosInstance = axios.create({
   withCredentials: true,
@@ -13,6 +13,22 @@ const axiosInstance = axios.create({
     Authorization: 'apikey 4igZwGbaQfUUQt09D0Ibgz:7fWQWREPHXz5fnE2Pk5a8H',
   },
   credentials: 'include',
+});
+
+const authLogin = createAsyncThunk('auth', async data => {
+  try {
+    const {email, password} = data;
+    const response = await axios.post(baseURL1, data);
+    const accessToken = response.data.accessToken;
+
+    const currentTime = new Date().getTime();
+
+    await AsyncStorage.setItem('accessToken', accessToken);
+    await AsyncStorage.setItem('tokenCreationTime', currentTime.toString());
+    return accessToken;
+  } catch (error) {
+    throw error.response.data;
+  }
 });
 
 const getHisseSenediProcess = createAsyncThunk(

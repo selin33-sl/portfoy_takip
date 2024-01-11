@@ -22,7 +22,18 @@ export default StyleSheet.create({
     borderColor: colors.white,
     borderWidth: 0.3,
   },
-  addPortfoyContainer: {
+  imageContainer: {
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: windowWidth * 0.4,
+    height: windowHeight * 0.2,
+  },
+
+  shareButton: {
     width: windowWidth * 0.5,
     height: windowHeight * 0.07,
     marginTop: windowHeight * 0.02,
@@ -30,7 +41,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  addPortfoyText: {
+  buttonText: {
     color: colors.white,
     fontWeight: '300',
     fontSize: windowHeight * 0.03,
@@ -47,7 +58,7 @@ export default StyleSheet.create({
     width: windowWidth * 0.9,
     height: windowHeight * 0.05,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   headerContainer: {

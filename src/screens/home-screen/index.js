@@ -70,6 +70,7 @@ export const HomeScreen = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [capturedImageURI, setCapturedImageURI] = useState(null);
   const [hidden, setHidden] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isShareModalVisible, setIsShareModalVisible] = useState(false);
@@ -87,14 +88,19 @@ export const HomeScreen = () => {
         quality: 0.8,
       });
 
-      // Ekran görüntüsünü paylaşma
-      await Share.open({
-        url: `file://${uri}`,
-      });
+      console.log('Captured Image URI:', uri);
+
+      setCapturedImageURI(uri);
+
+      // // Ekran görüntüsünü paylaşma
+      // await Share.open({
+      //   url: `file://${uri}`,
+      // });
     } catch (error) {
       console.error('Error capturing or sharing screen:', error);
     }
   };
+
   const widthAndHeight = 170;
   const series = [364.16, 302.4, 228.45, 103.02, 0, 0];
   const sliceColor = [
@@ -177,9 +183,11 @@ export const HomeScreen = () => {
         <View style={style.pieChartContainer}>
           <TouchableOpacity
             style={style.shareContainer}
-            onPress={captureScreen}
-            // onPress={() => setIsShareModalVisible(true)}
-          >
+            // onPress={captureScreen}
+            onPress={() => {
+              captureScreen();
+              setIsShareModalVisible(true);
+            }}>
             <Icon name={'share-variant-outline'} size={25} color={'white'} />
           </TouchableOpacity>
           <View ref={viewRef} style={style.pieChart}>
@@ -233,6 +241,7 @@ export const HomeScreen = () => {
       <ShareModal
         isModalVisible={isShareModalVisible}
         setIsModalVisible={setIsShareModalVisible}
+        image={capturedImageURI}
       />
     </LinearGradientContainer>
   );
