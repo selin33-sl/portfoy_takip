@@ -8,21 +8,27 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const ShareModal = ({isModalVisible, setIsModalVisible, image}) => {
   console.log('imaaageeee', image);
-  const viewRef = useRef();
+  const viewRef = useRef(null);
+
   const handleShare = async () => {
     try {
       // const uri = await captureRef(viewRef, {
       //   format: 'png',
       //   quality: 0.8,
       // });
+
+      // console.log('aaaaaaaaaaaaaaaaaaaaaaaaa');
+      // console.log('uurriii', uri);
+
       // Share the image
       await Share.open({
-        url: `file://${uri}`,
+        url: `file://${image}`,
       });
     } catch (error) {
       console.error('Error sharing image:', error);
     }
   };
+
   return (
     <Modal
       visible={isModalVisible}
@@ -45,16 +51,17 @@ export const ShareModal = ({isModalVisible, setIsModalVisible, image}) => {
             </TouchableOpacity>
           </View>
 
-          {image && (
-            <View ref={viewRef} style={style.imageContainer}>
-              <Image source={{uri: `file://${image}`}} style={style.image} />
-            </View>
-          )}
+          <View style={style.imageContainer}>
+            <Image source={{uri: `file://${image}`}} style={style.image} />
+          </View>
 
           <LinearGradient
             colors={['#150193', '#6354BA']}
             style={style.shareButton}>
-            <TouchableOpacity onPress={handleShare}>
+            <TouchableOpacity
+              onPress={() => {
+                handleShare();
+              }}>
               <Text style={style.buttonText}>Paylaş</Text>
             </TouchableOpacity>
           </LinearGradient>

@@ -1,30 +1,55 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseURL = 'https://api.collectapi.com/economy/';
-axios.defaults.baseURL = 'https://api.collectapi.com/economy/';
+const baseURL = 'https://portfoy-takip.onrender.com/api';
+axios.defaults.baseURL = baseURL;
 
-const baseURL1 = 'https://portfoy-takip.onrender.com/';
+const ALTERNATİVE_BASE_URL = 'https://portfoy-takip.onrender.com/auth';
 
-const axiosInstance = axios.create({
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: 'apikey 4igZwGbaQfUUQt09D0Ibgz:7fWQWREPHXz5fnE2Pk5a8H',
+// const axiosInstance = axios.create({
+//   withCredentials: true,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     Authorization: 'apikey 4igZwGbaQfUUQt09D0Ibgz:7fWQWREPHXz5fnE2Pk5a8H',
+//   },
+//   credentials: 'include',
+// });
+
+axios.interceptors.request.use(
+  async config => {
+    try {
+      // Erişim belirtecini async storage'dan alın
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      console.log(accessToken);
+
+      if (accessToken) {
+        // Başlıklara erişim belirtecini ekleyin
+        config.headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+      return config;
+    } catch (error) {
+      // Hata durumunda yapılacak işlemleri burada ele alabilirsiniz
+      console.error('Interceptor Error:', error);
+      return Promise.reject(error);
+    }
   },
-  credentials: 'include',
-});
+  error => {
+    return Promise.reject(error);
+  },
+);
 
-const authLogin = createAsyncThunk('auth', async data => {
+const authLogin = createAsyncThunk('auth/login', async data => {
   try {
     const {email, password} = data;
-    const response = await axios.post(baseURL1, data);
+    const response = await axios.post(ALTERNATİVE_BASE_URL, data);
     const accessToken = response.data.accessToken;
 
     const currentTime = new Date().getTime();
 
     await AsyncStorage.setItem('accessToken', accessToken);
     await AsyncStorage.setItem('tokenCreationTime', currentTime.toString());
+
     return accessToken;
   } catch (error) {
     throw error.response.data;
@@ -34,7 +59,7 @@ const authLogin = createAsyncThunk('auth', async data => {
 const getHisseSenediProcess = createAsyncThunk(
   'hisseSenedi/getHisseSenediProcess',
   async () => {
-    const res = await axiosInstance.get('hisseSenedi');
+    const res = await axios.get('/getAllStock');
     return res;
   },
 );
@@ -81,4 +106,5 @@ export {
   getEmtiaProcess,
   getGumusProcess,
   getAltinProcess,
+  authLogin,
 };

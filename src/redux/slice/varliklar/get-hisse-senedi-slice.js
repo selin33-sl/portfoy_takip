@@ -18,23 +18,20 @@ export const getHisseSenediSlice = createSlice({
   },
   extraReducers: builder => {
     builder
+
       .addCase(getHisseSenediProcess.pending, state => {
-        state.isLoading = {...state.isLoading, getHisseSenediProcess: true};
+        state.isLoading = true;
       })
       .addCase(getHisseSenediProcess.fulfilled, (state, action) => {
-        state.isLoading = {...state.isLoading, getHisseSenediProcess: false};
-        state.status = {
-          ...state.status,
-          getHisseSenediProcess: action.payload?.status,
-        };
-        state.message = {
-          ...state.message,
-          getHisseSenediProcess: action.payload?.message,
-        };
-        state.data = action.payload?.data?.result;
+        state.isLoading = false;
+        (state.status = action.payload?.status),
+          (state.message = action.payload?.message),
+          (state.data = action.payload?.data?.result);
       })
       .addCase(getHisseSenediProcess.rejected, (state, action) => {
-        state.isLoading = {...state.isLoading, getHisseSenediProcess: false};
+        state.isLoading = false;
+        state.status = action.payload?.errorCode;
+        state.message = action.payload?.message;
       });
   },
 });
