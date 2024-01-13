@@ -36,20 +36,26 @@ export const AuthScreen = () => {
     state => state.register,
   );
 
+  console.log('reg messageee:', RegisterMessage);
+
   useEffect(() => {
     setShowRegisterToastSuccess(false);
     setShowRegisterToastError(false);
 
     if (registerStatus === 'success') {
       setShowRegisterToastSuccess(true);
-      dispatch(resetRegister());
+      setTimeout(() => {
+        dispatch(resetRegister());
+      }, 2000);
       setRegister(false);
       setUsername('');
       setPassword('');
       setEmail('');
     } else if (registerStatus === 'error') {
       setShowRegisterToastError(true);
-      dispatch(resetRegister());
+      setTimeout(() => {
+        dispatch(resetRegister());
+      }, 2000);
     }
   }, [registerStatus]);
 
@@ -125,12 +131,12 @@ export const AuthScreen = () => {
       <ToastCompSuccess
         show={showRegisterToastSuccess}
         text1={'Kayıt Başarılı'}
-        text2={'Kayıt başarıyla oluşturuldu.'}
+        text2={RegisterMessage}
       />
       <ToastCompError
         show={showRegisterToastError}
         text1={'Kayıt Başarısız'}
-        text2={'Kayıt oluşturulamadı.'}
+        text2={RegisterMessage}
       />
       <LinearGradientContainer>
         <ToastCompError
