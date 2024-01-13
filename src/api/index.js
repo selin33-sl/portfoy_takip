@@ -56,8 +56,28 @@ const authLogin = createAsyncThunk('auth/login', async data => {
   }
 });
 
+const registerProcess = createAsyncThunk(
+  'register/registerProcess',
+  async data => {
+    try {
+      const {username, password, email} = data;
+      const response = await axios.post('/', data);
+      console.log(response.data.status, 'lkhjgsdhjklsdlhjksdlhjksd');
+      // if (response.data.status === 'success') {
+      //   await firebase.messaging().registerDeviceForRemoteMessages().then(() => {
+      //     console.log('Registered');
+      //   })
+      //     .catch(e => console.log(e, 'abuk subuk şeyler'));
+      // }
+      return response.data;
+    } catch (error) {
+      throw error.response.data;
+    }
+  },
+);
+
 const getHisseSenediProcess = createAsyncThunk(
-  'hisseSenedi/getHisseSenediProcess',
+  'getAllStock/getHisseSenediProcess',
   async () => {
     const res = await axios.get('/getAllStock');
     return res;
@@ -107,4 +127,5 @@ export {
   getGumusProcess,
   getAltinProcess,
   authLogin,
+  registerProcess,
 };

@@ -6,13 +6,16 @@ import {
   PatternDesign,
   TextinputCard,
   ToastCompError,
+  ToastCompSuccess,
 } from '../../components';
 import {images} from '../../assets';
 import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
-import {authLogin} from '../../api';
+import {authLogin, registerProcess} from '../../api';
 import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
+import {resetRegister} from '../../redux/slice/auth/register-slice';
+import {resetAuth} from '../../redux/slice/auth/login-slice';
 
 export const AuthScreen = () => {
   const {t} = useTranslation();
@@ -25,6 +28,30 @@ export const AuthScreen = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showRegisterToastSuccess, setShowRegisterToastSuccess] =
+    useState(false);
+  const [showRegisterToastError, setShowRegisterToastError] = useState(false);
+
+  const {status: registerStatus, message: RegisterMessage} = useSelector(
+    state => state.register,
+  );
+
+  useEffect(() => {
+    setShowRegisterToastSuccess(false);
+    setShowRegisterToastError(false);
+
+    if (registerStatus === 'success') {
+      setShowRegisterToastSuccess(true);
+      dispatch(resetRegister());
+      setRegister(false);
+      setUsername('');
+      setPassword('');
+      setEmail('');
+    } else if (registerStatus === 'error') {
+      setShowRegisterToastError(true);
+      dispatch(resetRegister());
+    }
+  }, [registerStatus]);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -39,13 +66,32 @@ export const AuthScreen = () => {
 
   const handleRegisterScreen = () => {
     setRegister(!register);
+    setEmail('');
+    setUsername('');
+    setPassword('');
+    dispatch(resetRegister());
+    dispatch(resetAuth());
   };
 
-  // const handlerLogin = () => {
+  // const handleLogin = () => {
   //   navigation.navigate('bottom-tabs');
   // };
 
-  const handlerLogin = () => {
+  const handleRegister = async () => {
+    if (username === '' || password === '' || email === '') {
+      Alert.alert('Uyarı', 'Lütfen bütün alanları doldurunuz.');
+      return;
+    }
+
+    // if (!isEmailValid) {
+    //   Alert.alert('Uyarı', 'Lütfen geçerli bir e-posta adresi giriniz.');
+    //   return;
+    // }
+
+    await dispatch(registerProcess({username, password, email}));
+  };
+
+  const handleLogin = () => {
     if (!isConnected) {
       Alert.alert(
         'İnternet Bağlantısı Yok',
@@ -62,10 +108,6 @@ export const AuthScreen = () => {
     dispatch(authLogin({email, password}));
   };
 
-  const handlerRegister = () => {
-    setRegister(false);
-  };
-
   // const handleEmailChange = text => {
   //   setEmail(text);
 
@@ -80,6 +122,16 @@ export const AuthScreen = () => {
 
   return (
     <ScrollView>
+      <ToastCompSuccess
+        show={showRegisterToastSuccess}
+        text1={'Kayıt Başarılı'}
+        text2={'Kayıt başarıyla oluşturuldu.'}
+      />
+      <ToastCompError
+        show={showRegisterToastError}
+        text1={'Kayıt Başarısız'}
+        text2={'Kayıt oluşturulamadı.'}
+      />
       <LinearGradientContainer>
         <ToastCompError
           show={showNoInternetToast}
@@ -147,7 +199,7 @@ export const AuthScreen = () => {
             </View>
             <TouchableOpacity
               style={style.buttonContainer}
-              onPress={register ? handlerRegister : handlerLogin}>
+              onPress={register ? handleRegister : handleLogin}>
               <Text style={style.buttonText}>
                 {register ? t('common.register') : t('common.login')}
               </Text>

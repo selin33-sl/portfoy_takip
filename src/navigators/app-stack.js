@@ -6,10 +6,13 @@ import {BottomTabs} from './bottom-tabs';
 import Toast from 'react-native-toast-message';
 import {ToastCompError} from '../components';
 import {AuthStack} from './auth-stack';
+import {useDispatch, useSelector} from 'react-redux';
 
 export const AppStack = () => {
   const [isConnected, setIsConnected] = useState(true);
-  const isAuthenticated = 0;
+  // const isAuthenticated = 0;
+
+  const {isAuthenticated} = useSelector(state => state.auth);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -24,7 +27,7 @@ export const AppStack = () => {
   return (
     <NavigationContainer>
       {isAuthenticated == '-1' ? (
-        <SplashScreen />
+        <AuthStack />
       ) : isAuthenticated == '0' ? (
         <AuthStack />
       ) : isAuthenticated == '1' ? (

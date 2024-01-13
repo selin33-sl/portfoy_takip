@@ -13,6 +13,7 @@ import {
   getHisseSenediSlice,
   getKriptoSlice,
   loginSlice,
+  registerSlice,
 } from './slice';
 
 const reducer = combineReducers({
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   silverPrice: getGumusSlice,
   goldPrice: getAltinSlice,
   auth: loginSlice,
+  register: registerSlice,
 });
 
 export const store = configureStore({
