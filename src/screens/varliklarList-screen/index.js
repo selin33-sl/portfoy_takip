@@ -12,6 +12,7 @@ import {
 } from '../../components';
 import {
   getAllCurrencyProcess,
+  getAllGoldProcess,
   getAllStockProcess,
   getAltinProcess,
   getDovizProcess,
@@ -27,7 +28,10 @@ import {
 import {resetKripto} from '../../redux/slice/varliklar/get-kripto-slice';
 import {resetEmtia} from '../../redux/slice/varliklar/get-emtia-slice';
 import {resetGumus} from '../../redux/slice/varliklar/get-gumus-slice';
-import {resetAltin} from '../../redux/slice/varliklar/get-altin-slice';
+import {
+  resetAllGold,
+  resetAltin,
+} from '../../redux/slice/varliklar/get-all-gold-slice';
 import {useTranslation} from 'react-i18next';
 
 export const VarliklarListScreen = () => {
@@ -43,21 +47,21 @@ export const VarliklarListScreen = () => {
   const {data: KriptoData} = useSelector(state => state.cripto);
   const {data: EmtiaData} = useSelector(state => state.emtia);
   const {data: GumusData} = useSelector(state => state.silverPrice);
-  const {data: AltinData} = useSelector(state => state.goldPrice);
+  const {data: AllGoldData} = useSelector(state => state.getAllGold);
 
   const data =
     AllStockData && AllStockData.length
       ? AllStockData
       : AllCurrencyData && AllCurrencyData.length
       ? AllCurrencyData
+      : AllGoldData && AllGoldData.length
+      ? AllGoldData
       : KriptoData && KriptoData.length
       ? KriptoData
       : EmtiaData && EmtiaData.length
       ? EmtiaData
       : GumusData && GumusData.length
       ? GumusData
-      : AltinData && AltinData.length
-      ? AltinData
       : null;
 
   useEffect(() => {
@@ -68,14 +72,14 @@ export const VarliklarListScreen = () => {
     } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
       dispatch(getKriptoProcess());
     } else if (text == t('headers.assetsHeaders.goldSilverCommodity')) {
-      dispatch(getEmtiaProcess());
-      dispatch(getGumusProcess());
-      dispatch(getAltinProcess());
+      // dispatch(getEmtiaProcess());
+      // dispatch(getGumusProcess());
+      dispatch(getAllGoldProcess());
     }
     dispatch(resetAllStock());
     dispatch(resetAllCurrency());
+    dispatch(resetAllGold());
 
-    dispatch(resetAltin());
     dispatch(resetGumus());
     dispatch(resetEmtia());
     dispatch(resetKripto());
@@ -94,6 +98,7 @@ export const VarliklarListScreen = () => {
   const renderItem = ({item}) => {
     let code = '';
     let fullName = '';
+    console.log('iteeemmm', item);
 
     if (AllStockData) {
       const words = item?.name.split(' ');
@@ -113,8 +118,6 @@ export const VarliklarListScreen = () => {
       roundedRate = `${Math.abs(rateValue).toFixed(2)}`;
     }
 
-    console.log('roundedRate:', roundedRate);
-
     // Renk belirleme
     const color = rateValue < 0 ? 'red' : 'green';
 
@@ -122,8 +125,14 @@ export const VarliklarListScreen = () => {
       <VarlikListCard
         fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
         percent={AllStockData || AllCurrencyData ? true : false}
-        price={item?.lastPrice}
-        code={AllStockData ? code : AllCurrencyData ? item?.name : null}
+        price={AllGoldData ? item?.price : item?.lastPrice}
+        code={
+          AllStockData
+            ? code
+            : AllCurrencyData || AllGoldData
+            ? item?.name
+            : null
+        }
         fullNameText={
           AllStockData ? fullName : AllCurrencyData ? item?.desc : null
         }

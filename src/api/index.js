@@ -92,6 +92,14 @@ const getAllCurrencyProcess = createAsyncThunk(
   },
 );
 
+const getAllGoldProcess = createAsyncThunk(
+  'getAllGold/getAllGoldProcess',
+  async () => {
+    const res = await axios.get('getAllGold');
+    return res;
+  },
+);
+
 const getKriptoProcess = createAsyncThunk(
   'cripto/getKriptoProcess',
   async () => {
@@ -111,21 +119,14 @@ const getGumusProcess = createAsyncThunk(
     return res;
   },
 );
-const getAltinProcess = createAsyncThunk(
-  'goldPrice/getAltinProcess',
-  async () => {
-    const res = await axiosInstance.get('goldPrice');
-    return res;
-  },
-);
 
 export {
   getAllStockProcess,
   getAllCurrencyProcess,
+  getAllGoldProcess,
   getKriptoProcess,
   getEmtiaProcess,
   getGumusProcess,
-  getAltinProcess,
   authLogin,
   registerProcess,
 };

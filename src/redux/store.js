@@ -7,8 +7,8 @@ import {
 import logger from 'redux-logger';
 import {
   getAllCurrencySlice,
+  getAllGoldSlice,
   getAllStockSlice,
-  getAltinSlice,
   getEmtiaSlice,
   getGumusSlice,
   getKriptoSlice,
@@ -22,7 +22,7 @@ const reducer = combineReducers({
   cripto: getKriptoSlice,
   emtia: getEmtiaSlice,
   silverPrice: getGumusSlice,
-  goldPrice: getAltinSlice,
+  getAllGold: getAllGoldSlice,
   auth: loginSlice,
   register: registerSlice,
 });
