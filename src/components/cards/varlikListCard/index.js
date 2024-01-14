@@ -6,10 +6,10 @@ import style from './style';
 export const VarlikListCard = ({
   onPress,
   code,
-  first,
-  second,
-  firstText,
-  secondText,
+  fullName,
+  percent,
+  fullNameText,
+  percentText,
   color,
   price,
 }) => {
@@ -21,9 +21,9 @@ export const VarlikListCard = ({
           <Text style={style.text1}>{price}</Text>
         </View>
         <View style={style.row2}>
-          {first ? <Text style={style.text2}>{firstText}</Text> : null}
-          {second ? (
-            <Text style={{...style.text2, color: color}}>%{secondText}</Text>
+          {fullName ? <Text style={style.text2}>{fullNameText}</Text> : null}
+          {percent ? (
+            <Text style={{...style.text2, color: color}}>%{percentText}</Text>
           ) : null}
         </View>
       </View>

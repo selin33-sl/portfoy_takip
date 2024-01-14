@@ -76,8 +76,8 @@ const registerProcess = createAsyncThunk(
   },
 );
 
-const getHisseSenediProcess = createAsyncThunk(
-  'getAllStock/getHisseSenediProcess',
+const getAllStockProcess = createAsyncThunk(
+  'getAllStock/getAllStockProcess',
   async () => {
     const res = await axios.get('/getAllStock');
     return res;
@@ -120,7 +120,7 @@ const getAltinProcess = createAsyncThunk(
 );
 
 export {
-  getHisseSenediProcess,
+  getAllStockProcess,
   getDovizProcess,
   getKriptoProcess,
   getEmtiaProcess,

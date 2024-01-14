@@ -11,14 +11,14 @@ import {
   VarlikListCard,
 } from '../../components';
 import {
+  getAllStockProcess,
   getAltinProcess,
   getDovizProcess,
   getEmtiaProcess,
   getGumusProcess,
-  getHisseSenediProcess,
   getKriptoProcess,
 } from '../../api';
-import {resetHisseSenedi} from '../../redux/slice/varliklar/get-hisse-senedi-slice';
+import {resetAllStock} from '../../redux/slice/varliklar/get-all-stock-slice';
 import {resetDoviz} from '../../redux/slice/varliklar/get-doviz-slice';
 import {resetKripto} from '../../redux/slice/varliklar/get-kripto-slice';
 import {resetEmtia} from '../../redux/slice/varliklar/get-emtia-slice';
@@ -34,7 +34,7 @@ export const VarliklarListScreen = () => {
   const route = useRoute();
   const {text} = route.params;
 
-  const {data: HisseSenediData} = useSelector(state => state.hisseSenedi);
+  const {data: AllStockData} = useSelector(state => state.getAllStock);
   const {data: DövizData} = useSelector(state => state.allCurrency);
   const {data: KriptoData} = useSelector(state => state.cripto);
   const {data: EmtiaData} = useSelector(state => state.emtia);
@@ -42,8 +42,8 @@ export const VarliklarListScreen = () => {
   const {data: AltinData} = useSelector(state => state.goldPrice);
 
   const data =
-    HisseSenediData && HisseSenediData.length
-      ? HisseSenediData
+    AllStockData && AllStockData.length
+      ? AllStockData
       : DövizData && DövizData.length
       ? DövizData
       : KriptoData && KriptoData.length
@@ -58,7 +58,7 @@ export const VarliklarListScreen = () => {
 
   useEffect(() => {
     if (text == t('headers.assetsHeaders.stock')) {
-      dispatch(getHisseSenediProcess());
+      dispatch(getAllStockProcess());
     } else if (text == t('headers.assetsHeaders.foreignCurrency')) {
       dispatch(getDovizProcess());
     } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
@@ -71,74 +71,48 @@ export const VarliklarListScreen = () => {
     dispatch(resetAltin());
     dispatch(resetGumus());
     dispatch(resetEmtia());
-    dispatch(resetHisseSenedi());
+    dispatch(resetAllStock());
     dispatch(resetDoviz());
     dispatch(resetKripto());
   }, []);
 
-  const filteredData = data?.filter(item => {
-    const code = item?.code
-      ? item?.code.toLowerCase()
-      : item?.name
-      ? item?.name.toLowerCase()
-      : '';
-    const searchTermLower = searchTerm.toLowerCase();
-    return code.includes(searchTermLower);
-  });
+  // const filteredData = data?.filter(item => {
+  //   const code = item?.code
+  //     ? item?.code.toLowerCase()
+  //     : item?.name
+  //     ? item?.name.toLowerCase()
+  //     : '';
+  //   const searchTermLower = searchTerm.toLowerCase();
+  //   return code.includes(searchTermLower);
+  // });
 
   const renderItem = ({item}) => {
-    // extractedText varsayılan olarak boş bir string olsun
-    let extractedText = '';
+    let code = '';
+    let fullName = '';
 
-    if (HisseSenediData) {
-      // HisseSenediData dolu olduğunda bu kısmı çalıştır
-      const lines = item?.text.split('\n');
-      // gereksiz boşlukları temizle
-      extractedText = lines[2] ? lines[2].trim() : '';
+    if (AllStockData) {
+      const words = item?.name.split(' ');
+      code = words[0] ? words[0].trim() : '';
+      fullName = words.slice(1).join(' ').trim();
     }
 
     // item.rate'den renk ve yuvarlanmış değeri al
-    const rateValue = parseFloat(item?.rate);
+    const rateValue = parseFloat(item?.changePercent);
     const roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
-
-    // item?.selling'den fiyat değerini al ve noktadan sonra 2 basamağa yuvarla
-    const sellingPrice = item?.selling
-      ? parseFloat(item?.selling).toFixed(2)
-      : item?.price
-      ? parseFloat(item?.price).toFixed(2)
-      : null;
 
     // Renk belirleme
     const color = rateValue < 0 ? 'red' : 'green';
 
     return (
       <VarlikListCard
-        price={
-          HisseSenediData
-            ? item?.lastprice
-            : DövizData || KriptoData
-            ? sellingPrice
-            : null
-        }
-        first={HisseSenediData || DövizData || KriptoData ? true : false}
-        second={HisseSenediData || KriptoData ? true : false}
-        code={
-          EmtiaData || AltinData
-            ? item?.name
-            : GumusData
-            ? item?.currency
-            : item?.code
-        }
-        firstText={
-          HisseSenediData
-            ? extractedText
-            : DövizData || KriptoData
-            ? item?.name
-            : null
-        }
+        price={item?.lastPrice}
+        fullName={AllStockData || DövizData || KriptoData ? true : false}
+        percent={AllStockData || KriptoData ? true : false}
+        code={code}
+        fullNameText={fullName}
         color={color}
-        secondText={
-          HisseSenediData ? roundedRate : KriptoData ? item?.changeDay : null
+        percentText={
+          AllStockData ? roundedRate : KriptoData ? item?.changeDay : null
         }
         onPress={() => navigation.navigate('varlikDetay-screen')}
       />
@@ -157,13 +131,13 @@ export const VarliklarListScreen = () => {
         <View style={style.listContainer}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={filteredData}
+            data={data}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
         {/* <VarlikListCard
-          // code={HisseSenediData}
+          // code={AllStockData}
           onPress={() => navigation.navigate('varlikDetay-screen')}
         />
         <VarlikListCard

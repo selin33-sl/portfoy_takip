@@ -6,18 +6,18 @@ import {
 
 import logger from 'redux-logger';
 import {
+  getAllStockSlice,
   getAltinSlice,
   getDovizSlice,
   getEmtiaSlice,
   getGumusSlice,
-  getHisseSenediSlice,
   getKriptoSlice,
   loginSlice,
   registerSlice,
 } from './slice';
 
 const reducer = combineReducers({
-  hisseSenedi: getHisseSenediSlice,
+  getAllStock: getAllStockSlice,
   allCurrency: getDovizSlice,
   cripto: getKriptoSlice,
   emtia: getEmtiaSlice,

@@ -4,15 +4,6 @@ import {colors} from '../../theme';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
-  container: {
-    width: windowWidth * 1,
-    maxHeight: windowHeight * 0.06,
-    marginTop: windowHeight * 0.06,
-    paddingHorizontal: windowWidth * 0.04,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
   rowContainer: {
     flexDirection: 'row',
     width: windowWidth * 0.4,
@@ -40,11 +31,11 @@ export default StyleSheet.create({
   informContainer: {
     width: windowWidth,
     maxHeight: windowHeight * 0.1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     flexDirection: 'row',
-    flex: 2,
   },
   inform: {
-    flex: 1,
     marginHorizontal: windowWidth * 0.02,
   },
 });

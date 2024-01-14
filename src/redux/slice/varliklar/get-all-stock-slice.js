@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getHisseSenediProcess} from '../../../api';
-export const getHisseSenediSlice = createSlice({
-  name: 'hisseSenedi',
+import {getAllStockProcess} from '../../../api';
+export const getAllStockSlice = createSlice({
+  name: 'getAllStock',
   initialState: {
     isLoading: {},
     status: {},
@@ -9,7 +9,7 @@ export const getHisseSenediSlice = createSlice({
     data: undefined,
   },
   reducers: {
-    resetHisseSenedi: state => {
+    resetAllStock: state => {
       state.data = undefined;
       state.isLoading = {};
       state.status = {};
@@ -19,16 +19,16 @@ export const getHisseSenediSlice = createSlice({
   extraReducers: builder => {
     builder
 
-      .addCase(getHisseSenediProcess.pending, state => {
+      .addCase(getAllStockProcess.pending, state => {
         state.isLoading = true;
       })
-      .addCase(getHisseSenediProcess.fulfilled, (state, action) => {
+      .addCase(getAllStockProcess.fulfilled, (state, action) => {
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
-          (state.data = action.payload?.data?.result);
+          (state.data = action.payload?.data?.data);
       })
-      .addCase(getHisseSenediProcess.rejected, (state, action) => {
+      .addCase(getAllStockProcess.rejected, (state, action) => {
         state.isLoading = false;
         state.status = action.payload?.errorCode;
         state.message = action.payload?.message;
@@ -36,5 +36,5 @@ export const getHisseSenediSlice = createSlice({
   },
 });
 
-export const {resetHisseSenedi} = getHisseSenediSlice.actions;
-export default getHisseSenediSlice.reducer;
+export const {resetAllStock} = getAllStockSlice.actions;
+export default getAllStockSlice.reducer;
