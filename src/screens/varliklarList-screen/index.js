@@ -11,6 +11,7 @@ import {
   VarlikListCard,
 } from '../../components';
 import {
+  getAllCurrencyProcess,
   getAllStockProcess,
   getAltinProcess,
   getDovizProcess,
@@ -19,7 +20,10 @@ import {
   getKriptoProcess,
 } from '../../api';
 import {resetAllStock} from '../../redux/slice/varliklar/get-all-stock-slice';
-import {resetDoviz} from '../../redux/slice/varliklar/get-doviz-slice';
+import {
+  resetAllCurrency,
+  resetDoviz,
+} from '../../redux/slice/varliklar/get-all-currency-slice';
 import {resetKripto} from '../../redux/slice/varliklar/get-kripto-slice';
 import {resetEmtia} from '../../redux/slice/varliklar/get-emtia-slice';
 import {resetGumus} from '../../redux/slice/varliklar/get-gumus-slice';
@@ -35,7 +39,7 @@ export const VarliklarListScreen = () => {
   const {text} = route.params;
 
   const {data: AllStockData} = useSelector(state => state.getAllStock);
-  const {data: DövizData} = useSelector(state => state.allCurrency);
+  const {data: AllCurrencyData} = useSelector(state => state.getAllCurrency);
   const {data: KriptoData} = useSelector(state => state.cripto);
   const {data: EmtiaData} = useSelector(state => state.emtia);
   const {data: GumusData} = useSelector(state => state.silverPrice);
@@ -44,8 +48,8 @@ export const VarliklarListScreen = () => {
   const data =
     AllStockData && AllStockData.length
       ? AllStockData
-      : DövizData && DövizData.length
-      ? DövizData
+      : AllCurrencyData && AllCurrencyData.length
+      ? AllCurrencyData
       : KriptoData && KriptoData.length
       ? KriptoData
       : EmtiaData && EmtiaData.length
@@ -60,7 +64,7 @@ export const VarliklarListScreen = () => {
     if (text == t('headers.assetsHeaders.stock')) {
       dispatch(getAllStockProcess());
     } else if (text == t('headers.assetsHeaders.foreignCurrency')) {
-      dispatch(getDovizProcess());
+      dispatch(getAllCurrencyProcess());
     } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
       dispatch(getKriptoProcess());
     } else if (text == t('headers.assetsHeaders.goldSilverCommodity')) {
@@ -68,11 +72,12 @@ export const VarliklarListScreen = () => {
       dispatch(getGumusProcess());
       dispatch(getAltinProcess());
     }
+    dispatch(resetAllStock());
+    dispatch(resetAllCurrency());
+
     dispatch(resetAltin());
     dispatch(resetGumus());
     dispatch(resetEmtia());
-    dispatch(resetAllStock());
-    dispatch(resetDoviz());
     dispatch(resetKripto());
   }, []);
 
@@ -97,23 +102,33 @@ export const VarliklarListScreen = () => {
     }
 
     // item.rate'den renk ve yuvarlanmış değeri al
-    const rateValue = parseFloat(item?.changePercent);
-    const roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
+    let rateValue = parseFloat(item?.changePercent);
+    let roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
+
+    // `AllCurrencyData` durumu için `changePercent` değerini düzenle
+    if (AllCurrencyData) {
+      rateValue = parseFloat(
+        item?.changePercent.replace('%', '').replace(',', '.'),
+      );
+      roundedRate = `${Math.abs(rateValue).toFixed(2)}`;
+    }
+
+    console.log('roundedRate:', roundedRate);
 
     // Renk belirleme
     const color = rateValue < 0 ? 'red' : 'green';
 
     return (
       <VarlikListCard
+        fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
+        percent={AllStockData || AllCurrencyData ? true : false}
         price={item?.lastPrice}
-        fullName={AllStockData || DövizData || KriptoData ? true : false}
-        percent={AllStockData || KriptoData ? true : false}
-        code={code}
-        fullNameText={fullName}
-        color={color}
-        percentText={
-          AllStockData ? roundedRate : KriptoData ? item?.changeDay : null
+        code={AllStockData ? code : AllCurrencyData ? item?.name : null}
+        fullNameText={
+          AllStockData ? fullName : AllCurrencyData ? item?.desc : null
         }
+        color={color}
+        percentText={roundedRate}
         onPress={() => navigation.navigate('varlikDetay-screen')}
       />
     );
@@ -136,16 +151,6 @@ export const VarliklarListScreen = () => {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
-        {/* <VarlikListCard
-          // code={AllStockData}
-          onPress={() => navigation.navigate('varlikDetay-screen')}
-        />
-        <VarlikListCard
-          onPress={() => navigation.navigate('varlikDetay-screen')}
-        />
-        <VarlikListCard
-          onPress={() => navigation.navigate('varlikDetay-screen')}
-        /> */}
       </View>
     </LinearGradientContainer>
   );

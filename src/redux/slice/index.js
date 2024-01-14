@@ -1,5 +1,5 @@
 export {default as getAllStockSlice} from './varliklar/get-all-stock-slice';
-export {default as getDovizSlice} from './varliklar/get-doviz-slice';
+export {default as getAllCurrencySlice} from './varliklar/get-all-currency-slice';
 export {default as getKriptoSlice} from './varliklar/get-kripto-slice';
 export {default as getEmtiaSlice} from './varliklar/get-emtia-slice';
 export {default as getGumusSlice} from './varliklar/get-gumus-slice';

@@ -84,10 +84,10 @@ const getAllStockProcess = createAsyncThunk(
   },
 );
 
-const getDovizProcess = createAsyncThunk(
-  'allCurrency/getDovizProcess',
+const getAllCurrencyProcess = createAsyncThunk(
+  'getAllCurrency/getAllCurrencyProcess',
   async () => {
-    const res = await axiosInstance.get('allCurrency');
+    const res = await axios.get('getAllCurrency');
     return res;
   },
 );
@@ -121,7 +121,7 @@ const getAltinProcess = createAsyncThunk(
 
 export {
   getAllStockProcess,
-  getDovizProcess,
+  getAllCurrencyProcess,
   getKriptoProcess,
   getEmtiaProcess,
   getGumusProcess,
