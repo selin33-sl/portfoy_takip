@@ -48,6 +48,7 @@ export const VarlikDetayScreen = () => {
   const {data: CurrencyDetailData} = useSelector(
     state => state.getCurrencyDetail,
   );
+  const {data: GoldDetailData} = useSelector(state => state.getGoldDetail);
 
   const lcData = [
     {value: 160, date: '1 Apr 2022'},
@@ -125,12 +126,16 @@ export const VarlikDetayScreen = () => {
       const words = firstStockItem?.name.split(' ');
       setCode(words[0] ? words[0].trim() : '');
       setFullName(words.slice(1).join(' ').trim());
+    } else if (GoldDetailData && GoldDetailData.length > 0) {
+      const firstStockItem = GoldDetailData[0];
+      setCode(firstStockItem?.name);
+      setFullName('');
     }
 
     console.log('fullllllllllllllllll', fullName);
-  }, [StockDetailData]);
+  }, [StockDetailData, CurrencyDetailData]);
 
-  console.log('CurrencyDetailData', CurrencyDetailData);
+  console.log('Gold', GoldDetailData);
 
   useEffect(() => {
     if (page == 'update') {
@@ -171,7 +176,7 @@ export const VarlikDetayScreen = () => {
           style={style.inputAreaContainer}>
           <InputContainer
             text={t('assetDetailScreen.amount')}
-            typeText={code}
+            typeText={GoldDetailData ? t('common.quantity') : code}
             value1={miktar1}
             onChangeText1={setMiktar1}
             value2={miktar2}

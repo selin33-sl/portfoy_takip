@@ -13,7 +13,8 @@
     "login": "Giriş",
     "register": "Kayıt",
     "password": "Şifre",
-    "search": "Ara"
+    "search": "Ara",
+    "quantity": " Adet"
   },
   "assets": {
     "turkisLira": "Türk Lirası",
@@ -61,10 +62,6 @@
     "namePortfolio": "Portföy İsmi",
     "writePortfolioName": "Portföy ismi yazınız",
     "create": "Oluştur"
-  },
-
-  "resizableCard": {
-    "quantity": " Adet"
   },
 
   "headers": {

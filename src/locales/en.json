@@ -13,7 +13,8 @@
     "login": "Login",
     "register": "Register",
     "password": "Password",
-    "search": "Search"
+    "search": "Search",
+    "quantity": " Quantity"
   },
   "assets": {
     "turkisLira": "Turkish Lira",
@@ -59,10 +60,6 @@
     "namePortfolio": "Portfolio Name",
     "writePortfolioName": "Write portfolio name",
     "create": "Create"
-  },
-
-  "resizableCard": {
-    "quantity": " Quantity"
   },
 
   "headers": {

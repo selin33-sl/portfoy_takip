@@ -45,7 +45,7 @@ export const ResizableCard = ({
         </View>
         <Text style={style.textDetailNumber}>
           {hidden ? '****' : adet}
-          {t('resizableCard.quantity')}
+          {t('common.quantity')}
         </Text>
       </TouchableOpacity>
     );

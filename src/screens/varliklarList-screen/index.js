@@ -18,6 +18,7 @@ import {
   getCurrencyDetailProcess,
   getDovizProcess,
   getEmtiaProcess,
+  getGoldDetailProcess,
   getGumusProcess,
   getKriptoProcess,
   getStokDetailProcess,
@@ -105,6 +106,7 @@ export const VarliklarListScreen = () => {
   const renderItem = ({item}) => {
     let code = '';
     let fullName = '';
+    let newGoldName = '';
 
     if (AllStockData) {
       const words = item?.name.split(' ');
@@ -112,12 +114,17 @@ export const VarliklarListScreen = () => {
       fullName = words.slice(1).join(' ').trim();
     }
 
+    if (AllGoldData) {
+      const words = item?.name.split(' ');
+      newGoldName = words[0] ? words[0].trim() : '';
+    }
+
     // item.rate'den renk ve yuvarlanmış değeri al
     let rateValue = parseFloat(item?.changePercent);
     let roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
 
     // `AllCurrencyData` durumu için `changePercent` değerini düzenle
-    if (AllCurrencyData) {
+    if (AllCurrencyData || AllGoldData) {
       rateValue = parseFloat(
         item?.changePercent.replace('%', '').replace(',', '.'),
       );
@@ -130,7 +137,7 @@ export const VarliklarListScreen = () => {
     return (
       <VarlikListCard
         fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
-        percent={AllStockData || AllCurrencyData ? true : false}
+        percent={AllStockData || AllCurrencyData || AllGoldData ? true : false}
         price={AllGoldData ? item?.price : item?.lastPrice}
         code={
           AllStockData
@@ -150,6 +157,8 @@ export const VarliklarListScreen = () => {
               ? await dispatch(getStokDetailProcess(item?.name))
               : AllCurrencyData && AllCurrencyData.length
               ? await dispatch(getCurrencyDetailProcess(item?.name))
+              : AllGoldData && AllGoldData.length
+              ? await dispatch(getGoldDetailProcess(newGoldName))
               : null;
           }
           await navigation.navigate('varlikDetay-screen');

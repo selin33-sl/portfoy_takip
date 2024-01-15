@@ -20,7 +20,10 @@ export const VarlikListCard = ({
           <Text style={style.text1}>{code}</Text>
           <Text style={style.text1}>{price}</Text>
         </View>
-        <View style={style.row2}>
+        <View
+          style={
+            fullName ? style.row2 : {...style.row2, justifyContent: 'flex-end'}
+          }>
           {fullName ? <Text style={style.text2}>{fullNameText}</Text> : null}
           {percent ? (
             <Text style={{...style.text2, color: color}}>%{percentText}</Text>
