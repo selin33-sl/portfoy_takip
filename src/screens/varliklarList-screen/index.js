@@ -14,14 +14,10 @@ import {
   getAllCurrencyProcess,
   getAllGoldProcess,
   getAllStockProcess,
-  getAltinProcess,
   getCurrencyDetailProcess,
-  getDovizProcess,
-  getEmtiaProcess,
   getGoldDetailProcess,
-  getGumusProcess,
   getKriptoProcess,
-  getStokDetailProcess,
+  getStockDetailProcess,
 } from '../../api';
 import {resetAllStock} from '../../redux/slice/varliklar/All/get-all-stock-slice';
 import {
@@ -134,6 +130,8 @@ export const VarliklarListScreen = () => {
     // Renk belirleme
     const color = rateValue < 0 ? 'red' : 'green';
 
+    console.log('naemeeeeeee: ', item?.name);
+
     return (
       <VarlikListCard
         fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
@@ -154,7 +152,7 @@ export const VarliklarListScreen = () => {
         onPress={async () => {
           {
             AllStockData && AllStockData.length
-              ? await dispatch(getStokDetailProcess(item?.name))
+              ? await dispatch(getStockDetailProcess(item?.name))
               : AllCurrencyData && AllCurrencyData.length
               ? await dispatch(getCurrencyDetailProcess(item?.name))
               : AllGoldData && AllGoldData.length
@@ -181,7 +179,7 @@ export const VarliklarListScreen = () => {
             showsVerticalScrollIndicator={false}
             data={data}
             renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={item => item._id.toString()}
           />
         </View>
       </View>

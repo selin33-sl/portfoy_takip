@@ -123,9 +123,8 @@ export const VarlikDetayScreen = () => {
       setFullName(words.slice(1).join(' ').trim());
     } else if (CurrencyDetailData && CurrencyDetailData.length > 0) {
       const firstStockItem = CurrencyDetailData[0];
-      const words = firstStockItem?.name.split(' ');
-      setCode(words[0] ? words[0].trim() : '');
-      setFullName(words.slice(1).join(' ').trim());
+      setCode(firstStockItem?.name);
+      setFullName(firstStockItem?.desc);
     } else if (GoldDetailData && GoldDetailData.length > 0) {
       const firstStockItem = GoldDetailData[0];
       setCode(firstStockItem?.name);

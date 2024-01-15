@@ -86,8 +86,8 @@ const getAllStockProcess = createAsyncThunk(
 
 const getStockDetailProcess = createAsyncThunk(
   'getStockDetail/getStockDetailProcess',
-  async _id => {
-    const res = await axios.get(`getStockDetail/${_id}`);
+  async name => {
+    const res = await axios.get(`getStockDetail/${name}`);
     return res;
   },
 );
@@ -102,8 +102,8 @@ const getAllCurrencyProcess = createAsyncThunk(
 
 const getCurrencyDetailProcess = createAsyncThunk(
   'getCurrencyDetail/getCurrencyDetailProcess',
-  async _id => {
-    const res = await axios.get(`getCurrencyDetail/${_id}`);
+  async name => {
+    const res = await axios.get(`getCurrencyDetail/${name}`);
     return res;
   },
 );
@@ -118,8 +118,8 @@ const getAllGoldProcess = createAsyncThunk(
 
 const getGoldDetailProcess = createAsyncThunk(
   'getGoldDetail/getGoldDetailProcess',
-  async _id => {
-    const res = await axios.get(`getGoldDetail/${_id}`);
+  async name => {
+    const res = await axios.get(`getGoldDetail/${name}`);
     return res;
   },
 );
