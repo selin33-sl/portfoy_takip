@@ -19,6 +19,7 @@ import {
   getEmtiaProcess,
   getGumusProcess,
   getKriptoProcess,
+  getStokDetailProcess,
 } from '../../api';
 import {resetAllStock} from '../../redux/slice/varliklar/All/get-all-stock-slice';
 import {
@@ -33,6 +34,7 @@ import {
   resetAltin,
 } from '../../redux/slice/varliklar/All/get-all-gold-slice';
 import {useTranslation} from 'react-i18next';
+import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
 
 export const VarliklarListScreen = () => {
   const {t} = useTranslation();
@@ -41,6 +43,10 @@ export const VarliklarListScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const {text} = route.params;
+
+  useEffect(() => {
+    dispatch(resetStockDetail());
+  }, []);
 
   const {data: AllStockData} = useSelector(state => state.getAllStock);
   const {data: AllCurrencyData} = useSelector(state => state.getAllCurrency);
@@ -98,7 +104,6 @@ export const VarliklarListScreen = () => {
   const renderItem = ({item}) => {
     let code = '';
     let fullName = '';
-    console.log('iteeemmm', item);
 
     if (AllStockData) {
       const words = item?.name.split(' ');
@@ -138,9 +143,10 @@ export const VarliklarListScreen = () => {
         }
         color={color}
         percentText={roundedRate}
-        onPress={() =>
-          navigation.navigate('varlikDetay-screen', {_id: item?._id})
-        }
+        onPress={async () => {
+          await dispatch(getStokDetailProcess(item?._id));
+          await navigation.navigate('varlikDetay-screen');
+        }}
       />
     );
   };

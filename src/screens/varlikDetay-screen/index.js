@@ -4,7 +4,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Dimensions,
+  BackHandler,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,13 +20,20 @@ import {
 } from '../../components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from './style';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
+import {getStokDetailProcess} from '../../api';
+import {useNavigation} from '@react-navigation/native';
+import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
 
 export const VarlikDetayScreen = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const {t} = useTranslation();
-  const {params: {page = 0, _id} = {}} = useRoute();
-  console.log('iiiiiidddddd:', _id);
+  const {params: {page = 0} = {}} = useRoute();
 
+  const [fullName, setFullName] = useState('');
+  const [code, setCode] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -36,6 +43,8 @@ export const VarlikDetayScreen = () => {
   const [miktar2, setMiktar2] = useState('');
   const [fiyat1, setFiyat1] = useState('');
   const [fiyat2, setFiyat2] = useState('');
+
+  const {data: StockDetailData} = useSelector(state => state.getStockDetail);
 
   const lcData = [
     {value: 160, date: '1 Apr 2022'},
@@ -103,6 +112,18 @@ export const VarlikDetayScreen = () => {
   ];
 
   useEffect(() => {
+    if (StockDetailData) {
+      const words = StockDetailData?.name.split(' ');
+      setCode(words[0] ? words[0].trim() : '');
+      setFullName(words.slice(1).join(' ').trim());
+    }
+
+    console.log('fullllllllllllllllll', fullName);
+  }, []);
+
+  console.log('StockDetailData', StockDetailData);
+
+  useEffect(() => {
     if (page == 'update') {
       setMiktar1('111');
       setMiktar2('222');
@@ -115,9 +136,9 @@ export const VarlikDetayScreen = () => {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <LinearGradientContainer>
-        <Header text={'USD'} backIcon />
+        <Header text={code} backIcon />
         <View style={style.descContainer}>
-          <Text style={style.descText}>United States Dollar</Text>
+          <Text style={style.descText}>{fullName}</Text>
         </View>
 
         <View style={style.lineChartContainer}>
@@ -141,7 +162,7 @@ export const VarlikDetayScreen = () => {
           style={style.inputAreaContainer}>
           <InputContainer
             text={t('assetDetailScreen.amount')}
-            typeText={'USDDFGD'}
+            typeText={code}
             value1={miktar1}
             onChangeText1={setMiktar1}
             value2={miktar2}
