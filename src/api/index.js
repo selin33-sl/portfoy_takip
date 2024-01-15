@@ -2,10 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseURL = 'https://portfoy-takip.onrender.com/api';
+const baseURL = 'https://portfoytakip.up.railway.app/api';
 axios.defaults.baseURL = baseURL;
 
-const ALTERNATİVE_BASE_URL = 'https://portfoy-takip.onrender.com/auth';
+const ALTERNATİVE_BASE_URL = 'https://portfoytakip.up.railway.app/auth';
 
 // const axiosInstance = axios.create({
 //   withCredentials: true,
@@ -100,6 +100,14 @@ const getAllCurrencyProcess = createAsyncThunk(
   },
 );
 
+const getCurrencyDetailProcess = createAsyncThunk(
+  'getCurrencyDetail/getCurrencyDetailProcess',
+  async _id => {
+    const res = await axios.get(`getCurrencyDetail/${_id}`);
+    return res;
+  },
+);
+
 const getAllGoldProcess = createAsyncThunk(
   'getAllGold/getAllGoldProcess',
   async () => {
@@ -135,6 +143,7 @@ export {
   getAllCurrencyProcess,
   getAllGoldProcess,
   getStokDetailProcess,
+  getCurrencyDetailProcess,
   getKriptoProcess,
   getEmtiaProcess,
   getGumusProcess,

@@ -26,8 +26,8 @@ export const AuthScreen = () => {
   const [isConnected, setIsConnected] = useState(true);
   const [showNoInternetToast, setShowNoInternetToast] = useState(false);
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('selin@gmail.com');
+  const [password, setPassword] = useState('123456');
   const [showRegisterToastSuccess, setShowRegisterToastSuccess] =
     useState(false);
   const [showRegisterToastError, setShowRegisterToastError] = useState(false);
