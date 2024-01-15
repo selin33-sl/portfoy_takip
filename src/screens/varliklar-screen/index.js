@@ -18,7 +18,7 @@ export const VarliklarScreen = () => {
       _id: 1,
     },
     {
-      text: t('headers.assetsHeaders.goldSilverCommodity'),
+      text: t('headers.assetsHeaders.goldSilver'),
       iconName: 'gold',
       backgroundColor: '#FF7A00',
       _id: 2,

@@ -17,7 +17,7 @@
   },
   "assets": {
     "turkisLira": "Turkish Lira",
-    "goldSilverCommodity": "Gold | Silver | Commodity",
+    "goldSilver": "Gold | Silver",
     "foreignCurrency": "Foreign Currency",
     "fund": "Fund",
     "stock": "Stock",
@@ -81,7 +81,7 @@
     },
     "assetsHeaders": {
       "turkisLira": "Turkish Lira",
-      "goldSilverCommodity": "Gold | Silver | Commodity",
+      "goldSilver": "Gold | Silver",
       "foreignCurrency": "Foreign Currency",
       "fund": "Fund",
       "stock": "Stock",

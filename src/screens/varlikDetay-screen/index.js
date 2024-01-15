@@ -45,6 +45,9 @@ export const VarlikDetayScreen = () => {
   const [fiyat2, setFiyat2] = useState('');
 
   const {data: StockDetailData} = useSelector(state => state.getStockDetail);
+  const {data: CurrencyDetailData} = useSelector(
+    state => state.getCurrencyDetail,
+  );
 
   const lcData = [
     {value: 160, date: '1 Apr 2022'},
@@ -112,16 +115,22 @@ export const VarlikDetayScreen = () => {
   ];
 
   useEffect(() => {
-    if (StockDetailData) {
-      const words = StockDetailData?.name.split(' ');
+    if (StockDetailData && StockDetailData.length > 0) {
+      const firstStockItem = StockDetailData[0];
+      const words = firstStockItem?.name.split(' ');
+      setCode(words[0] ? words[0].trim() : '');
+      setFullName(words.slice(1).join(' ').trim());
+    } else if (CurrencyDetailData && CurrencyDetailData.length > 0) {
+      const firstStockItem = CurrencyDetailData[0];
+      const words = firstStockItem?.name.split(' ');
       setCode(words[0] ? words[0].trim() : '');
       setFullName(words.slice(1).join(' ').trim());
     }
 
     console.log('fullllllllllllllllll', fullName);
-  }, []);
+  }, [StockDetailData]);
 
-  console.log('StockDetailData', StockDetailData);
+  console.log('CurrencyDetailData', CurrencyDetailData);
 
   useEffect(() => {
     if (page == 'update') {

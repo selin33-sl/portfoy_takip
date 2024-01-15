@@ -11,9 +11,10 @@ import {
   getAllStockSlice,
   getCurrencyDetailSlice,
   getEmtiaSlice,
+  getGoldDetailSlice,
   getGumusSlice,
   getKriptoSlice,
-  getStokDetailSlice,
+  getStockDetailSlice,
   loginSlice,
   registerSlice,
 } from './slice';
@@ -25,8 +26,9 @@ const reducer = combineReducers({
   emtia: getEmtiaSlice,
   silverPrice: getGumusSlice,
   getAllGold: getAllGoldSlice,
-  getStockDetail: getStokDetailSlice,
+  getStockDetail: getStockDetailSlice,
   getCurrencyDetail: getCurrencyDetailSlice,
+  getGoldDetail: getGoldDetailSlice,
   auth: loginSlice,
   register: registerSlice,
 });

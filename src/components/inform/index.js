@@ -45,7 +45,7 @@ export const Inform = ({deger1, deger2, deger3, deger4, deger5, deger6}) => {
         />
         <Row
           backgroundColor={'#FF7A00'}
-          text={t('headers.assetsHeaders.goldSilverCommodity')}
+          text={t('headers.assetsHeaders.goldSilver')}
           deger={deger5}
         />
         <Row

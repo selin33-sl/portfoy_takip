@@ -17,7 +17,7 @@
   },
   "assets": {
     "turkisLira": "Türk Lirası",
-    "goldSilverCommodity": "Altın | Gümüş | Emtia",
+    "goldSilver": "Altın | Gümüş",
     "foreignCurrency": "Döviz",
     "fund": "Fon",
     "stock": "Hisse Senedi",
@@ -83,7 +83,7 @@
     },
     "assetsHeaders": {
       "turkisLira": "Türk Lirası",
-      "goldSilverCommodity": "Altın | Gümüş | Emtia",
+      "goldSilver": "Altın | Gümüş",
       "foreignCurrency": "Döviz",
       "fund": "Fon",
       "stock": "Hisse Senedi",

@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getStockDetailProcess} from '../../../../api';
-export const getStockDetailSlice = createSlice({
-  name: 'getStockDetail',
+import {getGoldDetailProcess} from '../../../../api';
+export const getGoldDetailSlice = createSlice({
+  name: 'getGoldDetail',
   initialState: {
     isLoading: {},
     status: {},
@@ -9,7 +9,7 @@ export const getStockDetailSlice = createSlice({
     data: undefined,
   },
   reducers: {
-    resetStockDetail: state => {
+    resetGoldDetail: state => {
       state.data = undefined;
       state.isLoading = {};
       state.status = {};
@@ -19,16 +19,16 @@ export const getStockDetailSlice = createSlice({
   extraReducers: builder => {
     builder
 
-      .addCase(getStockDetailProcess.pending, state => {
+      .addCase(getGoldDetailProcess.pending, state => {
         state.isLoading = true;
       })
-      .addCase(getStockDetailProcess.fulfilled, (state, action) => {
+      .addCase(getGoldDetailProcess.fulfilled, (state, action) => {
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
           (state.data = action.payload?.data?.data);
       })
-      .addCase(getStockDetailProcess.rejected, (state, action) => {
+      .addCase(getGoldDetailProcess.rejected, (state, action) => {
         state.isLoading = false;
         state.status = action.payload?.errorCode;
         state.message = action.payload?.message;
@@ -36,5 +36,5 @@ export const getStockDetailSlice = createSlice({
   },
 });
 
-export const {resetStockDetail} = getStockDetailSlice.actions;
-export default getStockDetailSlice.reducer;
+export const {resetGoldDetail} = getGoldDetailSlice.actions;
+export default getGoldDetailSlice.reducer;

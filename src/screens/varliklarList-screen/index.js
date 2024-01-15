@@ -15,6 +15,7 @@ import {
   getAllGoldProcess,
   getAllStockProcess,
   getAltinProcess,
+  getCurrencyDetailProcess,
   getDovizProcess,
   getEmtiaProcess,
   getGumusProcess,
@@ -77,7 +78,7 @@ export const VarliklarListScreen = () => {
       dispatch(getAllCurrencyProcess());
     } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
       dispatch(getKriptoProcess());
-    } else if (text == t('headers.assetsHeaders.goldSilverCommodity')) {
+    } else if (text == t('headers.assetsHeaders.goldSilver')) {
       // dispatch(getEmtiaProcess());
       // dispatch(getGumusProcess());
       dispatch(getAllGoldProcess());
@@ -144,7 +145,13 @@ export const VarliklarListScreen = () => {
         color={color}
         percentText={roundedRate}
         onPress={async () => {
-          await dispatch(getStokDetailProcess(item?._id));
+          {
+            AllStockData && AllStockData.length
+              ? await dispatch(getStokDetailProcess(item?.name))
+              : AllCurrencyData && AllCurrencyData.length
+              ? await dispatch(getCurrencyDetailProcess(item?.name))
+              : null;
+          }
           await navigation.navigate('varlikDetay-screen');
         }}
       />
