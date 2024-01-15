@@ -24,7 +24,8 @@ import {useTranslation} from 'react-i18next';
 
 export const VarlikDetayScreen = () => {
   const {t} = useTranslation();
-  const {params: {page = 0} = {}} = useRoute();
+  const {params: {page = 0, _id} = {}} = useRoute();
+  console.log('iiiiiidddddd:', _id);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');

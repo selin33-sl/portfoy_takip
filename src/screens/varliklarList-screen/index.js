@@ -20,18 +20,18 @@ import {
   getGumusProcess,
   getKriptoProcess,
 } from '../../api';
-import {resetAllStock} from '../../redux/slice/varliklar/get-all-stock-slice';
+import {resetAllStock} from '../../redux/slice/varliklar/All/get-all-stock-slice';
 import {
   resetAllCurrency,
   resetDoviz,
-} from '../../redux/slice/varliklar/get-all-currency-slice';
+} from '../../redux/slice/varliklar/All/get-all-currency-slice';
 import {resetKripto} from '../../redux/slice/varliklar/get-kripto-slice';
 import {resetEmtia} from '../../redux/slice/varliklar/get-emtia-slice';
 import {resetGumus} from '../../redux/slice/varliklar/get-gumus-slice';
 import {
   resetAllGold,
   resetAltin,
-} from '../../redux/slice/varliklar/get-all-gold-slice';
+} from '../../redux/slice/varliklar/All/get-all-gold-slice';
 import {useTranslation} from 'react-i18next';
 
 export const VarliklarListScreen = () => {
@@ -138,7 +138,9 @@ export const VarliklarListScreen = () => {
         }
         color={color}
         percentText={roundedRate}
-        onPress={() => navigation.navigate('varlikDetay-screen')}
+        onPress={() =>
+          navigation.navigate('varlikDetay-screen', {_id: item?._id})
+        }
       />
     );
   };

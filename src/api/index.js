@@ -84,6 +84,14 @@ const getAllStockProcess = createAsyncThunk(
   },
 );
 
+const getStokDetailProcess = createAsyncThunk(
+  'getStockDetail/getStokDetailProcess',
+  async _id => {
+    const res = await axios.get(`getStockDetail/${_id}`);
+    return res;
+  },
+);
+
 const getAllCurrencyProcess = createAsyncThunk(
   'getAllCurrency/getAllCurrencyProcess',
   async () => {
@@ -121,12 +129,13 @@ const getGumusProcess = createAsyncThunk(
 );
 
 export {
+  authLogin,
+  registerProcess,
   getAllStockProcess,
   getAllCurrencyProcess,
   getAllGoldProcess,
+  getStokDetailProcess,
   getKriptoProcess,
   getEmtiaProcess,
   getGumusProcess,
-  authLogin,
-  registerProcess,
 };

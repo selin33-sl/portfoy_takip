@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getAllCurrencyProcess} from '../../../api';
-export const getAllCurrencySlice = createSlice({
-  name: 'getAllCurrency',
+import {getStokDetailProcess} from '../../../../api';
+export const getStokDetailSlice = createSlice({
+  name: 'getStockDetail',
   initialState: {
     isLoading: {},
     status: {},
@@ -9,7 +9,7 @@ export const getAllCurrencySlice = createSlice({
     data: undefined,
   },
   reducers: {
-    resetAllCurrency: state => {
+    resetStockDetail: state => {
       state.data = undefined;
       state.isLoading = {};
       state.status = {};
@@ -18,16 +18,17 @@ export const getAllCurrencySlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getAllCurrencyProcess.pending, state => {
+
+      .addCase(getStokDetailProcess.pending, state => {
         state.isLoading = true;
       })
-      .addCase(getAllCurrencyProcess.fulfilled, (state, action) => {
+      .addCase(getStokDetailProcess.fulfilled, (state, action) => {
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
           (state.data = action.payload?.data?.data);
       })
-      .addCase(getAllCurrencyProcess.rejected, (state, action) => {
+      .addCase(getStokDetailProcess.rejected, (state, action) => {
         state.isLoading = false;
         state.status = action.payload?.errorCode;
         state.message = action.payload?.message;
@@ -35,5 +36,5 @@ export const getAllCurrencySlice = createSlice({
   },
 });
 
-export const {resetAllCurrency} = getAllCurrencySlice.actions;
-export default getAllCurrencySlice.reducer;
+export const {resetStockDetail} = getStokDetailSlice.actions;
+export default getStokDetailSlice.reducer;
