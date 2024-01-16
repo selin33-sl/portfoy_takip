@@ -14,6 +14,7 @@ import {images} from '../../assets';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../theme';
+import {CustomArea} from '../../components/customArea';
 
 export const DegerlendirmelerScreen = () => {
   const {t} = useTranslation();
@@ -128,47 +129,13 @@ export const DegerlendirmelerScreen = () => {
         </View>
 
         <View style={style.elipsContainer}>
-          <View style={style.elips}>
-            <TouchableOpacity
-              style={style.headerElips}
-              onPress={() => setIsPortfoyListModalVisible(true)}>
-              <Text>PORTFÖY_1</Text>
-              <Icon name={'chevron-down'} color={'white'} size={30} />
-            </TouchableOpacity>
-
-            <View style={style.innerElips}>
-              <Text style={style.numberText}>15.855 TL</Text>
-
-              <View style={style.rateContainer}>
-                <TouchableOpacity style={style.rateButton}>
-                  <Text style={style.text1}>{t('reviewsScreen.daily')}</Text>
-                  <LinearGradient
-                    colors={['#746F96', '#AEAEAE']}
-                    style={style.innerRate}>
-                    <Text>%21,1</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={style.rateButton}>
-                  <Text style={style.text1}>{t('reviewsScreen.total')}</Text>
-                  <LinearGradient
-                    colors={['#746F96', '#AEAEAE']}
-                    style={style.innerRate}>
-                    <Text>%4,3</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={style.rateButton}>
-                  <Text style={style.text1}>{t('reviewsScreen.graph')}</Text>
-                  <LinearGradient
-                    colors={['#746F96', '#AEAEAE']}
-                    style={style.innerRateGrafik}>
-                    <Icon name={'chart-line'} size={25} color={'#00ff83'} />
-                  </LinearGradient>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
+          <CustomArea
+            portfoyName={'PORTFÖY_1'}
+            totalAmount={'15.855'}
+            dailyChange={'%21,1'}
+            totalChange={'%4,3'}
+            onPress={() => setIsPortfoyListModalVisible(true)}
+          />
         </View>
         <View style={style.listContainer}>
           <FlatList
