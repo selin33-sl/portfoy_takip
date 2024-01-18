@@ -163,11 +163,6 @@ export const HomeScreen = () => {
     );
   };
 
-  const handlePiePress = () => {
-    // Burada tıklanan dilimi işleyebilirsin
-    console.log('Tıklanan Dilim:');
-  };
-
   return (
     <LinearGradientContainer>
       <Header
@@ -177,22 +172,43 @@ export const HomeScreen = () => {
         headerOnPress={() => setIsPortfoyListModalVisible(true)}
       />
       <View style={style.innerContainer}>
-        <View style={style.pieChartContainer}>
-          <TouchableOpacity
-            style={style.shareContainer}
-            // onPress={captureScreen}
-            onPress={() => {
-              captureScreen();
-              setIsShareModalVisible(true);
-            }}>
-            <Icon name={'share-variant-outline'} size={25} color={'white'} />
-          </TouchableOpacity>
-          <View ref={viewRef} style={style.pieChart}>
+        <View ref={viewRef} style={style.pieChartContainer}>
+          <View style={style.optionContainer}>
+            <TouchableOpacity
+              style={style.shareContainer}
+              // onPress={captureScreen}
+              onPress={() => setIsModalVisible(true)}>
+              <Text style={style.birimText}>TL</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={style.shareContainer}
+              // onPress={captureScreen}
+              onPress={handleHidden}>
+              <Icon
+                name={hidden == true ? 'eye-off-outline' : 'eye-outline'}
+                size={25}
+                color={colors.white}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={style.shareContainer}
+              // onPress={captureScreen}
+              onPress={() => {
+                captureScreen();
+                setIsShareModalVisible(true);
+              }}>
+              <Icon name={'share-variant-outline'} size={25} color={'white'} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={style.pieChart}>
             <PieChart
+              showText
               widthAndHeight={widthAndHeight}
               series={series}
               sliceColor={sliceColor}
-              coverRadius={0.5}></PieChart>
+              coverRadius={0.5}
+            />
           </View>
           <Inform
             deger1={`${percentages[0]}`}
@@ -202,21 +218,6 @@ export const HomeScreen = () => {
             deger5={`${percentages[4]}`}
             deger6={`${percentages[5]}`}
           />
-        </View>
-
-        <View style={style.optionContainer}>
-          <TouchableOpacity
-            style={style.optionButton}
-            onPress={() => setIsModalVisible(true)}>
-            <Text style={style.birimText}>TL</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={style.optionButton} onPress={handleHidden}>
-            <Icon
-              name={hidden == true ? 'eye-off-outline' : 'eye-outline'}
-              size={25}
-              color={'#10001D'}
-            />
-          </TouchableOpacity>
         </View>
 
         <View style={style.toplamContainer}>

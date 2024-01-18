@@ -22,13 +22,13 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   shareContainer: {
-    right: 0,
-    top: 0,
-    width: windowWidth * 0.15,
-    height: windowHeight * 0.06,
-    position: 'absolute',
+    width: windowHeight * 0.05,
+    height: windowHeight * 0.05,
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 1,
+    elevation: 10,
+    borderRadius: 20,
   },
 
   pieChart: {
@@ -41,16 +41,20 @@ export default StyleSheet.create({
   },
   pieChartContainer: {
     width: windowWidth,
-    height: windowHeight * 0.45,
-    paddingVertical: windowHeight * 0.05,
+    height: windowHeight * 0.4,
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingBottom: windowHeight * 0.01,
   },
   toplamContainer: {
-    width: windowWidth,
+    width: 'auto',
     height: windowHeight * 0.07,
+    paddingHorizontal: windowWidth * 0.03,
+    borderRadius: 100,
+    elevation: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: windowHeight * 0.02,
   },
   toplamText: {
     fontSize: windowHeight * 0.035,
@@ -72,7 +76,7 @@ export default StyleSheet.create({
   birimText: {
     fontSize: windowHeight * 0.02,
     fontWeight: '700',
-    color: colors.primary2,
+    color: colors.white,
   },
   listContainer: {
     alignItems: 'center',
@@ -82,9 +86,9 @@ export default StyleSheet.create({
   optionContainer: {
     width: windowWidth,
     height: windowWidth * 0.1,
-    marginTop: windowHeight * 0.02,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     flexDirection: 'row',
+    paddingHorizontal: windowWidth * 0.02,
   },
 });

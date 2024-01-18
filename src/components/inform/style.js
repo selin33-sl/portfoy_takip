@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   circle: {
     borderRadius: 25,
-    width: windowWidth * 0.06,
+    width: windowWidth * 0.05,
     height: windowWidth * 0.05,
     backgroundColor: 'blue',
   },
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   },
 
   text: {
-    fontSize: windowHeight * 0.012,
+    fontSize: windowHeight * 0.014,
     color: colors.white,
     fontWeight: '300',
     marginLeft: windowWidth * 0.02,
@@ -35,7 +35,5 @@ export default StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  inform: {
-    marginHorizontal: windowWidth * 0.01,
-  },
+  inform: {},
 });
