@@ -20,6 +20,7 @@ import {captureRef} from 'react-native-view-shot';
 import Share from 'react-native-share';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
+import {Circle, G, Line, Text as SVGText} from 'react-native-svg';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -162,6 +163,11 @@ export const HomeScreen = () => {
     );
   };
 
+  const handlePiePress = () => {
+    // Burada tıklanan dilimi işleyebilirsin
+    console.log('Tıklanan Dilim:');
+  };
+
   return (
     <LinearGradientContainer>
       <Header
@@ -171,15 +177,6 @@ export const HomeScreen = () => {
         headerOnPress={() => setIsPortfoyListModalVisible(true)}
       />
       <View style={style.innerContainer}>
-        <Inform
-          deger1={`${percentages[0]}`}
-          deger2={`${percentages[1]}`}
-          deger3={`${percentages[2]}`}
-          deger4={`${percentages[3]}`}
-          deger5={`${percentages[4]}`}
-          deger6={`${percentages[5]}`}
-        />
-
         <View style={style.pieChartContainer}>
           <TouchableOpacity
             style={style.shareContainer}
@@ -195,9 +192,16 @@ export const HomeScreen = () => {
               widthAndHeight={widthAndHeight}
               series={series}
               sliceColor={sliceColor}
-              coverRadius={0.5}
-            />
+              coverRadius={0.5}></PieChart>
           </View>
+          <Inform
+            deger1={`${percentages[0]}`}
+            deger2={`${percentages[1]}`}
+            deger3={`${percentages[2]}`}
+            deger4={`${percentages[3]}`}
+            deger5={`${percentages[4]}`}
+            deger6={`${percentages[5]}`}
+          />
         </View>
 
         <View style={style.optionContainer}>

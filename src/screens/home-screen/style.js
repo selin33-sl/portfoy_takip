@@ -41,8 +41,9 @@ export default StyleSheet.create({
   },
   pieChartContainer: {
     width: windowWidth,
-    height: 180,
-    justifyContent: 'center',
+    height: windowHeight * 0.45,
+    paddingVertical: windowHeight * 0.05,
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   toplamContainer: {

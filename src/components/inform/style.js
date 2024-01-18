@@ -9,11 +9,11 @@ export default StyleSheet.create({
     width: windowWidth * 0.4,
     height: windowHeight * 0.03,
     alignItems: 'center',
-    marginTop: windowHeight * 0.001,
+    marginTop: windowHeight * 0.005,
   },
   circle: {
     borderRadius: 25,
-    width: windowWidth * 0.05,
+    width: windowWidth * 0.06,
     height: windowWidth * 0.05,
     backgroundColor: 'blue',
   },
@@ -23,7 +23,7 @@ export default StyleSheet.create({
   },
 
   text: {
-    fontSize: windowHeight * 0.015,
+    fontSize: windowHeight * 0.012,
     color: colors.white,
     fontWeight: '300',
     marginLeft: windowWidth * 0.02,
@@ -31,11 +31,11 @@ export default StyleSheet.create({
   informContainer: {
     width: windowWidth,
     maxHeight: windowHeight * 0.1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
   inform: {
-    marginHorizontal: windowWidth * 0.02,
+    marginHorizontal: windowWidth * 0.01,
   },
 });

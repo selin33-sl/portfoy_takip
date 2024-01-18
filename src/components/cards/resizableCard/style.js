@@ -26,6 +26,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+
   detailContainer: {
     paddingHorizontal: windowWidth * 0.02,
     marginHorizontal: windowWidth * 0.02,
@@ -36,10 +37,19 @@ export default StyleSheet.create({
     paddingVertical: 3,
     justifyContent: 'space-between',
   },
-  detail: {
+  detail1: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  detail2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  iconRow: {
+    backgroundColor: 'blue',
+    width: windowHeight * 0.1,
   },
   textDetailName: {
     fontSize: windowHeight * 0.022,

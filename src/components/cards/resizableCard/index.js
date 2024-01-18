@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useTranslation} from 'react-i18next';
 import style from './style';
+import {colors} from '../../../theme';
 
 const windowHeight = Dimensions.get('window').height;
 export const ResizableCard = ({
@@ -37,16 +38,18 @@ export const ResizableCard = ({
   const SmallCard = ({name, price, adet}) => {
     return (
       <TouchableOpacity style={style.detailContainer} onPress={onPress}>
-        <View style={style.detail}>
+        <View style={style.detail1}>
           <Text style={style.textDetailName}>{name}</Text>
           <Text style={style.textDetailPrice}>
             {hidden ? '****' : price} TL
           </Text>
         </View>
-        <Text style={style.textDetailNumber}>
-          {hidden ? '****' : adet}
-          {t('common.quantity')}
-        </Text>
+        <View style={style.detail2}>
+          <Text style={style.textDetailNumber}>
+            {hidden ? '****' : adet}
+            {t('common.quantity')}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
   };
