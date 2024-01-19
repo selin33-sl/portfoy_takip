@@ -29,8 +29,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: windowWidth * 0.8,
-    height: windowHeight * 0.4,
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.33,
   },
 
   shareButton: {

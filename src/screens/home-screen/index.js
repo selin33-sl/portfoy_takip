@@ -84,21 +84,28 @@ export const HomeScreen = () => {
 
   const captureScreen = async () => {
     try {
-      const uri = await captureRef(viewRef, {
-        format: 'png',
-        quality: 0.8,
-      });
+      if (viewRef.current) {
+        const uri = await captureRef(viewRef, {
+          format: 'png',
+          quality: 0.8,
+        });
 
-      console.log('Captured Image URI:', uri);
+        console.log('Captured Image URI:', uri);
 
-      setCapturedImageURI(uri);
+        setCapturedImageURI(uri);
 
-      // // Ekran görüntüsünü paylaşma
-      // await Share.open({
-      //   url: `file://${uri}`,
-      // });
+        // Ekran görüntüsünü paylaşma
+        // await Share.open({
+        //   url: `file://${uri}`,
+        // });
+      } else {
+        console.error('Ref mevcut değil.');
+      }
     } catch (error) {
-      console.error('Error capturing or sharing screen:', error);
+      console.error(
+        'Ekran görüntüsü alınırken veya paylaşılırken hata oluştu:',
+        error,
+      );
     }
   };
 
@@ -172,7 +179,7 @@ export const HomeScreen = () => {
         headerOnPress={() => setIsPortfoyListModalVisible(true)}
       />
       <View style={style.innerContainer}>
-        <View ref={viewRef} style={style.pieChartContainer}>
+        <View style={style.pieChartContainer}>
           <View style={style.optionContainer}>
             <TouchableOpacity
               style={style.shareContainer}
@@ -193,31 +200,34 @@ export const HomeScreen = () => {
             <TouchableOpacity
               style={style.shareContainer}
               // onPress={captureScreen}
-              onPress={() => {
-                captureScreen();
-                setIsShareModalVisible(true);
+              onPress={async () => {
+                await captureScreen();
+                await setIsShareModalVisible(true);
               }}>
               <Icon name={'share-variant-outline'} size={25} color={'white'} />
             </TouchableOpacity>
           </View>
 
-          <View style={style.pieChart}>
-            <PieChart
-              showText
-              widthAndHeight={widthAndHeight}
-              series={series}
-              sliceColor={sliceColor}
-              coverRadius={0.5}
+          <View ref={viewRef} collapsable={false} style={style.shareArea}>
+            <View style={style.pieChart}>
+              <PieChart
+                showText
+                widthAndHeight={widthAndHeight}
+                series={series}
+                sliceColor={sliceColor}
+                coverRadius={0.5}
+              />
+            </View>
+
+            <Inform
+              deger1={`${percentages[0]}`}
+              deger2={`${percentages[1]}`}
+              deger3={`${percentages[2]}`}
+              deger4={`${percentages[3]}`}
+              deger5={`${percentages[4]}`}
+              deger6={`${percentages[5]}`}
             />
           </View>
-          <Inform
-            deger1={`${percentages[0]}`}
-            deger2={`${percentages[1]}`}
-            deger3={`${percentages[2]}`}
-            deger4={`${percentages[3]}`}
-            deger5={`${percentages[4]}`}
-            deger6={`${percentages[5]}`}
-          />
         </View>
 
         <View style={style.toplamContainer}>

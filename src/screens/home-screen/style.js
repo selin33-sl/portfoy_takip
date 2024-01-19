@@ -15,6 +15,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginTop: windowHeight * 0.01,
   },
+  shareArea: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 5,
+  },
   buttonContainer: {
     flexDirection: 'row',
     width: windowWidth * 1,
