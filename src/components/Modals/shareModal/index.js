@@ -1,25 +1,13 @@
 import {View, Text, Modal, TouchableOpacity, Image} from 'react-native';
-import React, {useRef} from 'react';
+import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Share from 'react-native-share';
-import {captureRef} from 'react-native-view-shot';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const ShareModal = ({isModalVisible, setIsModalVisible, image}) => {
-  console.log('imaaageeee', image);
-  const viewRef = useRef(null);
-
   const handleShare = async () => {
     try {
-      // const uri = await captureRef(viewRef, {
-      //   format: 'png',
-      //   quality: 0.8,
-      // });
-
-      // console.log('aaaaaaaaaaaaaaaaaaaaaaaaa');
-      // console.log('uurriii', uri);
-
       // Share the image
       await Share.open({
         url: `file://${image}`,

@@ -24,26 +24,7 @@ export default StyleSheet.create({
     borderRightWidth: 0.3,
     borderLeftWidth: 0.3,
   },
-  addPortfoyContainer: {
-    width: windowWidth * 0.5,
-    height: windowHeight * 0.07,
-    marginTop: windowHeight * 0.02,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  addPortfoyText: {
-    color: colors.white,
-    fontWeight: '300',
-    fontSize: windowHeight * 0.03,
-    textAlign: 'center',
-  },
 
-  text: {
-    fontSize: windowHeight * 0.03,
-    fontWeight: '500',
-    color: colors.white,
-  },
   iconsContainer: {
     paddingHorizontal: windowWidth * 0.05,
     width: windowWidth * 0.9,
@@ -51,29 +32,57 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 5,
   },
-  headerContainer: {
-    paddingHorizontal: windowWidth * 0.05,
+  cardContainer: {
     width: windowWidth * 0.9,
-    height: windowHeight * 0.05,
+    height: windowHeight * 0.06,
+    marginBottom: windowHeight * 0.01,
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  cartInnerContainer: {
-    backgroundColor: colors.white,
+  progressBarContainer: {
     width: windowWidth * 0.8,
-    height: windowHeight * 0.07,
-    borderRadius: 10,
-    marginVertical: windowHeight * 0.005,
+    height: windowHeight * 0.03,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
-  portfoyName: {
-    fontSize: windowHeight * 0.025,
-    fontWeight: 'bold',
-    color: colors.black,
+  progressBar: {
+    width: windowWidth * 0.7,
   },
-  portfoyNameContainer: {
+
+  textContainer: {
     width: windowWidth * 0.8,
-    height: windowHeight * 0.07,
-    justifyContent: 'center',
-    paddingHorizontal: windowWidth * 0.02,
+    height: windowHeight * 0.03,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  textType: {
+    fontSize: windowHeight * 0.014,
+    color: colors.white,
+    fontWeight: '300',
+  },
+  textQuantity: {
+    fontSize: windowHeight * 0.014,
+    color: colors.white,
+    fontWeight: '300',
+  },
+  textPercentage: {
+    fontSize: windowHeight * 0.016,
+    color: colors.white,
+    fontWeight: '400',
+  },
+  textHeader: {
+    fontSize: windowHeight * 0.03,
+    color: colors.white,
+    fontWeight: '300',
+  },
+  listContainer: {
+    alignItems: 'center',
+    width: windowWidth * 0.9,
+    height: windowHeight * 0.53,
+    borderRadius: 15,
   },
 });

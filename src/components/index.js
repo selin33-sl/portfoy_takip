@@ -22,3 +22,4 @@ export * from './Cards/circleOptionCard';
 export * from './Cards/bildirimCard';
 export * from './inputContainer';
 export * from './Modals/shareModal';
+export * from './Modals/assetDetailsModal';

@@ -5,6 +5,7 @@ import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTranslation} from 'react-i18next';
 import {PortfoyAddModal} from '../portfoyAddModal';
+import {colors} from '../../../theme';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -42,7 +43,7 @@ export const PortfoyListModal = ({
                 name={'cog-outline'}
                 size={30}
                 style={{
-                  color: 'white',
+                  color: colors.white,
                 }}
               />
             </TouchableOpacity>
@@ -51,7 +52,7 @@ export const PortfoyListModal = ({
                 name={'close'}
                 size={32}
                 style={{
-                  color: 'white',
+                  color: colors.white,
                 }}
               />
             </TouchableOpacity>

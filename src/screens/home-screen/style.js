@@ -26,6 +26,13 @@ export default StyleSheet.create({
     padding: windowWidth * 0.02,
     justifyContent: 'space-between',
   },
+  detailIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    width: windowWidth * 0.15,
+    height: windowHeight * 0.05,
+  },
   shareContainer: {
     width: windowHeight * 0.05,
     height: windowHeight * 0.05,
@@ -37,12 +44,10 @@ export default StyleSheet.create({
   },
 
   pieChart: {
-    width: 175,
+    width: windowWidth,
     height: 175,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 100,
-    elevation: 15,
   },
   pieChartContainer: {
     width: windowWidth,

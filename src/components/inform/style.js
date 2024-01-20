@@ -6,7 +6,6 @@ const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
-    width: windowWidth * 0.4,
     height: windowHeight * 0.03,
     alignItems: 'center',
     marginTop: windowHeight * 0.005,
@@ -30,10 +29,13 @@ export default StyleSheet.create({
   },
   informContainer: {
     width: windowWidth,
+    height: windowHeight * 0.1,
     maxHeight: windowHeight * 0.1,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
   },
-  inform: {},
+  inform: {
+    height: windowHeight * 0.1,
+  },
 });

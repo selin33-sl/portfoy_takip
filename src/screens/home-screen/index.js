@@ -2,9 +2,9 @@ import {View, Text, TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import style from './style';
 import PieChart from 'react-native-pie-chart';
-import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
+  AssetDetailsModal,
   CurrencyModal,
   Header,
   Inform,
@@ -15,12 +15,9 @@ import {
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {getHisseSenediProcess} from '../../api';
 import {captureRef} from 'react-native-view-shot';
-import Share from 'react-native-share';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
-import {Circle, G, Line, Text as SVGText} from 'react-native-svg';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -71,6 +68,9 @@ export const HomeScreen = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [header, setHeader] = useState('');
+  const [isAssetDetailsModal, setIsAssetDetailsModal] = useState(false);
+  const [especial, setEspecial] = useState(false);
   const [capturedImageURI, setCapturedImageURI] = useState(null);
   const [hidden, setHidden] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -119,6 +119,9 @@ export const HomeScreen = () => {
     colors.altin,
     colors.kripto,
   ];
+
+  const seriesEspecial = [70, 10];
+  const sliceColorEspecial = [colors.doviz, 'grey'];
 
   const calculatePercentage = series => {
     const total = series.reduce((sum, value) => sum + value, 0);
@@ -209,17 +212,31 @@ export const HomeScreen = () => {
           </View>
 
           <View ref={viewRef} collapsable={false} style={style.shareArea}>
-            <View style={style.pieChart}>
+            <TouchableOpacity
+              activeOpacity={1.0}
+              style={style.pieChart}
+              onPress={() => setEspecial(false)}>
               <PieChart
                 showText
                 widthAndHeight={widthAndHeight}
-                series={series}
-                sliceColor={sliceColor}
+                series={especial ? seriesEspecial : series}
+                sliceColor={especial ? sliceColorEspecial : sliceColor}
                 coverRadius={0.5}
               />
-            </View>
+
+              {especial && (
+                <TouchableOpacity
+                  style={style.detailIcon}
+                  onPress={() => setIsAssetDetailsModal(true)}>
+                  <Icon name={'details'} size={30} color={'white'} />
+                </TouchableOpacity>
+              )}
+            </TouchableOpacity>
 
             <Inform
+              especial={especial}
+              onPress={() => setEspecial(true)}
+              setHeaderCallback={setHeader} // Pass setHeader as a callback
               deger1={`${percentages[0]}`}
               deger2={`${percentages[1]}`}
               deger3={`${percentages[2]}`}
@@ -257,6 +274,11 @@ export const HomeScreen = () => {
         isModalVisible={isShareModalVisible}
         setIsModalVisible={setIsShareModalVisible}
         image={capturedImageURI}
+      />
+      <AssetDetailsModal
+        header={header}
+        isAssetDetailsModal={isAssetDetailsModal}
+        setIsAssetDetailsModal={setIsAssetDetailsModal}
       />
     </LinearGradientContainer>
   );
