@@ -19,7 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {captureRef} from 'react-native-view-shot';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
-import {getAllPortfolioProcess} from '../../api';
+import {addPortfolioProcess, getAllPortfolioProcess} from '../../api';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -89,6 +89,10 @@ export const HomeScreen = () => {
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
   }, []);
+
+  const handleCreatePortfolio = () => {
+    dispatch(addPortfolioProcess({}));
+  };
 
   const captureScreen = async () => {
     try {

@@ -4,13 +4,11 @@ import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTranslation} from 'react-i18next';
-import {PortfoyAddModal} from '../portfoyAddModal';
 import {colors} from '../../../theme';
 
 export const PortfoyListModal = ({
   isModalVisible,
   setIsModalVisible,
-  isAddModalVisible,
   setIsAddModalVisible,
   data,
 }) => {
@@ -84,10 +82,6 @@ export const PortfoyListModal = ({
           </LinearGradient>
         </LinearGradient>
       </View>
-      {/* <PortfoyAddModal
-        isAddModalVisible={isAddModalVisible}
-        setIsAddModalVisible={setIsAddModalVisible}
-      /> */}
     </Modal>
   );
 };

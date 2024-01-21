@@ -1,12 +1,20 @@
 import {View, Text, Modal, TouchableOpacity, TextInput} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {addPortfolioProcess} from '../../../api';
 
 export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
+  const [name, setName] = useState('');
+
+  const handleCreatePortfolio = async () => {
+    await dispatch(addPortfolioProcess({name}));
+  };
 
   return (
     <Modal
@@ -41,6 +49,8 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
           <View style={style.inputContainer}>
             <TextInput
               style={style.textInput}
+              Name={name}
+              onChangeText={setName}
               placeholder={t('portfoyAddModal.writePortfolioName')}
               placeholderTextColor={'#D3D3D3'}
             />
@@ -49,7 +59,7 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
           <LinearGradient
             colors={['#150193', '#6354BA']}
             style={style.addPortfoyContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleCreatePortfolio}>
               <Text style={style.addPortfoyText}>
                 {t('portfoyAddModal.create')}
               </Text>

@@ -76,8 +76,4 @@ export default StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: windowWidth * 0.02,
   },
-  listContainer: {
-    backgroundColor: 'red',
-    height: 200,
-  },
 });

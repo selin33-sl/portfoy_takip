@@ -72,5 +72,6 @@ export default StyleSheet.create({
   textInput: {
     justifyContent: 'center',
     alignItems: 'center',
+    color: colors.black,
   },
 });
