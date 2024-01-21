@@ -14,10 +14,11 @@ import {
   ShareModal,
 } from '../../components';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {captureRef} from 'react-native-view-shot';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
+import {getAllPortfolioProcess} from '../../api';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -81,6 +82,12 @@ export const HomeScreen = () => {
     useState(false);
 
   const viewRef = useRef();
+
+  const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
+
+  useEffect(() => {
+    dispatch(getAllPortfolioProcess());
+  }, []);
 
   const captureScreen = async () => {
     try {
@@ -265,6 +272,7 @@ export const HomeScreen = () => {
         setIsModalVisible={setIsModalVisible}
       />
       <PortfoyListModal
+        data={AllPortfolioData}
         isModalVisible={isPortfoyListModalVisible}
         setIsModalVisible={setIsPortfoyListModalVisible}
         isAddModalVisible={isPortfoyAddModalVisible}

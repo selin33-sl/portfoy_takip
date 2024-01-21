@@ -2,10 +2,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const baseURL = 'https://portfoytakip.up.railway.app/api';
-axios.defaults.baseURL = baseURL;
+// import {BASE_URL_API, BASE_URL_AUTH} from '@env';
+// console.log('BASE_URL_API:', BASE_URL_API);
 
-const ALTERNATİVE_BASE_URL = 'https://portfoytakip.up.railway.app/auth';
+import Config from 'react-native-config';
+
+// Accessing individual variables
+const apiBaseUrl = Config.BASE_URL_API;
+const apiBaseAuthUrl = Config.BASE_URL_AUTH;
+console.log('apiBaseUrl:', apiBaseUrl);
+
+axios.defaults.baseURL = apiBaseUrl;
+const ALTERNATIVE_BASE_URL = apiBaseAuthUrl;
 
 // const axiosInstance = axios.create({
 //   withCredentials: true,
@@ -42,7 +50,7 @@ axios.interceptors.request.use(
 const authLogin = createAsyncThunk('auth/login', async data => {
   try {
     const {email, password} = data;
-    const response = await axios.post(ALTERNATİVE_BASE_URL, data);
+    const response = await axios.post(ALTERNATIVE_BASE_URL, data);
     const accessToken = response.data.accessToken;
 
     const currentTime = new Date().getTime();
@@ -144,6 +152,14 @@ const getGumusProcess = createAsyncThunk(
   },
 );
 
+const getAllPortfolioProcess = createAsyncThunk(
+  'getAllPortfolio/getAllPortfolioProcess',
+  async () => {
+    const res = await axios.get('/getAllPortfolio');
+    return res;
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -156,4 +172,5 @@ export {
   getKriptoProcess,
   getEmtiaProcess,
   getGumusProcess,
+  getAllPortfolioProcess,
 };

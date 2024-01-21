@@ -9,3 +9,4 @@ export {default as registerSlice} from '../slice/auth/register-slice';
 export {default as getStockDetailSlice} from './varliklar/Detail/get-stock-detail-slice';
 export {default as getCurrencyDetailSlice} from './varliklar/Detail/get-currency-detail-slice';
 export {default as getGoldDetailSlice} from './varliklar/Detail/get-gold-detail-slice';
+export {default as getAllPortfolioSlice} from './portfolio/get-all-portfolio-slice';

@@ -15,7 +15,7 @@ export const AssetDetailsModal = ({
     {
       type: 'HEKTAS',
       quantity: '1000',
-      progress: 0.1,
+      progress: 0.5,
       pertange: '%80',
       _id: 1,
     },

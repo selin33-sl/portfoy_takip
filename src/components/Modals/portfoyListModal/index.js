@@ -1,4 +1,4 @@
-import {View, Text, Modal, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, Modal, TouchableOpacity, FlatList} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
@@ -12,19 +12,22 @@ export const PortfoyListModal = ({
   setIsModalVisible,
   isAddModalVisible,
   setIsAddModalVisible,
+  data,
 }) => {
   const {t} = useTranslation();
 
-  const Cart = () => {
+  const Cart = ({text}) => {
     return (
-      <TouchableOpacity style={style.cartContainer}>
-        <View style={style.cartInnerContainer}>
-          <View style={style.portfoyNameContainer}>
-            <Text style={style.portfoyName}>Portföy_1</Text>
-          </View>
+      <TouchableOpacity style={style.cartInnerContainer}>
+        <View style={style.portfoyNameContainer}>
+          <Text style={style.portfoyName}>{text}</Text>
         </View>
       </TouchableOpacity>
     );
+  };
+
+  const renderItem = ({item}) => {
+    return <Cart text={item?.name} />;
   };
 
   return (
@@ -61,14 +64,14 @@ export const PortfoyListModal = ({
           <View style={style.headerContainer}>
             <Text style={style.text}>{t('portfoyListModal.myPortfolio')}</Text>
           </View>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-            <Cart />
-          </ScrollView>
+          <View style={style.listContainer}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </View>
 
           <LinearGradient
             colors={['#150193', '#6354BA']}
