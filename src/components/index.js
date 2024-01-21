@@ -1,6 +1,7 @@
 export * from './header';
 export * from './inform';
 export * from './linearGradient';
+export * from './portfoyComponent';
 export * from './Cards/varliklarCard';
 export * from './Modals/currencyModal';
 export * from './Cards/resizableCard';

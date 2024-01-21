@@ -2,9 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// import {BASE_URL_API, BASE_URL_AUTH} from '@env';
-// console.log('BASE_URL_API:', BASE_URL_API);
-
 import Config from 'react-native-config';
 
 // Accessing individual variables
@@ -160,6 +157,19 @@ const getAllPortfolioProcess = createAsyncThunk(
   },
 );
 
+const addPortfolioProcess = createAsyncThunk(
+  'createPortfolio/addPortfolioProcess',
+  async data => {
+    const {name} = data;
+    try {
+      const res = await axios.post('createPortfolio', data);
+      return res;
+    } catch (error) {
+      throw error.response.data;
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -173,4 +183,5 @@ export {
   getEmtiaProcess,
   getGumusProcess,
   getAllPortfolioProcess,
+  addPortfolioProcess,
 };

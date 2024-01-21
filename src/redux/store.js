@@ -6,6 +6,7 @@ import {
 
 import logger from 'redux-logger';
 import {
+  addPortfolioSlice,
   getAllCurrencySlice,
   getAllGoldSlice,
   getAllPortfolioSlice,
@@ -33,6 +34,7 @@ const reducer = combineReducers({
   getCurrencyDetail: getCurrencyDetailSlice,
   getGoldDetail: getGoldDetailSlice,
   getAllPortfolio: getAllPortfolioSlice,
+  createPortfolio: addPortfolioSlice,
 });
 
 export const store = configureStore({

@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {colors} from '../../../theme';
+import {colors} from '../../theme';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -27,7 +27,7 @@ export default StyleSheet.create({
   addPortfoyContainer: {
     width: windowWidth * 0.5,
     height: windowHeight * 0.07,
-    marginTop: windowHeight * 0.007,
+    marginTop: windowHeight * 0.02,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -75,9 +75,5 @@ export default StyleSheet.create({
     height: windowHeight * 0.07,
     justifyContent: 'center',
     paddingHorizontal: windowWidth * 0.02,
-  },
-  listContainer: {
-    backgroundColor: 'red',
-    height: 200,
   },
 });

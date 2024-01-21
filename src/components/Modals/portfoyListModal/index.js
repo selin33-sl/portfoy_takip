@@ -64,14 +64,13 @@ export const PortfoyListModal = ({
           <View style={style.headerContainer}>
             <Text style={style.text}>{t('portfoyListModal.myPortfolio')}</Text>
           </View>
-          <View style={style.listContainer}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
+          <FlatList
+            contentContainerStyle={{flexGrow: 1}}
+            showsVerticalScrollIndicator={false}
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
 
           <LinearGradient
             colors={['#150193', '#6354BA']}
@@ -85,10 +84,10 @@ export const PortfoyListModal = ({
           </LinearGradient>
         </LinearGradient>
       </View>
-      <PortfoyAddModal
+      {/* <PortfoyAddModal
         isAddModalVisible={isAddModalVisible}
         setIsAddModalVisible={setIsAddModalVisible}
-      />
+      /> */}
     </Modal>
   );
 };

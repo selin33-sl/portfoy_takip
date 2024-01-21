@@ -9,6 +9,7 @@ import {
   Header,
   Inform,
   LinearGradientContainer,
+  PortfoyComponent,
   PortfoyListModal,
   ResizableCard,
   ShareModal,
@@ -271,12 +272,13 @@ export const HomeScreen = () => {
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
       />
-      <PortfoyListModal
-        data={AllPortfolioData}
-        isModalVisible={isPortfoyListModalVisible}
-        setIsModalVisible={setIsPortfoyListModalVisible}
+
+      <PortfoyComponent
+        isListModalVisible={isPortfoyListModalVisible}
+        setIsListModalVisible={setIsPortfoyListModalVisible}
         isAddModalVisible={isPortfoyAddModalVisible}
         setIsAddModalVisible={setIsPortfoyAddModalVisible}
+        data={AllPortfolioData}
       />
       <ShareModal
         isModalVisible={isShareModalVisible}
