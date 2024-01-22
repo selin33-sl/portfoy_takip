@@ -5,4 +5,4 @@ export * from './varliklar-stack';
 export * from './settings-stack';
 export * from './app-stack';
 export * from './auth-stack';
-export * from './degerlendirmeler-stack';
+export * from './degerlendirme-stack';

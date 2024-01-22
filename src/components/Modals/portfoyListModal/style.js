@@ -10,7 +10,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.rgbDark,
   },
-
+  button: {
+    width: windowWidth * 0.1,
+    height: windowHeight * 0.07,
+    marginRight: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 1,
+  },
   innerContainer: {
     width: windowWidth * 0.9,
     height: windowHeight * 0.6,
@@ -41,7 +48,7 @@ export default StyleSheet.create({
 
   text: {
     fontSize: windowHeight * 0.03,
-    fontWeight: '500',
+    fontWeight: '400',
     color: colors.white,
   },
   iconsContainer: {
@@ -49,7 +56,7 @@ export default StyleSheet.create({
     width: windowWidth * 0.9,
     height: windowHeight * 0.05,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   headerContainer: {
@@ -64,14 +71,16 @@ export default StyleSheet.create({
     height: windowHeight * 0.07,
     borderRadius: 10,
     marginVertical: windowHeight * 0.005,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   portfoyName: {
-    fontSize: windowHeight * 0.025,
-    fontWeight: 'bold',
+    fontSize: windowHeight * 0.023,
+    fontWeight: '400',
     color: colors.black,
   },
   portfoyNameContainer: {
-    width: windowWidth * 0.8,
+    width: windowWidth * 0.6,
     height: windowHeight * 0.07,
     justifyContent: 'center',
     paddingHorizontal: windowWidth * 0.02,

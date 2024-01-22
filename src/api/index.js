@@ -170,6 +170,14 @@ const addPortfolioProcess = createAsyncThunk(
   },
 );
 
+const deletePortfolioProcess = createAsyncThunk(
+  'deletePortfolio/deletePortfolioProcess',
+  async id => {
+    const res = await axios.delete(`deletePortfolio/${id}`);
+    return res;
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -184,4 +192,5 @@ export {
   getGumusProcess,
   getAllPortfolioProcess,
   addPortfolioProcess,
+  deletePortfolioProcess,
 };

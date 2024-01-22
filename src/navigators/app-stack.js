@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import {BottomTabs} from './bottom-tabs';
 import Toast from 'react-native-toast-message';
-import {ToastCompError} from '../components';
+import {ToastComp} from '../components';
 import {AuthStack} from './auth-stack';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -34,7 +34,9 @@ export const AppStack = () => {
         <BottomTabs />
       ) : null}
 
-      <ToastCompError
+      <ToastComp
+        type="error"
+        visibilityTime={3500}
         show={!isConnected}
         text1="İnternet Bağlantısı Yok"
         text2="Lütfen internet bağlantınızı kontrol ediniz."

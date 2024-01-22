@@ -5,11 +5,8 @@ import {
   LinearGradientContainer,
   PatternDesign,
   TextinputCard,
-  ToastCompError,
-  ToastCompSuccess,
+  ToastComp,
 } from '../../components';
-import {images} from '../../assets';
-import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 import {authLogin, registerProcess} from '../../api';
 import {useDispatch, useSelector} from 'react-redux';
@@ -21,7 +18,6 @@ export const AuthScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
-  const navigation = useNavigation();
   const [register, setRegister] = useState(false);
   const [isConnected, setIsConnected] = useState(true);
   const [showNoInternetToast, setShowNoInternetToast] = useState(false);
@@ -128,22 +124,28 @@ export const AuthScreen = () => {
 
   return (
     <ScrollView>
-      <ToastCompSuccess
+      <ToastComp
         show={showRegisterToastSuccess}
+        type="success"
         text1={'Kayıt Başarılı'}
         text2={RegisterMessage}
+        visibilityTime={3000}
       />
-      <ToastCompError
+      <ToastComp
         show={showRegisterToastError}
+        type="error"
         text1={'Kayıt Başarısız'}
         text2={RegisterMessage}
+        visibilityTime={3500}
+      />
+      <ToastComp
+        show={showNoInternetToast}
+        type="error"
+        text1="İnternet Bağlantısı Yok"
+        text2="Lütfen internet bağlantınızı kontrol ediniz.."
+        visibilityTime={3500}
       />
       <LinearGradientContainer>
-        <ToastCompError
-          show={showNoInternetToast}
-          text1="İnternet Bağlantısı Yok"
-          text2="Lütfen internet bağlantınızı kontrol ediniz.."
-        />
         <View style={style.innerContainer}>
           <View style={style.firstContainer}>
             <PatternDesign />

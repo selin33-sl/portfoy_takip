@@ -1,10 +1,12 @@
 import {View, Text, Modal, TouchableOpacity, FlatList} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../../theme';
+import {deletePortfolioProcess, getAllPortfolioProcess} from '../../../api';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -12,20 +14,49 @@ export const PortfoyListModal = ({
   setIsAddModalVisible,
   data,
 }) => {
+  const dispatch = useDispatch();
   const {t} = useTranslation();
 
-  const Cart = ({text}) => {
+  const {status: deleteStatus, message: deleteMessage} = useSelector(
+    state => state.deletePortfolio,
+  );
+
+  const Cart = ({item}) => {
+    const handleDeletePortfolio = () => {
+      dispatch(deletePortfolioProcess(item?._id));
+      dispatch(getAllPortfolioProcess());
+    };
     return (
-      <TouchableOpacity style={style.cartInnerContainer}>
+      <View style={style.cartInnerContainer}>
         <View style={style.portfoyNameContainer}>
-          <Text style={style.portfoyName}>{text}</Text>
+          <Text style={style.portfoyName}>{item?.name}</Text>
         </View>
-      </TouchableOpacity>
+        <TouchableOpacity style={style.button}>
+          <Icon
+            name={'pencil-outline'}
+            size={25}
+            style={{
+              color: colors.black,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleDeletePortfolio} style={style.button}>
+          <Icon
+            name={'delete-outline'}
+            size={25}
+            style={{
+              color: 'red',
+            }}
+          />
+        </TouchableOpacity>
+      </View>
     );
   };
 
   const renderItem = ({item}) => {
-    return <Cart text={item?.name} />;
+    console.log('itemm:', item);
+    console.log(item.id);
+    return <Cart item={item} />;
   };
 
   return (
@@ -39,21 +70,12 @@ export const PortfoyListModal = ({
           colors={['#10001D', '#44007A']}
           style={style.innerContainer}>
           <View style={style.iconsContainer}>
-            <TouchableOpacity>
-              <Icon
-                name={'cog-outline'}
-                size={30}
-                style={{
-                  color: colors.white,
-                }}
-              />
-            </TouchableOpacity>
             <TouchableOpacity onPress={() => setIsModalVisible(false)}>
               <Icon
                 name={'close'}
                 size={32}
                 style={{
-                  color: colors.white,
+                  color: 'white',
                 }}
               />
             </TouchableOpacity>
