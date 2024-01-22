@@ -5,7 +5,6 @@ import {
   LinearGradientContainer,
   PatternDesign,
   TextinputCard,
-  ToastComp,
 } from '../../components';
 import {useTranslation} from 'react-i18next';
 import {authLogin, registerProcess} from '../../api';
@@ -13,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import {resetRegister} from '../../redux/slice/auth/register-slice';
 import {resetAuth} from '../../redux/slice/auth/login-slice';
+import {useToast} from '../../hooks/useToast';
 
 export const AuthScreen = () => {
   const {t} = useTranslation();
@@ -20,45 +20,25 @@ export const AuthScreen = () => {
 
   const [register, setRegister] = useState(false);
   const [isConnected, setIsConnected] = useState(true);
-  const [showNoInternetToast, setShowNoInternetToast] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('test@gmail.com');
   const [password, setPassword] = useState('123456');
-  const [showRegisterToastSuccess, setShowRegisterToastSuccess] =
-    useState(false);
-  const [showRegisterToastError, setShowRegisterToastError] = useState(false);
 
   const {status: registerStatus, message: RegisterMessage} = useSelector(
     state => state.register,
   );
 
-  console.log('reg messageee:', RegisterMessage);
-
-  useEffect(() => {
-    setShowRegisterToastSuccess(false);
-    setShowRegisterToastError(false);
-
-    if (registerStatus === 'success') {
-      setShowRegisterToastSuccess(true);
-      setTimeout(() => {
-        dispatch(resetRegister());
-      }, 2000);
-      setRegister(false);
-      setUsername('');
-      setPassword('');
-      setEmail('');
-    } else if (registerStatus === 'error') {
-      setShowRegisterToastError(true);
-      setTimeout(() => {
-        dispatch(resetRegister());
-      }, 2000);
-    }
-  }, [registerStatus]);
+  useToast(
+    registerStatus,
+    resetRegister(),
+    RegisterMessage,
+    RegisterMessage,
+    dispatch,
+  );
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
-      setShowNoInternetToast(!state.isConnected);
     });
 
     return () => {
@@ -124,27 +104,6 @@ export const AuthScreen = () => {
 
   return (
     <ScrollView>
-      <ToastComp
-        show={showRegisterToastSuccess}
-        type="success"
-        text1={'Kayıt Başarılı'}
-        text2={RegisterMessage}
-        visibilityTime={3000}
-      />
-      <ToastComp
-        show={showRegisterToastError}
-        type="error"
-        text1={'Kayıt Başarısız'}
-        text2={RegisterMessage}
-        visibilityTime={3500}
-      />
-      <ToastComp
-        show={showNoInternetToast}
-        type="error"
-        text1="İnternet Bağlantısı Yok"
-        text2="Lütfen internet bağlantınızı kontrol ediniz.."
-        visibilityTime={3500}
-      />
       <LinearGradientContainer>
         <View style={style.innerContainer}>
           <View style={style.firstContainer}>

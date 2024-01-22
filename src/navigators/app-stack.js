@@ -1,10 +1,9 @@
-import {View, Text} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import {BottomTabs} from './bottom-tabs';
 import Toast from 'react-native-toast-message';
-import {ToastComp} from '../components';
+import {toastComp} from '../components';
 import {AuthStack} from './auth-stack';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -24,6 +23,12 @@ export const AppStack = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isConnected) {
+      toastComp('error', 'Lütfen internet bağlantınızı kontrol ediniz..');
+    }
+  }, [isConnected]);
+
   return (
     <NavigationContainer>
       {isAuthenticated == '-1' ? (
@@ -34,13 +39,6 @@ export const AppStack = () => {
         <BottomTabs />
       ) : null}
 
-      <ToastComp
-        type="error"
-        visibilityTime={3500}
-        show={!isConnected}
-        text1="İnternet Bağlantısı Yok"
-        text2="Lütfen internet bağlantınızı kontrol ediniz."
-      />
       <Toast />
     </NavigationContainer>
   );
