@@ -28,6 +28,8 @@ export const AuthScreen = () => {
     state => state.register,
   );
 
+  console.log('registerStatus:', registerStatus);
+
   useToast(
     registerStatus,
     resetRegister(),

@@ -5,6 +5,7 @@ export const colors = {
   lilac: '#9A1FFF',
   white: '#FFFFFF',
   black: '#000000',
+  green: '#42C803',
   dark: '#17002A',
   pale: '#3D4376',
   purpleLight: '#958EBF',

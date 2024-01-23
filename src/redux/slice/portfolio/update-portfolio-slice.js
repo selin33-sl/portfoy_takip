@@ -1,15 +1,15 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {deletePortfolioProcess} from '../../../api';
+import {updatePortfolioProcess} from '../../../api';
 
-export const deletePortfolioSlice = createSlice({
-  name: 'deletePortfolio',
+export const updatePortfolioSlice = createSlice({
+  name: 'updatePortfolio',
   initialState: {
     isLoading: {},
     status: {},
     message: {},
   },
   reducers: {
-    resetDeletePortfolio: state => {
+    resetUpdatePortfolio: state => {
       state.isLoading = {};
       state.status = {};
       state.message = {};
@@ -17,20 +17,20 @@ export const deletePortfolioSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(deletePortfolioProcess.pending, state => {
+      .addCase(updatePortfolioProcess.pending, state => {
         state.isLoading = true;
       })
-      .addCase(deletePortfolioProcess.fulfilled, (state, action) => {
+      .addCase(updatePortfolioProcess.fulfilled, (state, action) => {
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message);
       })
-      .addCase(deletePortfolioProcess.rejected, (state, action) => {
+      .addCase(updatePortfolioProcess.rejected, (state, action) => {
         state.isLoading = false;
         state.status = action.payload?.status;
         state.message = action.payload?.message;
       });
   },
 });
-export const {resetDeletePortfolio} = deletePortfolioSlice.actions;
-export default deletePortfolioSlice.reducer;
+export const {resetUpdatePortfolio} = updatePortfolioSlice.actions;
+export default updatePortfolioSlice.reducer;

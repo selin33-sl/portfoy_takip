@@ -12,3 +12,4 @@ export {default as getGoldDetailSlice} from './varliklar/Detail/get-gold-detail-
 export {default as getAllPortfolioSlice} from './portfolio/get-all-portfolio-slice';
 export {default as addPortfolioSlice} from './portfolio/add-portfolio-slice';
 export {default as deletePortfolioSlice} from './portfolio/delete-portfolio-slice';
+export {default as updatePortfolioSlice} from './portfolio/update-portfolio-slice';

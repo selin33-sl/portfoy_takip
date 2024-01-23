@@ -75,9 +75,11 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   portfoyName: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: colors.black,
     fontSize: windowHeight * 0.023,
     fontWeight: '400',
-    color: colors.black,
   },
   portfoyNameContainer: {
     width: windowWidth * 0.6,

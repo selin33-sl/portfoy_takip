@@ -159,22 +159,39 @@ const getAllPortfolioProcess = createAsyncThunk(
 
 const addPortfolioProcess = createAsyncThunk(
   'createPortfolio/addPortfolioProcess',
-  async data => {
+  async (data, {rejectWithValue}) => {
     const {name} = data;
     try {
       const res = await axios.post('createPortfolio', data);
       return res;
     } catch (error) {
-      throw error.response.data;
+      throw rejectWithValue(error.response.data);
     }
   },
 );
 
 const deletePortfolioProcess = createAsyncThunk(
   'deletePortfolio/deletePortfolioProcess',
-  async id => {
-    const res = await axios.delete(`deletePortfolio/${id}`);
-    return res;
+  async (id, {rejectWithValue}) => {
+    try {
+      const res = await axios.delete(`deletePortfolio/${id}`);
+      return res.data;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
+const updatePortfolioProcess = createAsyncThunk(
+  'updatePortfolio/updatePortfolioProcess',
+  async ({id, data}, {rejectWithValue}) => {
+    try {
+      const {name} = data;
+      const res = await axios.put(`updatePortfolio/${id}`, data);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
   },
 );
 
@@ -193,4 +210,38 @@ export {
   getAllPortfolioProcess,
   addPortfolioProcess,
   deletePortfolioProcess,
+  updatePortfolioProcess,
 };
+
+// const createSchoolStaff = createAsyncThunk(
+//   "createSchoolStaff/createSchoolStaff",
+//   async ({ id, data }, { rejectWithValue }) => {
+//     try {
+//       const { name, email, password, role, phoneNumber, subjectId } = data;
+//       const response = await axios.post(
+//         `/school/createSchoolStaff/${id}/staff`,
+//         data
+//       );
+//       return response;
+//     } catch (error) {
+//       throw rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+
+// const handleSave = async (formikValues) => {
+//   await dispatch(
+//     createSchoolStaff({
+//       id: params.tab,
+//       data: {
+//         name: formikValues.name,
+//         email: formikValues.email,
+//         password: formikValues.password,
+//         subjectId: formikValues.subjectId,
+//         phoneNumber: formikValues.phoneNumber,
+//         role: "TEACHER",
+//       },
+//     })
+//   );
+//   await dispatch(getTeacherBySchoolId(params.tab));
+// };

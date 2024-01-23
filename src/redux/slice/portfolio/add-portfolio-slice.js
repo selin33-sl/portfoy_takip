@@ -29,7 +29,7 @@ export const addPortfolioSlice = createSlice({
       })
       .addCase(addPortfolioProcess.rejected, (state, action) => {
         state.isLoading = false;
-        state.status = action.payload?.errorCode;
+        state.status = action.payload?.status;
         state.message = action.payload?.message;
       });
   },

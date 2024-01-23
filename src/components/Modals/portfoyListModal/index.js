@@ -1,4 +1,11 @@
-import {View, Text, Modal, TouchableOpacity, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  FlatList,
+  TextInput,
+} from 'react-native';
 import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
@@ -6,7 +13,15 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../../theme';
-import {deletePortfolioProcess, getAllPortfolioProcess} from '../../../api';
+import {
+  deletePortfolioProcess,
+  getAllPortfolioProcess,
+  updatePortfolioProcess,
+} from '../../../api';
+import {resetDeletePortfolio} from '../../../redux/slice/portfolio/delete-portfolio-slice';
+import {useToast} from '../../../hooks/useToast';
+import {resetUpdatePortfolio} from '../../../redux/slice/portfolio/update-portfolio-slice';
+import {resetAllPortfolio} from '../../../redux/slice/portfolio/get-all-portfolio-slice';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -20,23 +35,77 @@ export const PortfoyListModal = ({
   const {status: deleteStatus, message: deleteMessage} = useSelector(
     state => state.deletePortfolio,
   );
+  const {status: updateStatus, message: updateMessage} = useSelector(
+    state => state.updatePortfolio,
+  );
+
+  console.log('statusss', deleteStatus);
+
+  useToast(
+    deleteStatus,
+    resetDeletePortfolio(),
+    deleteMessage,
+    deleteMessage,
+    dispatch,
+  );
+
+  useToast(
+    updateStatus,
+    resetUpdatePortfolio(),
+    updateMessage,
+    updateMessage,
+    dispatch,
+  );
 
   const Cart = ({item}) => {
-    const handleDeletePortfolio = () => {
-      dispatch(deletePortfolioProcess(item?._id));
-      dispatch(getAllPortfolioProcess());
+    const handleDeletePortfolio = async () => {
+      await dispatch(deletePortfolioProcess(item?._id));
+      await dispatch(getAllPortfolioProcess());
     };
+    console.log('editName', editedName);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedName, setEditedName] = useState(item?.name);
+
+    const handleEditToggle = () => {
+      setIsEditing(true);
+    };
+
+    const handleSaveChanges = async () => {
+      console.log('burada neymiş', editedName);
+      if (isEditing) {
+        await dispatch(
+          updatePortfolioProcess({id: item?._id, data: {name: editedName}}),
+        );
+        await dispatch(resetAllPortfolio());
+        await dispatch(getAllPortfolioProcess());
+
+        await setIsEditing(false);
+      }
+    };
+    const handleNameChange = text => {
+      console.log('texxttt', text);
+      console.log('editedddddd', editedName);
+      setEditedName(text);
+    };
+
     return (
-      <View style={style.cartInnerContainer}>
+      <TouchableOpacity style={style.cartInnerContainer}>
         <View style={style.portfoyNameContainer}>
-          <Text style={style.portfoyName}>{item?.name}</Text>
+          <TextInput
+            style={style.portfoyName}
+            value={editedName}
+            onChangeText={handleNameChange}
+            editable={isEditing}
+          />
         </View>
-        <TouchableOpacity style={style.button}>
+        <TouchableOpacity
+          onPress={isEditing ? handleSaveChanges : handleEditToggle}
+          style={style.button}>
           <Icon
-            name={'pencil-outline'}
+            name={isEditing ? 'check' : 'pencil-outline'}
             size={25}
             style={{
-              color: colors.black,
+              color: isEditing ? colors.green : colors.black,
             }}
           />
         </TouchableOpacity>
@@ -49,13 +118,11 @@ export const PortfoyListModal = ({
             }}
           />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   const renderItem = ({item}) => {
-    console.log('itemm:', item);
-    console.log(item.id);
     return <Cart item={item} />;
   };
 

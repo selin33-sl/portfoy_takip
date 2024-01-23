@@ -3,8 +3,6 @@ import React, {useEffect} from 'react';
 import Toast from 'react-native-toast-message';
 
 export const toastComp = (type, text1) => {
-  console.log('popopopopopopo', text1);
-
   Toast.show({
     type,
     text1,

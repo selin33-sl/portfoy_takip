@@ -5,16 +5,32 @@ import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {addPortfolioProcess} from '../../../api';
+import {addPortfolioProcess, getAllPortfolioProcess} from '../../../api';
+import {useToast} from '../../../hooks/useToast';
 
 export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const [name, setName] = useState('');
 
+  const {status: createPortfolioStatus, message: createPortfolioMessage} =
+    useSelector(state => state.createPortfolio);
+
+  console.log('şoşoşoşo', createPortfolioStatus, createPortfolioMessage);
+
   const handleCreatePortfolio = async () => {
     await dispatch(addPortfolioProcess({name}));
+    await dispatch(getAllPortfolioProcess());
+    await setIsAddModalVisible(false);
   };
+
+  // useToast(
+  //   registerStatus,
+  //   resetRegister(),
+  //   RegisterMessage,
+  //   RegisterMessage,
+  //   dispatch,
+  // );
 
   return (
     <Modal
@@ -49,7 +65,7 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
           <View style={style.inputContainer}>
             <TextInput
               style={style.textInput}
-              Name={name}
+              value={name}
               onChangeText={setName}
               placeholder={t('portfoyAddModal.writePortfolioName')}
               placeholderTextColor={'#D3D3D3'}
