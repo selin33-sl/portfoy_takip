@@ -19,7 +19,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {captureRef} from 'react-native-view-shot';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
-import {addPortfolioProcess, getAllPortfolioProcess} from '../../api';
+import {getAllPortfolioProcess, getPortfolioDetailsProcess} from '../../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -85,14 +86,37 @@ export const HomeScreen = () => {
   const viewRef = useRef();
 
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
+  const {data: PortfolioDetailsData} = useSelector(
+    state => state.getPortfolioDetails,
+  );
 
+  console.log(
+    'PortfolioDetailsData',
+    PortfolioDetailsData.portfolio?.portfolioDetails,
+  );
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
   }, []);
 
-  const handleCreatePortfolio = () => {
-    dispatch(addPortfolioProcess({}));
-  };
+  useEffect(() => {
+    if (!isPortfoyListModalVisible) {
+      const fetchData = async () => {
+        try {
+          const selectedPortfolioId = await AsyncStorage.getItem(
+            'selectedPortfolioId',
+          );
+
+          console.log('selectedPortfolioId:', selectedPortfolioId);
+
+          dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
+        } catch (error) {
+          console.error('Error fetching selectedPortfolioId:', error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [isPortfoyListModalVisible]);
 
   const captureScreen = async () => {
     try {
@@ -122,7 +146,14 @@ export const HomeScreen = () => {
   };
 
   const widthAndHeight = 170;
-  const series = [364.16, 302.4, 228.45, 103.02, 0, 0];
+  const series = [
+    PortfolioDetailsData.distribution[3].percentage,
+    PortfolioDetailsData.distribution[2].percentage,
+    PortfolioDetailsData.distribution[5].percentage,
+    PortfolioDetailsData.distribution[0].percentage,
+    PortfolioDetailsData.distribution[1].percentage,
+    PortfolioDetailsData.distribution[4].percentage,
+  ];
   const sliceColor = [
     colors.nakit,
     colors.doviz,
@@ -132,14 +163,8 @@ export const HomeScreen = () => {
     colors.kripto,
   ];
 
-  const seriesEspecial = [70, 10];
+  const seriesEspecial = [90, 10];
   const sliceColorEspecial = [colors.doviz, 'grey'];
-
-  const calculatePercentage = series => {
-    const total = series.reduce((sum, value) => sum + value, 0);
-    return series.map(value => ((value / total) * 100).toFixed(2));
-  };
-  const percentages = calculatePercentage(series);
 
   const handleHidden = () => {
     setHidden(!hidden);
@@ -189,7 +214,7 @@ export const HomeScreen = () => {
     <LinearGradientContainer>
       <Header
         option
-        text={'PORTFOY_1'}
+        text={PortfolioDetailsData?.portfolio?.name}
         backIcon={false}
         headerOnPress={() => setIsPortfoyListModalVisible(true)}
       />
@@ -249,18 +274,22 @@ export const HomeScreen = () => {
               especial={especial}
               onPress={() => setEspecial(true)}
               setHeaderCallback={setHeader} // Pass setHeader as a callback
-              deger1={`${percentages[0]}`}
-              deger2={`${percentages[1]}`}
-              deger3={`${percentages[2]}`}
-              deger4={`${percentages[3]}`}
-              deger5={`${percentages[4]}`}
-              deger6={`${percentages[5]}`}
+              deger1={PortfolioDetailsData.distribution[3].percentage}
+              deger2={PortfolioDetailsData.distribution[2].percentage}
+              deger3={PortfolioDetailsData.distribution[5].percentage}
+              deger4={PortfolioDetailsData.distribution[0].percentage}
+              deger5={PortfolioDetailsData.distribution[1].percentage}
+              deger6={PortfolioDetailsData.distribution[4].percentage}
             />
           </View>
         </View>
 
         <View style={style.toplamContainer}>
-          <Text style={style.toplamText}>{hidden ? '****TL' : '1.377 TL'}</Text>
+          <Text style={style.toplamText}>
+            {hidden
+              ? '****TL'
+              : `${PortfolioDetailsData?.portfolio?.totalValue + ' TL'}`}
+          </Text>
         </View>
         <View style={style.listContainer}>
           <FlatList

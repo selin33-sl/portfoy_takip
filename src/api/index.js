@@ -195,6 +195,19 @@ const updatePortfolioProcess = createAsyncThunk(
   },
 );
 
+const getPortfolioDetailsProcess = createAsyncThunk(
+  'getPortfolioDetails/getPortfolioDetailsProcess',
+  async ({id}, {rejectWithValue}) => {
+    console.log(id, 'IDIDIDIIDIDID');
+    try {
+      const res = await axios.get(`getPortfolioDetails/${id}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -211,6 +224,7 @@ export {
   addPortfolioProcess,
   deletePortfolioProcess,
   updatePortfolioProcess,
+  getPortfolioDetailsProcess,
 };
 
 // const createSchoolStaff = createAsyncThunk(

@@ -13,3 +13,4 @@ export {default as getAllPortfolioSlice} from './portfolio/get-all-portfolio-sli
 export {default as addPortfolioSlice} from './portfolio/add-portfolio-slice';
 export {default as deletePortfolioSlice} from './portfolio/delete-portfolio-slice';
 export {default as updatePortfolioSlice} from './portfolio/update-portfolio-slice';
+export {default as getPortfolioDetailsSlice} from './portfolio/get-portfolio-details-slice';

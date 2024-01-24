@@ -22,6 +22,7 @@ import {resetDeletePortfolio} from '../../../redux/slice/portfolio/delete-portfo
 import {useToast} from '../../../hooks/useToast';
 import {resetUpdatePortfolio} from '../../../redux/slice/portfolio/update-portfolio-slice';
 import {resetAllPortfolio} from '../../../redux/slice/portfolio/get-all-portfolio-slice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -88,8 +89,15 @@ export const PortfoyListModal = ({
       setEditedName(text);
     };
 
+    const handleSelectPortfolio = async () => {
+      console.log(item, 'ITEm');
+      await AsyncStorage.setItem('selectedPortfolioId', item?._id);
+      await setIsModalVisible(false);
+    };
     return (
-      <TouchableOpacity style={style.cartInnerContainer}>
+      <TouchableOpacity
+        style={style.cartInnerContainer}
+        onPress={handleSelectPortfolio}>
         <View style={style.portfoyNameContainer}>
           <TextInput
             style={style.portfoyName}
