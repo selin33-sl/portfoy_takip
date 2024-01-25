@@ -13,6 +13,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {resetRegister} from '../../redux/slice/auth/register-slice';
 import {resetAuth} from '../../redux/slice/auth/login-slice';
 import {useToast} from '../../hooks/useToast';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthScreen = () => {
   const {t} = useTranslation();
@@ -24,11 +25,38 @@ export const AuthScreen = () => {
   const [email, setEmail] = useState('test@gmail.com');
   const [password, setPassword] = useState('123456');
 
-  const {status: registerStatus, message: RegisterMessage} = useSelector(
-    state => state.register,
-  );
+  const {
+    status: registerStatus,
+    message: RegisterMessage,
+    portfolioId: portfolioId,
+  } = useSelector(state => state.register);
 
-  console.log('registerStatus:', registerStatus);
+  console.log('portfolioId:', portfolioId);
+
+  useEffect(() => {
+    if (portfolioId) {
+      const fetchData = async () => {
+        try {
+          await AsyncStorage.setItem('selectedPortfolioId', portfolioId);
+
+          console.log('portfolioId:', portfolioId);
+
+          const veli = await AsyncStorage.getItem('selectedPortfolioId');
+          console.log(veli, 'ASYYYYYNC');
+        } catch (error) {
+          console.error('Error fetching selectedPortfolioId:', error);
+        }
+      };
+
+      fetchData();
+    }
+
+    // if (portfolioId) {
+    //   AsyncStorage.setItem('selectedPortfolioId', portfolioId);
+    // }
+    // const veli = AsyncStorage.getItem('selectedPortfolioId');
+    // console.log(veli, 'ASYYYYYNC');
+  }, [portfolioId]);
 
   useToast(
     registerStatus,

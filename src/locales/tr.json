@@ -18,11 +18,11 @@
   },
   "assets": {
     "turkisLira": "Türk Lirası",
-    "goldSilver": "Altın | Gümüş",
+    "goldSilver": "Altın",
     "foreignCurrency": "Döviz",
     "fund": "Fon",
     "stock": "Hisse Senedi",
-    "cryptoCurrrency": "Kripto Para"
+    "cryptoCurrrency": "Kripto"
   },
 
   "timePeriodModal": {
@@ -80,11 +80,11 @@
     },
     "assetsHeaders": {
       "turkisLira": "Türk Lirası",
-      "goldSilver": "Altın | Gümüş",
+      "goldSilver": "Altın",
       "foreignCurrency": "Döviz",
       "fund": "Fon",
       "stock": "Hisse Senedi",
-      "cryptoCurrrency": "Kripto Para"
+      "cryptoCurrrency": "Kripto"
     }
   }
 }

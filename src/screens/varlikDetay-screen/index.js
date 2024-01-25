@@ -24,16 +24,19 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {addAssetProcess, getStokDetailProcess} from '../../api';
 import {useNavigation} from '@react-navigation/native';
-import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {t} = useTranslation();
-  const {params: {page = 0} = {}} = useRoute();
+  const {params: {page = 0, text} = {}} = useRoute();
 
-  const [fullName, setFullName] = useState('');
+  console.log('TTTTTTTTTTTTT', text);
+
+  const [longName, setLongName] = useState('');
   const [code, setCode] = useState('');
+  const [fullName, setFullName] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -115,23 +118,29 @@ export const VarlikDetayScreen = () => {
     // {value: 210, date: '5 May 2022'},
   ];
 
+  console.log('CurrencyDetailData', CurrencyDetailData);
+
   useEffect(() => {
     if (StockDetailData && StockDetailData.length > 0) {
       const firstStockItem = StockDetailData[0];
+      console.log('nee buuuu', firstStockItem);
+      setFullName(firstStockItem?.name);
       const words = firstStockItem?.name.split(' ');
       setCode(words[0] ? words[0].trim() : '');
-      setFullName(words.slice(1).join(' ').trim());
+      setLongName(words.slice(1).join(' ').trim());
     } else if (CurrencyDetailData && CurrencyDetailData.length > 0) {
       const firstStockItem = CurrencyDetailData[0];
+      setFullName(firstStockItem?.name);
+
       setCode(firstStockItem?.name);
-      setFullName(firstStockItem?.desc);
+      setLongName(firstStockItem?.desc);
     } else if (GoldDetailData && GoldDetailData.length > 0) {
       const firstStockItem = GoldDetailData[0];
       setCode(firstStockItem?.name);
-      setFullName('');
+      setLongName('');
     }
 
-    console.log('fullllllllllllllllll', fullName);
+    console.log('fullllllllllllllllll', longName);
   }, [StockDetailData, CurrencyDetailData]);
 
   console.log('Gold', GoldDetailData);
@@ -147,15 +156,46 @@ export const VarlikDetayScreen = () => {
   }, []);
 
   const handleAddAsset = async () => {
-    // await dispatch(addAssetProcess({}));
+    const totalQuantity = `${miktar1}.${miktar2}`;
+    const totalPrice = `${fiyat1}.${fiyat2}`;
+    const selectedPortfolioId = await AsyncStorage.getItem(
+      'selectedPortfolioId',
+    );
+    await dispatch(
+      addAssetProcess({
+        id: selectedPortfolioId,
+        data: {
+          type:
+            text == 'Döviz'
+              ? 'Currency'
+              : text == 'Hisse Senedi'
+              ? 'Stock'
+              : text == 'Fon'
+              ? 'Fund'
+              : text == 'Kripto'
+              ? 'Crypto'
+              : text == 'Altın'
+              ? 'Gold'
+              : text == 'Türk Lirası'
+              ? 'TurkishLira'
+              : text,
+          name: fullName,
+          quantity: totalQuantity,
+          purchasePrice: totalPrice,
+          purchaseDate: selectedDate,
+        },
+      }),
+    );
   };
+
+  console.log('selectedDateee', selectedDate);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <LinearGradientContainer>
         <Header text={code} backIcon />
         <View style={style.descContainer}>
-          <Text style={style.descText}>{fullName}</Text>
+          <Text style={style.descText}>{longName}</Text>
         </View>
 
         <View style={style.lineChartContainer}>

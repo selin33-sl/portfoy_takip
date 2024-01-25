@@ -18,11 +18,11 @@
   },
   "assets": {
     "turkisLira": "Turkish Lira",
-    "goldSilver": "Gold | Silver",
-    "foreignCurrency": "Foreign Currency",
+    "goldSilver": "Gold",
+    "foreignCurrency": "Currency",
     "fund": "Fund",
     "stock": "Stock",
-    "cryptoCurrrency": "Cryptocurrency"
+    "cryptoCurrrency": "Crypto"
   },
   "timePeriodModal": {
     "today": "Today",
@@ -78,11 +78,11 @@
     },
     "assetsHeaders": {
       "turkisLira": "Turkish Lira",
-      "goldSilver": "Gold | Silver",
-      "foreignCurrency": "Foreign Currency",
+      "goldSilver": "Gold",
+      "foreignCurrency": "Currency",
       "fund": "Fund",
       "stock": "Stock",
-      "cryptoCurrrency": "Cryptocurrency"
+      "cryptoCurrrency": "Crypto"
     }
   }
 }

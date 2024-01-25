@@ -53,6 +53,8 @@ export const VarliklarListScreen = () => {
   const {data: GumusData} = useSelector(state => state.silverPrice);
   const {data: AllGoldData} = useSelector(state => state.getAllGold);
 
+  console.log('AllCurrencyData', AllCurrencyData);
+
   const data =
     AllStockData && AllStockData.length
       ? AllStockData
@@ -130,8 +132,6 @@ export const VarliklarListScreen = () => {
     // Renk belirleme
     const color = rateValue < 0 ? 'red' : 'green';
 
-    console.log('naemeeeeeee: ', item?.name);
-
     return (
       <VarlikListCard
         fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
@@ -159,7 +159,7 @@ export const VarliklarListScreen = () => {
               ? await dispatch(getGoldDetailProcess(newGoldName))
               : null;
           }
-          await navigation.navigate('varlikDetay-screen');
+          await navigation.navigate('varlikDetay-screen', {text: text});
         }}
       />
     );

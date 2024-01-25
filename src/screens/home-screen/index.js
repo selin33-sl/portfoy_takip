@@ -24,53 +24,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
-  const data = [
-    {
-      tür: t('headers.assetsHeaders.foreignCurrency'),
-      name: 'THYAO1',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 1,
-    },
-    {
-      tür: t('headers.assetsHeaders.foreignCurrency'),
-      name: 'THYAO2',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 2,
-    },
-    {
-      tür: t('headers.assetsHeaders.foreignCurrency'),
-      name: 'THYAO3',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 3,
-    },
-    {
-      tür: t('headers.assetsHeaders.fund'),
-      name: 'THYAO4',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 4,
-    },
-    {
-      tür: t('headers.assetsHeaders.fund'),
-      name: 'THYAO5',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 5,
-    },
-    {
-      tür: t('headers.assetsHeaders.fund'),
-      name: 'THYAO6',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 6,
-    },
-  ];
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const [header, setHeader] = useState('');
   const [color, setColor] = useState('');
   const [deger, setDeger] = useState();
@@ -173,27 +130,7 @@ export const HomeScreen = () => {
     setHidden(!hidden);
   };
 
-  const getUniqueTurItems = data => {
-    const uniqueTurItems = {};
-    data.forEach(item => {
-      const tur = item.tür;
-      if (!uniqueTurItems[tur]) {
-        uniqueTurItems[tur] = item;
-      }
-    });
-    return Object.values(uniqueTurItems);
-  };
-
-  const uniqueTurItems = getUniqueTurItems(data);
-
   const renderItem = ({item, index}) => {
-    console.log('item neeeyyy', item);
-    console.log('index', index);
-    const tür = PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type;
-    console.log(
-      'PortfolioDetailsData?.portfolio?.portfolioDetails?.type',
-      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type,
-    );
     return (
       <ResizableCard
         onPress={() =>
@@ -210,11 +147,6 @@ export const HomeScreen = () => {
       />
     );
   };
-
-  console.log(
-    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-    PortfolioDetailsData?.distribution[3]?.percentage,
-  );
 
   return (
     <LinearGradientContainer>
@@ -304,7 +236,7 @@ export const HomeScreen = () => {
           <Text style={style.toplamText}>
             {hidden
               ? '****TL'
-              : `${PortfolioDetailsData?.portfolio?.totalValue + ' TL'}`}
+              : `${PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'}`}
           </Text>
         </View>
         <View style={style.listContainer}>

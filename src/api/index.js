@@ -207,7 +207,7 @@ const addAssetProcess = createAsyncThunk(
   'addAsset/addAssetProcess',
   async ({id, data}, {rejectWithValue}) => {
     try {
-      const {type, name, quantity, unitPrice, purchaseDate} = data;
+      const {type, name, quantity, purchasePrice, purchaseDate} = data;
       const res = await axios.post(`addAsset/${id}`, data);
       return res;
     } catch (error) {

@@ -7,12 +7,14 @@ export const registerSlice = createSlice({
     isLoading: {},
     status: undefined,
     message: {},
+    portfolioId: undefined,
   },
   reducers: {
     resetRegister: state => {
       state.isLoading = {};
       state.status = undefined;
       state.message = {};
+      state.portfolioId = undefined;
     },
   },
   extraReducers: builder => {
@@ -23,6 +25,7 @@ export const registerSlice = createSlice({
       .addCase(registerProcess.fulfilled, (state, action) => {
         (state.status = action.payload?.status), (state.isLoading = false);
         state.message = action.payload?.message;
+        state.portfolioId = action.payload?.portfolioId;
       })
       .addCase(registerProcess.rejected, (state, action) => {
         console.error('Error in registerProcess:', action.error);
