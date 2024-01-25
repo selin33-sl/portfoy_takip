@@ -12,9 +12,17 @@ export const Inform = ({
   deger4,
   deger5,
   deger6,
+  borderColor1,
+  borderColor2,
+  borderColor3,
+  borderColor4,
+  borderColor5,
+  borderColor6,
   onPress,
   especial,
   setHeaderCallback,
+  setColorCallback,
+  setDegerCallback,
 }) => {
   const {t} = useTranslation();
 
@@ -32,7 +40,9 @@ export const Inform = ({
             text,
             deger,
           });
-          setHeaderCallback(text); // Set header using the callback function
+          setColorCallback(backgroundColor);
+          setDegerCallback(deger);
+          setHeaderCallback(text);
           onPress();
         }}
         style={
@@ -79,19 +89,19 @@ export const Inform = ({
           <View style={style.inform}>
             <Row
               start
-              backgroundColor={'#3401FF'}
+              backgroundColor={borderColor1}
               text={t('headers.assetsHeaders.turkisLira')}
               deger={deger1}
             />
             <Row
               start
-              backgroundColor={'#00EFFE'}
+              backgroundColor={borderColor2}
               text={t('headers.assetsHeaders.foreignCurrency')}
               deger={deger2}
             />
             <Row
               start
-              backgroundColor={'#FF007A'}
+              backgroundColor={borderColor3}
               text={t('headers.assetsHeaders.fund')}
               deger={deger3}
             />
@@ -100,19 +110,19 @@ export const Inform = ({
           <View style={style.inform}>
             <Row
               end
-              backgroundColor={'#BCFE00'}
+              backgroundColor={borderColor4}
               text={t('headers.assetsHeaders.stock')}
               deger={deger4}
             />
             <Row
               end
-              backgroundColor={'#FF7A00'}
+              backgroundColor={borderColor5}
               text={t('headers.assetsHeaders.goldSilver')}
               deger={deger5}
             />
             <Row
               end
-              backgroundColor={'#DB00FF'}
+              backgroundColor={borderColor6}
               text={t('headers.assetsHeaders.cryptoCurrrency')}
               deger={deger6}
             />

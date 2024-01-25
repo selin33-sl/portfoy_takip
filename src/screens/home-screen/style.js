@@ -92,6 +92,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     maxHeight: windowHeight * 0.32,
     width: windowWidth,
+    paddingBottom: windowHeight * 0.015,
   },
   optionContainer: {
     width: windowWidth,

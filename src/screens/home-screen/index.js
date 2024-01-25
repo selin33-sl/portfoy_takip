@@ -72,6 +72,8 @@ export const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [header, setHeader] = useState('');
+  const [color, setColor] = useState('');
+  const [deger, setDeger] = useState();
   const [isAssetDetailsModal, setIsAssetDetailsModal] = useState(false);
   const [especial, setEspecial] = useState(false);
   const [capturedImageURI, setCapturedImageURI] = useState(null);
@@ -92,13 +94,14 @@ export const HomeScreen = () => {
 
   console.log(
     'PortfolioDetailsData',
-    PortfolioDetailsData.portfolio?.portfolioDetails,
+    PortfolioDetailsData?.portfolio?.portfolioDetails[1],
   );
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
   }, []);
 
   useEffect(() => {
+    console.log('isPortfoyListModalVisible', isPortfoyListModalVisible);
     if (!isPortfoyListModalVisible) {
       const fetchData = async () => {
         try {
@@ -147,12 +150,12 @@ export const HomeScreen = () => {
 
   const widthAndHeight = 170;
   const series = [
-    PortfolioDetailsData.distribution[3].percentage,
-    PortfolioDetailsData.distribution[2].percentage,
-    PortfolioDetailsData.distribution[5].percentage,
-    PortfolioDetailsData.distribution[0].percentage,
-    PortfolioDetailsData.distribution[1].percentage,
-    PortfolioDetailsData.distribution[4].percentage,
+    PortfolioDetailsData?.distribution[3]?.percentage,
+    PortfolioDetailsData?.distribution[1]?.percentage,
+    PortfolioDetailsData?.distribution[5]?.percentage,
+    PortfolioDetailsData?.distribution[0]?.percentage,
+    PortfolioDetailsData?.distribution[2]?.percentage,
+    PortfolioDetailsData?.distribution[4]?.percentage,
   ];
   const sliceColor = [
     colors.nakit,
@@ -163,8 +166,8 @@ export const HomeScreen = () => {
     colors.kripto,
   ];
 
-  const seriesEspecial = [90, 10];
-  const sliceColorEspecial = [colors.doviz, 'grey'];
+  const seriesEspecial = [deger, 100 - deger];
+  const sliceColorEspecial = [color, 'grey'];
 
   const handleHidden = () => {
     setHidden(!hidden);
@@ -183,32 +186,35 @@ export const HomeScreen = () => {
 
   const uniqueTurItems = getUniqueTurItems(data);
 
-  const renderItem = ({item}) => {
-    const {tür} = item;
-    const itemsWithSameTur = data.filter(dataItem => dataItem.tür === tür);
-
+  const renderItem = ({item, index}) => {
+    console.log('item neeeyyy', item);
+    console.log('index', index);
+    const tür = PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type;
+    console.log(
+      'PortfolioDetailsData?.portfolio?.portfolioDetails?.type',
+      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type,
+    );
     return (
       <ResizableCard
         onPress={() =>
           navigation.navigate('varlikDetay-screen', {page: 'update'})
         }
         borderColor={
-          tür == t('headers.assetsHeaders.foreignCurrency')
-            ? colors.doviz
-            : tür == t('headers.assetsHeaders.fund')
-            ? colors.fon
-            : null
+          PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
         }
-        tür={tür}
-        sendItem={itemsWithSameTur.map(({name, price, adet}) => ({
-          name,
-          price,
-          adet,
-        }))}
+        tür={PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type}
+        sendItem={
+          PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
+        }
         hidden={hidden}
       />
     );
   };
+
+  console.log(
+    'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    PortfolioDetailsData?.distribution[3]?.percentage,
+  );
 
   return (
     <LinearGradientContainer>
@@ -272,14 +278,24 @@ export const HomeScreen = () => {
 
             <Inform
               especial={especial}
-              onPress={() => setEspecial(true)}
+              onPress={() => {
+                setEspecial(true);
+              }}
+              setColorCallback={setColor}
+              setDegerCallback={setDeger}
               setHeaderCallback={setHeader} // Pass setHeader as a callback
-              deger1={PortfolioDetailsData.distribution[3].percentage}
-              deger2={PortfolioDetailsData.distribution[2].percentage}
-              deger3={PortfolioDetailsData.distribution[5].percentage}
-              deger4={PortfolioDetailsData.distribution[0].percentage}
-              deger5={PortfolioDetailsData.distribution[1].percentage}
-              deger6={PortfolioDetailsData.distribution[4].percentage}
+              borderColor1={PortfolioDetailsData?.distribution[3]?.color}
+              borderColor2={PortfolioDetailsData?.distribution[1]?.color}
+              borderColor3={PortfolioDetailsData?.distribution[5]?.color}
+              borderColor4={PortfolioDetailsData?.distribution[0]?.color}
+              borderColor5={PortfolioDetailsData?.distribution[2]?.color}
+              borderColor6={PortfolioDetailsData?.distribution[4]?.color}
+              deger1={PortfolioDetailsData?.distribution[3]?.percentage}
+              deger2={PortfolioDetailsData?.distribution[1]?.percentage}
+              deger3={PortfolioDetailsData?.distribution[5]?.percentage}
+              deger4={PortfolioDetailsData?.distribution[0]?.percentage}
+              deger5={PortfolioDetailsData?.distribution[2]?.percentage}
+              deger6={PortfolioDetailsData?.distribution[4]?.percentage}
             />
           </View>
         </View>
@@ -294,7 +310,7 @@ export const HomeScreen = () => {
         <View style={style.listContainer}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={uniqueTurItems}
+            data={PortfolioDetailsData?.portfolio?.portfolioDetails}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -319,6 +335,7 @@ export const HomeScreen = () => {
         image={capturedImageURI}
       />
       <AssetDetailsModal
+        color={color}
         header={header}
         isAssetDetailsModal={isAssetDetailsModal}
         setIsAssetDetailsModal={setIsAssetDetailsModal}

@@ -18,7 +18,7 @@ export const ResizableCard = ({
 
   const [isModalVisible2, setModalVisible2] = useState(false);
   const [modalHeight, setModalHeight] = useState(windowHeight * 0.08); // Modalın başlangıç yüksekliği
-  const numItems = sendItem.length;
+  const numItems = sendItem?.length;
   const toggleModal = () => {
     if (isModalVisible2) {
       // Modal kapanırken yüksekliği sıfırla
@@ -29,7 +29,7 @@ export const ResizableCard = ({
 
   const expandModal = () => {
     // Modalı açarken yüksekliği artır
-    const newHeight = windowHeight * 0.08 + numItems * windowHeight * 0.08; // Örnek bir formül, ihtiyaca göre ayarlayabilirsiniz
+    const newHeight = windowHeight * 0.08 + numItems * windowHeight * 0.08;
     setModalHeight(newHeight);
     toggleModal();
     setModalVisible2(!isModalVisible2);
@@ -55,7 +55,13 @@ export const ResizableCard = ({
   };
 
   const renderItem = ({item}) => {
-    return <SmallCard name={item.name} price={item.price} adet={item.adet} />;
+    return (
+      <SmallCard
+        name={item.name}
+        price={item.purchasePrice}
+        adet={item.quantity}
+      />
+    );
   };
 
   return (

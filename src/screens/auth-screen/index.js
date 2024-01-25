@@ -62,11 +62,10 @@ export const AuthScreen = () => {
   // };
 
   const handleRegister = async () => {
-    if (username === '' || password === '' || email === '') {
+    if (register && (username === '' || password === '' || email === '')) {
       Alert.alert('Uyarı', 'Lütfen bütün alanları doldurunuz.');
       return;
     }
-
     // if (!isEmailValid) {
     //   Alert.alert('Uyarı', 'Lütfen geçerli bir e-posta adresi giriniz.');
     //   return;

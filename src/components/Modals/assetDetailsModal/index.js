@@ -10,6 +10,7 @@ export const AssetDetailsModal = ({
   isAssetDetailsModal,
   setIsAssetDetailsModal,
   header,
+  color,
 }) => {
   const data = [
     {
@@ -115,7 +116,7 @@ export const AssetDetailsModal = ({
         </View>
         <View style={style.progressBarContainer}>
           <View style={style.progressBar}>
-            <ProgressBar progress={progress} color={'green'} />
+            <ProgressBar progress={progress} color={color} />
           </View>
           <Text style={style.textPercentage}>{pertange}</Text>
         </View>

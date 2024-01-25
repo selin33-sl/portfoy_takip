@@ -22,7 +22,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {getStokDetailProcess} from '../../api';
+import {addAssetProcess, getStokDetailProcess} from '../../api';
 import {useNavigation} from '@react-navigation/native';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
 
@@ -146,6 +146,10 @@ export const VarlikDetayScreen = () => {
     }
   }, []);
 
+  const handleAddAsset = async () => {
+    // await dispatch(addAssetProcess({}));
+  };
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <LinearGradientContainer>
@@ -206,7 +210,9 @@ export const VarlikDetayScreen = () => {
             </View>
           </View>
 
-          <View style={style.saveButtonContainer}>
+          <TouchableOpacity
+            style={style.saveButtonContainer}
+            onPress={handleAddAsset}>
             <LinearGradient
               colors={['#05A04D', '#007029']}
               style={style.saveButton}>
@@ -214,7 +220,7 @@ export const VarlikDetayScreen = () => {
                 {t('assetDetailScreen.save')}
               </Text>
             </LinearGradient>
-          </View>
+          </TouchableOpacity>
         </LinearGradient>
       </LinearGradientContainer>
       <CalendarModal

@@ -7,7 +7,6 @@ import Config from 'react-native-config';
 // Accessing individual variables
 const apiBaseUrl = Config.BASE_URL_API;
 const apiBaseAuthUrl = Config.BASE_URL_AUTH;
-console.log('apiBaseUrl:', apiBaseUrl);
 
 axios.defaults.baseURL = apiBaseUrl;
 const ALTERNATIVE_BASE_URL = apiBaseAuthUrl;
@@ -26,7 +25,6 @@ axios.interceptors.request.use(
     try {
       // Erişim belirtecini async storage'dan alın
       const accessToken = await AsyncStorage.getItem('accessToken');
-      console.log(accessToken);
 
       if (accessToken) {
         // Başlıklara erişim belirtecini ekleyin
@@ -35,7 +33,6 @@ axios.interceptors.request.use(
       return config;
     } catch (error) {
       // Hata durumunda yapılacak işlemleri burada ele alabilirsiniz
-      console.error('Interceptor Error:', error);
       return Promise.reject(error);
     }
   },
@@ -67,7 +64,6 @@ const registerProcess = createAsyncThunk(
     try {
       const {username, password, email} = data;
       const response = await axios.post('/', data);
-      console.log(response.data.status, 'lkhjgsdhjklsdlhjksdlhjksd');
       // if (response.data.status === 'success') {
       //   await firebase.messaging().registerDeviceForRemoteMessages().then(() => {
       //     console.log('Registered');
@@ -198,9 +194,21 @@ const updatePortfolioProcess = createAsyncThunk(
 const getPortfolioDetailsProcess = createAsyncThunk(
   'getPortfolioDetails/getPortfolioDetailsProcess',
   async ({id}, {rejectWithValue}) => {
-    console.log(id, 'IDIDIDIIDIDID');
     try {
       const res = await axios.get(`getPortfolioDetails/${id}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
+const addAssetProcess = createAsyncThunk(
+  'addAsset/addAssetProcess',
+  async ({id, data}, {rejectWithValue}) => {
+    try {
+      const {type, name, quantity, unitPrice, purchaseDate} = data;
+      const res = await axios.post(`addAsset/${id}`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -225,6 +233,7 @@ export {
   deletePortfolioProcess,
   updatePortfolioProcess,
   getPortfolioDetailsProcess,
+  addAssetProcess,
 };
 
 // const createSchoolStaff = createAsyncThunk(

@@ -4,7 +4,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Animated, {
   useSharedValue,
-  useAnimatedStyle,
   withRepeat,
   withSequence,
   withTiming,
@@ -16,6 +15,7 @@ const SIZE = 100;
 const GLOW_INITIAL_SCALE = 2; //Scale of the glow
 const GLOW_MINIMUM_SCALE = 1.2;
 const GLOW_DURATION = 5000;
+import {useAnimatedStyle} from 'react-native-reanimated';
 
 export const PatternDesign = () => {
   const useGlowAnimation = () => {
