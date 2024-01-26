@@ -1,9 +1,10 @@
 import {View, Text, Modal, TouchableOpacity, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {ProgressBar, MD3Colors} from 'react-native-paper';
 import style from './style';
+import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../../../theme';
 
 export const AssetDetailsModal = ({
@@ -12,11 +13,16 @@ export const AssetDetailsModal = ({
   header,
   color,
 }) => {
+  const {data: AssetPercentageData} = useSelector(
+    state => state.getAssetPercentages,
+  );
+
+  console.log('AssetPercentageData', AssetPercentageData);
   const data = [
     {
       type: 'HEKTAS',
       quantity: '1000',
-      progress: 0.5,
+      progress: 0.68546666671638712638716328716387112739817,
       pertange: '%80',
       _id: 1,
     },
@@ -118,7 +124,7 @@ export const AssetDetailsModal = ({
           <View style={style.progressBar}>
             <ProgressBar progress={progress} color={color} />
           </View>
-          <Text style={style.textPercentage}>{pertange}</Text>
+          <Text style={style.textPercentage}>%{pertange}</Text>
         </View>
       </View>
     );
@@ -127,10 +133,10 @@ export const AssetDetailsModal = ({
   const renderItem = ({item}) => {
     return (
       <Card
-        type={item?.type}
+        type={item?.name}
         quantity={item?.quantity}
-        progress={item?.progress}
-        pertange={item?.pertange}
+        progress={item?.progressBar}
+        pertange={item?.percentage}
       />
     );
   };
@@ -161,7 +167,7 @@ export const AssetDetailsModal = ({
           <View style={style.listContainer}>
             <FlatList
               showsVerticalScrollIndicator={false}
-              data={data}
+              data={AssetPercentageData}
               renderItem={renderItem}
               keyExtractor={(item, index) => index.toString()}
             />

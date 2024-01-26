@@ -13,11 +13,13 @@ import {
   getAllGoldSlice,
   getAllPortfolioSlice,
   getAllStockSlice,
+  getAssetPercentagesSlice,
   getCurrencyDetailSlice,
   getEmtiaSlice,
   getGoldDetailSlice,
   getGumusSlice,
   getKriptoSlice,
+  getLastStockDetailSlice,
   getPortfolioDetailsSlice,
   getStockDetailSlice,
   loginSlice,
@@ -43,6 +45,7 @@ const reducer = combineReducers({
   updatePortfolio: updatePortfolioSlice,
   getPortfolioDetails: getPortfolioDetailsSlice,
   addAsset: addAssetSlice,
+  getAssetPercentages: getAssetPercentagesSlice,
 });
 
 export const store = configureStore({

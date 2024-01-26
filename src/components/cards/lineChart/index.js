@@ -2,7 +2,7 @@ import {View, Text} from 'react-native';
 import {LineChart} from 'react-native-gifted-charts';
 import React from 'react';
 
-export const LineChartt = ({lcData, width, height}) => {
+export const LineChartt = ({lcData, width, height, maxValue}) => {
   return (
     <LineChart
       areaChart
@@ -11,17 +11,17 @@ export const LineChartt = ({lcData, width, height}) => {
       width={width}
       height={height}
       hideDataPoints
-      spacing={10}
+      spacing={35}
       color="#00ff83"
       thickness={1}
       startFillColor="rgba(20,105,81,0.3)"
       endFillColor="rgba(20,85,81,0.01)"
-      startOpacity={0.9}
+      startOpacity={3}
       endOpacity={0.2}
-      initialSpacing={0}
+      initialSpacing={20}
       endSpacing={0}
       noOfSections={2}
-      maxValue={1000}
+      // maxValue={maxValue}
       yAxisColor="white"
       yAxisThickness={0}
       yAxisIndicesColor={'yellow'}
@@ -44,15 +44,14 @@ export const LineChartt = ({lcData, width, height}) => {
           return (
             <View
               style={{
-                height: 90,
-                width: 100,
                 justifyContent: 'center',
-                marginTop: -0,
+                marginTop: 60,
                 marginLeft: -40,
+                backgroundColor: 'pink',
               }}>
               <Text
                 style={{
-                  color: 'white',
+                  color: 'red',
                   fontSize: 10,
                   marginBottom: 6,
                   textAlign: 'center',
@@ -62,7 +61,6 @@ export const LineChartt = ({lcData, width, height}) => {
 
               <View
                 style={{
-                  borderRadius: 16,
                   backgroundColor: 'white',
                 }}>
                 <Text
@@ -71,7 +69,7 @@ export const LineChartt = ({lcData, width, height}) => {
                     textAlign: 'center',
                     color: 'black',
                   }}>
-                  {'$' + items[0].value + '.0'}
+                  {items[0].value + '.0' + ' TL'}
                 </Text>
               </View>
             </View>

@@ -15,3 +15,4 @@ export {default as deletePortfolioSlice} from './portfolio/delete-portfolio-slic
 export {default as updatePortfolioSlice} from './portfolio/update-portfolio-slice';
 export {default as getPortfolioDetailsSlice} from './portfolio/get-portfolio-details-slice';
 export {default as addAssetSlice} from './portfolio/add-asset-slice';
+export {default as getAssetPercentagesSlice} from './portfolio/get-asset-percentages-slice';

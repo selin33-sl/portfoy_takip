@@ -19,7 +19,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {captureRef} from 'react-native-view-shot';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
-import {getAllPortfolioProcess, getPortfolioDetailsProcess} from '../../api';
+import {
+  getAllPortfolioProcess,
+  getAssetPercentagesProcess,
+  getPortfolioDetailsProcess,
+} from '../../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HomeScreen = () => {
@@ -32,6 +36,7 @@ export const HomeScreen = () => {
   const [color, setColor] = useState('');
   const [deger, setDeger] = useState();
   const [isAssetDetailsModal, setIsAssetDetailsModal] = useState(false);
+  const [portfolioId, setPortfolioId] = useState('');
   const [especial, setEspecial] = useState(false);
   const [capturedImageURI, setCapturedImageURI] = useState(null);
   const [hidden, setHidden] = useState(false);
@@ -66,6 +71,7 @@ export const HomeScreen = () => {
             'selectedPortfolioId',
           );
 
+          setPortfolioId(selectedPortfolioId);
           console.log('selectedPortfolioId:', selectedPortfolioId);
 
           dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
@@ -202,7 +208,28 @@ export const HomeScreen = () => {
               {especial && (
                 <TouchableOpacity
                   style={style.detailIcon}
-                  onPress={() => setIsAssetDetailsModal(true)}>
+                  onPress={async () => {
+                    await dispatch(
+                      getAssetPercentagesProcess({
+                        id: portfolioId,
+                        type:
+                          header == 'Döviz'
+                            ? 'Currency'
+                            : header == 'Hisse Senedi'
+                            ? 'Stock'
+                            : header == 'Fon'
+                            ? 'Fund'
+                            : header == 'Kripto'
+                            ? 'Crypto'
+                            : header == 'Altın'
+                            ? 'Gold'
+                            : header == 'Türk Lirası'
+                            ? 'TurkishLira'
+                            : header,
+                      }),
+                    );
+                    setIsAssetDetailsModal(true);
+                  }}>
                   <Icon name={'details'} size={30} color={'white'} />
                 </TouchableOpacity>
               )}

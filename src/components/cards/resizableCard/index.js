@@ -58,7 +58,7 @@ export const ResizableCard = ({
     return (
       <SmallCard
         name={item.name}
-        price={item.purchasePrice}
+        price={item.totalAssetValue}
         adet={item.quantity}
       />
     );
