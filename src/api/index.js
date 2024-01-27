@@ -228,6 +228,18 @@ const getAssetPercentagesProcess = createAsyncThunk(
   },
 );
 
+const deleteAssetProcess = createAsyncThunk(
+  'removeAsset/deleteAssetProcess',
+  async ({portfolioId, assetId}, {rejectWportfolioIthValue}) => {
+    try {
+      const res = await axios.delete(`removeAsset/${portfolioId}/${assetId}`);
+      return res.data;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -247,6 +259,7 @@ export {
   getPortfolioDetailsProcess,
   addAssetProcess,
   getAssetPercentagesProcess,
+  deleteAssetProcess,
 };
 
 // const createSchoolStaff = createAsyncThunk(

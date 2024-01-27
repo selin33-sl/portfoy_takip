@@ -25,6 +25,8 @@ import {
   getPortfolioDetailsProcess,
 } from '../../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useMessageAndErrorUser} from '../../hooks/useMessageandError';
+import {resetPortfolioDetails} from '../../redux/slice/portfolio/get-portfolio-details-slice';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -52,6 +54,12 @@ export const HomeScreen = () => {
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
   const {data: PortfolioDetailsData} = useSelector(
     state => state.getPortfolioDetails,
+  );
+
+  useMessageAndErrorUser(
+    state => state.getPortfolioDetails,
+    resetPortfolioDetails(),
+    dispatch,
   );
 
   console.log(

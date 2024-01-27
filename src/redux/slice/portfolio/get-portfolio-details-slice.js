@@ -24,13 +24,13 @@ export const getPortfolioDetailsSlice = createSlice({
       })
       .addCase(getPortfolioDetailsProcess.fulfilled, (state, action) => {
         state.isLoading = false;
-        (state.status = action.payload?.status),
+        (state.status = action.payload?.data?.status),
           (state.message = action.payload?.message),
           (state.data = action.payload?.data);
       })
       .addCase(getPortfolioDetailsProcess.rejected, (state, action) => {
         state.isLoading = false;
-        state.status = action.payload?.status;
+        state.status = action.payload?.data?.status;
         state.message = action.payload?.message;
       });
   },

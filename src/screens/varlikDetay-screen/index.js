@@ -56,14 +56,14 @@ export const VarlikDetayScreen = () => {
 
   console.log('LastPriceStock', LastPriceStock);
   const lcData = [
-    {value: 160, date: '1 Apr 2022'},
-    {value: 180, date: '2 Apr 2022'},
-    {value: 190, date: '3 Apr 2022'},
-    {value: 180, date: '4 Apr 2022'},
+    {value: 160.5, date: '1 Apr 2022', label: '1 Apr 2022'},
+    {value: 1.8, date: '2 Apr 2022'},
+    {value: 19.0, date: '3 Apr 2022'},
+    {value: 18.0, date: '4 Apr 2022'},
     {value: 140, date: '5 Apr 2022'},
     {value: 145, date: '6 Apr 2022'},
     {value: 160, date: '7 Apr 2022'},
-    {value: 200, date: '8 Apr 2022'},
+    {value: 200, date: '8 Apr 2022', label: '1 Apr 2022'},
   ];
 
   console.log('CurrencyDetailData', CurrencyDetailData);

@@ -5,9 +5,17 @@ import React from 'react';
 export const LineChartt = ({lcData, width, height, maxValue}) => {
   return (
     <LineChart
+      isAnimated
       areaChart
+      scrollAnimation
       data={lcData}
-      rotateLabel={true}
+      // rotateLabel={true}
+      xAxisLabelTextStyle={{
+        color: 'red',
+        width: 60,
+        fontSize: 10,
+      }}
+      xAxisLabelTexts={{color: 'green'}}
       width={width}
       height={height}
       hideDataPoints
@@ -20,12 +28,12 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       endOpacity={0.2}
       initialSpacing={20}
       endSpacing={0}
-      noOfSections={2}
+      noOfSections={1}
       // maxValue={maxValue}
       yAxisColor="white"
       yAxisThickness={0}
       yAxisIndicesColor={'yellow'}
-      rulesType="solid"
+      // rulesType="solid"
       rulesColor="gray"
       yAxisTextStyle={{color: 'gray'}}
       yAxisSide="right"

@@ -22,7 +22,7 @@ export const AuthScreen = () => {
   const [register, setRegister] = useState(false);
   const [isConnected, setIsConnected] = useState(true);
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('test@gmail.com');
+  const [email, setEmail] = useState('7@7.com');
   const [password, setPassword] = useState('123456');
 
   const {
