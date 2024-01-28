@@ -9,6 +9,7 @@ import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {useRoute} from '@react-navigation/native';
 import {
+  AlertModal,
   CalendarModal,
   FullScreenLineChartModal,
   Header,
@@ -47,6 +48,7 @@ export const VarlikDetayScreen = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
   const [timePeriod, setTimePeriod] = useState(t('timePeriodModal.today'));
   const [timePeriodVisible, setTimePeriodVisible] = useState(false);
   const [miktar1, setMiktar1] = useState('');
@@ -255,7 +257,9 @@ export const VarlikDetayScreen = () => {
             {page == 'update' && (
               <TouchableOpacity
                 style={style.deleteContainer}
-                onPress={handleDeleteAsset}>
+                onPress={() => {
+                  setIsAlertModalVisible(true);
+                }}>
                 <Icon name={'delete-outline'} color={colors.white} size={25} />
               </TouchableOpacity>
             )}
@@ -280,6 +284,11 @@ export const VarlikDetayScreen = () => {
         setIsModalVisible={setTimePeriodVisible}
         selectedItem={timePeriod}
         setSelectedItem={setTimePeriod}
+      />
+      <AlertModal
+        handleDelete={handleDeleteAsset}
+        isModalVisible={isAlertModalVisible}
+        setIsModalVisible={setIsAlertModalVisible}
       />
     </ScrollView>
   );

@@ -268,7 +268,7 @@ export const HomeScreen = () => {
                   }}
                   setColorCallback={setColor}
                   setDegerCallback={setDeger}
-                  setHeaderCallback={setHeader} // Pass setHeader as a callback
+                  setHeaderCallback={setHeader}
                   borderColor1={PortfolioDetailsData?.distribution[3]?.color}
                   borderColor2={PortfolioDetailsData?.distribution[1]?.color}
                   borderColor3={PortfolioDetailsData?.distribution[5]?.color}
