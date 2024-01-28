@@ -21,15 +21,23 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import style from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {addAssetProcess, getStokDetailProcess} from '../../api';
+import {
+  addAssetProcess,
+  deleteAssetProcess,
+  getPortfolioDetailsProcess,
+  getStokDetailProcess,
+} from '../../api';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {colors} from '../../theme';
 
 export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {t} = useTranslation();
-  const {params: {page = 0, text} = {}} = useRoute();
+  const {params: {page = 0, text, assetId} = {}} = useRoute();
+
+  console.log('assetIdddddddddd', assetId);
 
   console.log('TTTTTTTTTTTTT', text);
 
@@ -101,6 +109,21 @@ export const VarlikDetayScreen = () => {
       setSelectedDate('05-12-2023');
     }
   }, []);
+
+  const handleDeleteAsset = async () => {
+    const selectedPortfolioId = await AsyncStorage.getItem(
+      'selectedPortfolioId',
+    );
+    await dispatch(
+      deleteAssetProcess({
+        portfolioId: selectedPortfolioId,
+        assetId: assetId,
+      }),
+    );
+    await dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
+
+    navigation.goBack();
+  };
 
   const handleAddAsset = async () => {
     const currentDate = new Date();
@@ -207,18 +230,36 @@ export const VarlikDetayScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-
-          <TouchableOpacity
-            style={style.saveButtonContainer}
-            onPress={handleAddAsset}>
-            <LinearGradient
-              colors={['#05A04D', '#007029']}
-              style={style.saveButton}>
-              <Text style={style.saveButtonText}>
-                {t('assetDetailScreen.save')}
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
+          <View
+            style={
+              page == 'update'
+                ? {
+                    ...style.buttonsContainer,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingRight: 50,
+                  }
+                : style.buttonsContainer
+            }>
+            <TouchableOpacity
+              style={style.saveButtonContainer}
+              onPress={handleAddAsset}>
+              <LinearGradient
+                colors={['#05A04D', '#007029']}
+                style={style.saveButton}>
+                <Text style={style.saveButtonText}>
+                  {t('assetDetailScreen.save')}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            {page == 'update' && (
+              <TouchableOpacity
+                style={style.deleteContainer}
+                onPress={handleDeleteAsset}>
+                <Icon name={'delete-outline'} color={colors.white} size={25} />
+              </TouchableOpacity>
+            )}
+          </View>
         </LinearGradient>
       </LinearGradientContainer>
       <CalendarModal

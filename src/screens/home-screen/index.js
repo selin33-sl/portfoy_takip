@@ -9,6 +9,7 @@ import {
   Header,
   Inform,
   LinearGradientContainer,
+  Loader,
   PortfoyComponent,
   PortfoyListModal,
   ResizableCard,
@@ -52,9 +53,10 @@ export const HomeScreen = () => {
   const viewRef = useRef();
 
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
-  const {data: PortfolioDetailsData} = useSelector(
-    state => state.getPortfolioDetails,
-  );
+  const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
+    useSelector(state => state.getPortfolioDetails);
+
+  console.log('PortfolioDetailsLoading', PortfolioDetailsLoading);
 
   useMessageAndErrorUser(
     state => state.getPortfolioDetails,
@@ -144,12 +146,20 @@ export const HomeScreen = () => {
     setHidden(!hidden);
   };
 
-  const renderItem = ({item, index}) => {
+  const renderItem = ({item, index, itemIndex}) => {
+    console.log(
+      'NE BU ŞİMDİİ',
+      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets,
+    );
     return (
       <ResizableCard
-        onPress={() =>
-          navigation.navigate('varlikDetay-screen', {page: 'update'})
-        }
+        onPress={assetId => {
+          console.log(assetId, 'oluyoorr gibi gibi'),
+            navigation.navigate('varlikDetay-screen', {
+              page: 'update',
+              assetId: assetId,
+            });
+        }}
         borderColor={
           PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
         }
@@ -164,149 +174,161 @@ export const HomeScreen = () => {
 
   return (
     <LinearGradientContainer>
-      <Header
-        option
-        text={PortfolioDetailsData?.portfolio?.name}
-        backIcon={false}
-        headerOnPress={() => setIsPortfoyListModalVisible(true)}
-      />
-      <View style={style.innerContainer}>
-        <View style={style.pieChartContainer}>
-          <View style={style.optionContainer}>
-            <TouchableOpacity
-              style={style.shareContainer}
-              // onPress={captureScreen}
-              onPress={() => setIsModalVisible(true)}>
-              <Text style={style.birimText}>TL</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={style.shareContainer}
-              // onPress={captureScreen}
-              onPress={handleHidden}>
-              <Icon
-                name={hidden == true ? 'eye-off-outline' : 'eye-outline'}
-                size={25}
-                color={colors.white}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={style.shareContainer}
-              // onPress={captureScreen}
-              onPress={async () => {
-                await captureScreen();
-                await setIsShareModalVisible(true);
-              }}>
-              <Icon name={'share-variant-outline'} size={25} color={'white'} />
-            </TouchableOpacity>
-          </View>
-
-          <View ref={viewRef} collapsable={false} style={style.shareArea}>
-            <TouchableOpacity
-              activeOpacity={1.0}
-              style={style.pieChart}
-              onPress={() => setEspecial(false)}>
-              <PieChart
-                showText
-                widthAndHeight={widthAndHeight}
-                series={especial ? seriesEspecial : series}
-                sliceColor={especial ? sliceColorEspecial : sliceColor}
-                coverRadius={0.5}
-              />
-
-              {especial && (
-                <TouchableOpacity
-                  style={style.detailIcon}
-                  onPress={async () => {
-                    await dispatch(
-                      getAssetPercentagesProcess({
-                        id: portfolioId,
-                        type:
-                          header == 'Döviz'
-                            ? 'Currency'
-                            : header == 'Hisse Senedi'
-                            ? 'Stock'
-                            : header == 'Fon'
-                            ? 'Fund'
-                            : header == 'Kripto'
-                            ? 'Crypto'
-                            : header == 'Altın'
-                            ? 'Gold'
-                            : header == 'Türk Lirası'
-                            ? 'TurkishLira'
-                            : header,
-                      }),
-                    );
-                    setIsAssetDetailsModal(true);
-                  }}>
-                  <Icon name={'details'} size={30} color={'white'} />
-                </TouchableOpacity>
-              )}
-            </TouchableOpacity>
-
-            <Inform
-              especial={especial}
-              onPress={() => {
-                setEspecial(true);
-              }}
-              setColorCallback={setColor}
-              setDegerCallback={setDeger}
-              setHeaderCallback={setHeader} // Pass setHeader as a callback
-              borderColor1={PortfolioDetailsData?.distribution[3]?.color}
-              borderColor2={PortfolioDetailsData?.distribution[1]?.color}
-              borderColor3={PortfolioDetailsData?.distribution[5]?.color}
-              borderColor4={PortfolioDetailsData?.distribution[0]?.color}
-              borderColor5={PortfolioDetailsData?.distribution[2]?.color}
-              borderColor6={PortfolioDetailsData?.distribution[4]?.color}
-              deger1={PortfolioDetailsData?.distribution[3]?.percentage}
-              deger2={PortfolioDetailsData?.distribution[1]?.percentage}
-              deger3={PortfolioDetailsData?.distribution[5]?.percentage}
-              deger4={PortfolioDetailsData?.distribution[0]?.percentage}
-              deger5={PortfolioDetailsData?.distribution[2]?.percentage}
-              deger6={PortfolioDetailsData?.distribution[4]?.percentage}
-            />
-          </View>
-        </View>
-
-        <View style={style.toplamContainer}>
-          <Text style={style.toplamText}>
-            {hidden
-              ? '****TL'
-              : `${PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'}`}
-          </Text>
-        </View>
-        <View style={style.listContainer}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={PortfolioDetailsData?.portfolio?.portfolioDetails}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
+      {PortfolioDetailsLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Header
+            option
+            text={PortfolioDetailsData?.portfolio?.name}
+            backIcon={false}
+            headerOnPress={() => setIsPortfoyListModalVisible(true)}
           />
-        </View>
-      </View>
+          <View style={style.innerContainer}>
+            <View style={style.pieChartContainer}>
+              <View style={style.optionContainer}>
+                <TouchableOpacity
+                  style={style.shareContainer}
+                  // onPress={captureScreen}
+                  onPress={() => setIsModalVisible(true)}>
+                  <Text style={style.birimText}>TL</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={style.shareContainer}
+                  // onPress={captureScreen}
+                  onPress={handleHidden}>
+                  <Icon
+                    name={hidden == true ? 'eye-off-outline' : 'eye-outline'}
+                    size={25}
+                    color={colors.white}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={style.shareContainer}
+                  // onPress={captureScreen}
+                  onPress={async () => {
+                    await captureScreen();
+                    await setIsShareModalVisible(true);
+                  }}>
+                  <Icon
+                    name={'share-variant-outline'}
+                    size={25}
+                    color={'white'}
+                  />
+                </TouchableOpacity>
+              </View>
 
-      <CurrencyModal
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-      />
+              <View ref={viewRef} collapsable={false} style={style.shareArea}>
+                <TouchableOpacity
+                  activeOpacity={1.0}
+                  style={style.pieChart}
+                  onPress={() => setEspecial(false)}>
+                  <PieChart
+                    showText
+                    widthAndHeight={widthAndHeight}
+                    series={especial ? seriesEspecial : series}
+                    sliceColor={especial ? sliceColorEspecial : sliceColor}
+                    coverRadius={0.5}
+                  />
 
-      <PortfoyComponent
-        isListModalVisible={isPortfoyListModalVisible}
-        setIsListModalVisible={setIsPortfoyListModalVisible}
-        isAddModalVisible={isPortfoyAddModalVisible}
-        setIsAddModalVisible={setIsPortfoyAddModalVisible}
-        data={AllPortfolioData}
-      />
-      <ShareModal
-        isModalVisible={isShareModalVisible}
-        setIsModalVisible={setIsShareModalVisible}
-        image={capturedImageURI}
-      />
-      <AssetDetailsModal
-        color={color}
-        header={header}
-        isAssetDetailsModal={isAssetDetailsModal}
-        setIsAssetDetailsModal={setIsAssetDetailsModal}
-      />
+                  {especial && (
+                    <TouchableOpacity
+                      style={style.detailIcon}
+                      onPress={async () => {
+                        await dispatch(
+                          getAssetPercentagesProcess({
+                            id: portfolioId,
+                            type:
+                              header == 'Döviz'
+                                ? 'Currency'
+                                : header == 'Hisse Senedi'
+                                ? 'Stock'
+                                : header == 'Fon'
+                                ? 'Fund'
+                                : header == 'Kripto'
+                                ? 'Crypto'
+                                : header == 'Altın'
+                                ? 'Gold'
+                                : header == 'Türk Lirası'
+                                ? 'TurkishLira'
+                                : header,
+                          }),
+                        );
+                        setIsAssetDetailsModal(true);
+                      }}>
+                      <Icon name={'details'} size={30} color={'white'} />
+                    </TouchableOpacity>
+                  )}
+                </TouchableOpacity>
+
+                <Inform
+                  especial={especial}
+                  onPress={() => {
+                    setEspecial(true);
+                  }}
+                  setColorCallback={setColor}
+                  setDegerCallback={setDeger}
+                  setHeaderCallback={setHeader} // Pass setHeader as a callback
+                  borderColor1={PortfolioDetailsData?.distribution[3]?.color}
+                  borderColor2={PortfolioDetailsData?.distribution[1]?.color}
+                  borderColor3={PortfolioDetailsData?.distribution[5]?.color}
+                  borderColor4={PortfolioDetailsData?.distribution[0]?.color}
+                  borderColor5={PortfolioDetailsData?.distribution[2]?.color}
+                  borderColor6={PortfolioDetailsData?.distribution[4]?.color}
+                  deger1={PortfolioDetailsData?.distribution[3]?.percentage}
+                  deger2={PortfolioDetailsData?.distribution[1]?.percentage}
+                  deger3={PortfolioDetailsData?.distribution[5]?.percentage}
+                  deger4={PortfolioDetailsData?.distribution[0]?.percentage}
+                  deger5={PortfolioDetailsData?.distribution[2]?.percentage}
+                  deger6={PortfolioDetailsData?.distribution[4]?.percentage}
+                />
+              </View>
+            </View>
+
+            <View style={style.toplamContainer}>
+              <Text style={style.toplamText}>
+                {hidden
+                  ? '****TL'
+                  : `${
+                      PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'
+                    }`}
+              </Text>
+            </View>
+            <View style={style.listContainer}>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={PortfolioDetailsData?.portfolio?.portfolioDetails}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            </View>
+          </View>
+
+          <CurrencyModal
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+          />
+
+          <PortfoyComponent
+            isListModalVisible={isPortfoyListModalVisible}
+            setIsListModalVisible={setIsPortfoyListModalVisible}
+            isAddModalVisible={isPortfoyAddModalVisible}
+            setIsAddModalVisible={setIsPortfoyAddModalVisible}
+            data={AllPortfolioData}
+          />
+          <ShareModal
+            isModalVisible={isShareModalVisible}
+            setIsModalVisible={setIsShareModalVisible}
+            image={capturedImageURI}
+          />
+          <AssetDetailsModal
+            color={color}
+            header={header}
+            isAssetDetailsModal={isAssetDetailsModal}
+            setIsAssetDetailsModal={setIsAssetDetailsModal}
+          />
+        </>
+      )}
     </LinearGradientContainer>
   );
 };

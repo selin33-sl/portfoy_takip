@@ -24,6 +24,21 @@ export default StyleSheet.create({
     borderColor: colors.pale,
     borderRadius: 20,
   },
+  buttonsContainer: {
+    width: windowWidth * 0.9,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteContainer: {
+    marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: windowWidth * 0.1,
+    height: windowHeight * 0.055,
+    right: -50,
+    backgroundColor: 'red',
+    borderRadius: 50,
+  },
 
   innerContainer: {
     flex: 1,
@@ -121,8 +136,8 @@ export default StyleSheet.create({
   },
   saveButtonContainer: {
     marginTop: 30,
-    width: windowWidth * 0.9,
-    height: windowHeight * 0.08,
+    width: windowWidth * 0.5,
+    height: windowHeight * 0.055,
     justifyContent: 'center',
     alignItems: 'center',
   },
