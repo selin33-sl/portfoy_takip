@@ -13,6 +13,7 @@ export const ResizableCard = ({
   hidden,
   sendItem,
   onPress,
+  infoModalOnPress,
 }) => {
   const {t} = useTranslation();
 
@@ -35,7 +36,7 @@ export const ResizableCard = ({
     setModalVisible2(!isModalVisible2);
   };
 
-  const SmallCard = ({name, price, adet, assetId}) => {
+  const SmallCard = ({name, price, adet, profit, assetId}) => {
     return (
       <TouchableOpacity
         style={style.detailContainer}
@@ -51,6 +52,20 @@ export const ResizableCard = ({
             {hidden ? '****' : adet}
             {t('common.quantity')}
           </Text>
+          <View style={style.profitInfoContainer}>
+            <View
+              style={{
+                ...style.profitContainer,
+                backgroundColor: profit > 0 ? 'green' : 'red',
+              }}>
+              <Text style={style.profitText}>{profit}%</Text>
+            </View>
+            <TouchableOpacity
+              style={style.infoButtonContainer}
+              onPress={infoModalOnPress}>
+              <Icon name={'information-variant'} color={'black'} size={20} />
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -63,6 +78,7 @@ export const ResizableCard = ({
         price={item.totalAssetValue}
         adet={item.quantity}
         assetId={item._id}
+        profit={item.profitPercentage}
       />
     );
   };

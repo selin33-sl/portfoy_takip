@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import {deleteAssetProcess} from '../../../api';
 
 export const deleteAssetSlice = createSlice({
-  name: 'deleteAsset',
+  name: 'removeAsset',
   initialState: {
     isLoading: {},
     status: {},

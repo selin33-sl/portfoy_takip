@@ -26,11 +26,12 @@ import {
   addAssetProcess,
   deleteAssetProcess,
   getPortfolioDetailsProcess,
-  getStokDetailProcess,
 } from '../../api';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors} from '../../theme';
+import {resetDeleteAsset} from '../../redux/slice/portfolio/delete-asset-slice';
+import {useToast} from '../../hooks/useToast';
 
 export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
@@ -63,6 +64,9 @@ export const VarlikDetayScreen = () => {
     state => state.getCurrencyDetail,
   );
   const {data: GoldDetailData} = useSelector(state => state.getGoldDetail);
+  const {status: DeleteAssetStatus, message: DeleteAssetMessage} = useSelector(
+    state => state.removeAsset,
+  );
 
   console.log('LastPriceStock', LastPriceStock);
   const lcData = [
@@ -77,6 +81,14 @@ export const VarlikDetayScreen = () => {
   ];
 
   console.log('CurrencyDetailData', CurrencyDetailData);
+
+  useToast(
+    DeleteAssetStatus,
+    resetDeleteAsset(),
+    DeleteAssetMessage,
+    DeleteAssetMessage,
+    dispatch,
+  );
 
   useEffect(() => {
     if (StockDetailData && StockDetailData.length > 0) {
@@ -123,6 +135,8 @@ export const VarlikDetayScreen = () => {
       }),
     );
     await dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
+
+    setIsAlertModalVisible(false);
 
     navigation.goBack();
   };

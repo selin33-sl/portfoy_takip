@@ -26,3 +26,4 @@ export * from './inputContainer';
 export * from './Modals/shareModal';
 export * from './Modals/assetDetailsModal';
 export * from './Modals/alertModal';
+export * from './Modals/assetInfoModal';

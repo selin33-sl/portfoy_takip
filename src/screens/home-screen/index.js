@@ -5,6 +5,7 @@ import PieChart from 'react-native-pie-chart';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   AssetDetailsModal,
+  AssetInfoModal,
   CurrencyModal,
   Header,
   Inform,
@@ -39,6 +40,8 @@ export const HomeScreen = () => {
   const [color, setColor] = useState('');
   const [deger, setDeger] = useState();
   const [isAssetDetailsModal, setIsAssetDetailsModal] = useState(false);
+  const [isAssetInfoModal, setIsAssetInfoModal] = useState(false);
+  const [assetInfoItem, setAssetInfoItem] = useState('');
   const [portfolioId, setPortfolioId] = useState('');
   const [especial, setEspecial] = useState(false);
   const [capturedImageURI, setCapturedImageURI] = useState(null);
@@ -56,18 +59,8 @@ export const HomeScreen = () => {
   const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
     useSelector(state => state.getPortfolioDetails);
 
-  console.log('PortfolioDetailsLoading', PortfolioDetailsLoading);
+  console.log('assetInfoItem', assetInfoItem);
 
-  useMessageAndErrorUser(
-    state => state.getPortfolioDetails,
-    resetPortfolioDetails(),
-    dispatch,
-  );
-
-  console.log(
-    'PortfolioDetailsData',
-    PortfolioDetailsData?.portfolio?.portfolioDetails[1],
-  );
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
   }, []);
@@ -151,6 +144,7 @@ export const HomeScreen = () => {
       'NE BU ŞİMDİİ',
       PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets,
     );
+
     return (
       <ResizableCard
         onPress={assetId => {
@@ -168,6 +162,14 @@ export const HomeScreen = () => {
           PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
         }
         hidden={hidden}
+        infoModalOnPress={() => {
+          setAssetInfoItem(
+            PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets[
+              index
+            ],
+          );
+          setIsAssetInfoModal(true);
+        }}
       />
     );
   };
@@ -326,6 +328,11 @@ export const HomeScreen = () => {
             header={header}
             isAssetDetailsModal={isAssetDetailsModal}
             setIsAssetDetailsModal={setIsAssetDetailsModal}
+          />
+          <AssetInfoModal
+            item={assetInfoItem}
+            isModalVisible={isAssetInfoModal}
+            setIsModalVisible={setIsAssetInfoModal}
           />
         </>
       )}

@@ -7,6 +7,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   Header,
   LinearGradientContainer,
+  Loader,
   SearchBar,
   VarlikListCard,
 } from '../../components';
@@ -38,6 +39,8 @@ export const VarliklarListScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation();
   const route = useRoute();
   const {text} = route.params;
@@ -46,14 +49,26 @@ export const VarliklarListScreen = () => {
     dispatch(resetStockDetail());
   }, []);
 
-  const {data: AllStockData} = useSelector(state => state.getAllStock);
-  const {data: AllCurrencyData} = useSelector(state => state.getAllCurrency);
+  const {data: AllStockData, isLoading: AllStockLoading} = useSelector(
+    state => state.getAllStock,
+  );
+  const {data: AllCurrencyData, isLoading: AllCurrencyLoading} = useSelector(
+    state => state.getAllCurrency,
+  );
+  const {data: AllGoldData, isLoading: AllGoldLoading} = useSelector(
+    state => state.getAllGold,
+  );
+
   const {data: KriptoData} = useSelector(state => state.cripto);
   const {data: EmtiaData} = useSelector(state => state.emtia);
   const {data: GumusData} = useSelector(state => state.silverPrice);
-  const {data: AllGoldData} = useSelector(state => state.getAllGold);
 
-  console.log('AllCurrencyData', AllCurrencyData);
+  useEffect(() => {
+    console.log('AllStockLoading', AllStockLoading);
+  }, [AllStockLoading]);
+
+  console.log('AllCurrencyLoading', AllCurrencyLoading);
+  console.log('AllGoldLoading', AllGoldLoading);
 
   const data =
     AllStockData && AllStockData.length
@@ -165,24 +180,46 @@ export const VarliklarListScreen = () => {
     );
   };
 
+  useEffect(() => {
+    if (
+      AllStockLoading == true ||
+      AllGoldLoading == true ||
+      AllCurrencyLoading == true
+    ) {
+      setLoading(true);
+      console.log('TRUE OLUNCA');
+    } else {
+      setLoading(false);
+      console.log('FALSE OLUNCA');
+    }
+  }, [AllStockLoading, AllGoldLoading, AllCurrencyLoading]);
+
   return (
     <LinearGradientContainer>
       <Header text={text} backIcon />
-      <View style={style.innerContainer}>
-        <SearchBar
-          value={searchTerm}
-          onChangeText={setSearchTerm}
-          onClear={() => setSearchTerm('')}
-        />
-        <View style={style.listContainer}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={item => item._id.toString()}
+      {loading ? (
+        <>
+          {console.log(AllStockLoading, AllGoldLoading, AllCurrencyLoading)}
+          <Loader />
+        </>
+      ) : (
+        <View style={style.innerContainer}>
+          <SearchBar
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            onClear={() => setSearchTerm('')}
           />
+
+          <View style={style.listContainer}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={item => item._id.toString()}
+            />
+          </View>
         </View>
-      </View>
+      )}
     </LinearGradientContainer>
   );
 };

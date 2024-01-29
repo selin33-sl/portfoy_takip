@@ -47,7 +47,7 @@ const reducer = combineReducers({
   getPortfolioDetails: getPortfolioDetailsSlice,
   addAsset: addAssetSlice,
   getAssetPercentages: getAssetPercentagesSlice,
-  deleteAsset: deleteAssetSlice,
+  removeAsset: deleteAssetSlice,
 });
 
 export const store = configureStore({

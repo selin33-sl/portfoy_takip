@@ -26,6 +26,31 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  profitInfoContainer: {
+    flexDirection: 'row',
+  },
+  infoButtonContainer: {
+    width: windowWidth * 0.06,
+    height: windowWidth * 0.06,
+    backgroundColor: colors.grey,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 5,
+  },
+  profitContainer: {
+    width: 'auto',
+    height: windowWidth * 0.06,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  profitText: {
+    fontSize: windowHeight * 0.015,
+    paddingHorizontal: 5,
+    color: colors.white,
+    fontWeight: '500',
+  },
 
   detailContainer: {
     paddingHorizontal: windowWidth * 0.02,
@@ -43,6 +68,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   detail2: {
+    height: windowHeight * 0.04,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
