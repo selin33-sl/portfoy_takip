@@ -10,6 +10,7 @@ export const FullScreenLineChartModal = ({
   isAddModalVisible,
   setIsAddModalVisible,
   lcData,
+  header,
 }) => {
   const [allowLandscape, setAllowLandscape] = useState(false);
 
@@ -41,7 +42,7 @@ export const FullScreenLineChartModal = ({
       onRequestClose={closeModal}>
       <LinearGradient colors={['#44007A', '#10001D']}>
         <View style={style.header}>
-          <Text style={style.headerText}>USD</Text>
+          <Text style={style.headerText}>{header}</Text>
           <TouchableOpacity onPress={closeModal}>
             <Icon name={'close'} size={30} color={'white'} />
           </TouchableOpacity>

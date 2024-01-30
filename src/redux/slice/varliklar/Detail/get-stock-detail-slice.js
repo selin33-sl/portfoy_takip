@@ -8,6 +8,7 @@ export const getStockDetailSlice = createSlice({
     message: {},
     data: undefined,
     lastPrice: undefined,
+    name: undefined,
   },
   reducers: {
     resetStockDetail: state => {
@@ -26,14 +27,15 @@ export const getStockDetailSlice = createSlice({
       })
       .addCase(getStockDetailProcess.fulfilled, (state, action) => {
         state.isLoading = false;
-        (state.status = action.payload?.status),
+        (state.status = action.payload?.data?.status),
           (state.message = action.payload?.message),
-          (state.lastPrice = action.payload?.lastPrice),
+          (state.lastPrice = action.payload?.data?.lastPrice),
+          (state.name = action.payload?.data?.name),
           (state.data = action.payload?.data?.data);
       })
       .addCase(getStockDetailProcess.rejected, (state, action) => {
         state.isLoading = false;
-        state.status = action.payload?.errorCode;
+        state.status = action.payload?.data?.status;
         state.message = action.payload?.message;
       });
   },

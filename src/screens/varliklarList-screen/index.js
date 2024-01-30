@@ -166,6 +166,7 @@ export const VarliklarListScreen = () => {
         percentText={roundedRate}
         onPress={async () => {
           {
+            console.log('şaşkınımmmmmmmm:', item?.name);
             AllStockData && AllStockData.length
               ? await dispatch(getStockDetailProcess(item?.name))
               : AllCurrencyData && AllCurrencyData.length

@@ -52,7 +52,6 @@ export const AssetInfoModal = ({isModalVisible, setIsModalVisible, item}) => {
               text1={'Ortalama Maliyet: '}
               text2={`${item?.purchasePrice} TL`}
             />
-            <Text>Günlük Değişim: {}</Text>
           </View>
         </LinearGradient>
       </View>

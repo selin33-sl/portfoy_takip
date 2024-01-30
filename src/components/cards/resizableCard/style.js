@@ -36,7 +36,7 @@ export default StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 5,
+    marginLeft: 8,
   },
   profitContainer: {
     width: 'auto',

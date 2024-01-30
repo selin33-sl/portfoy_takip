@@ -1,7 +1,9 @@
-import {View, Text} from 'react-native';
+import {View, Text, Dimensions} from 'react-native';
 import {LineChart} from 'react-native-gifted-charts';
 import React from 'react';
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 export const LineChartt = ({lcData, width, height, maxValue}) => {
   return (
     <LineChart
@@ -11,7 +13,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       data={lcData}
       // rotateLabel={true}
       xAxisLabelTextStyle={{
-        color: 'red',
+        color: 'white',
         width: 60,
         fontSize: 10,
       }}
@@ -19,7 +21,6 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       width={width}
       height={height}
       hideDataPoints
-      spacing={35}
       color="#00ff83"
       thickness={1}
       startFillColor="rgba(20,105,81,0.3)"
@@ -27,7 +28,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       startOpacity={3}
       endOpacity={0.2}
       initialSpacing={20}
-      endSpacing={0}
+      endSpacing={40}
       noOfSections={1}
       // maxValue={maxValue}
       yAxisColor="white"
@@ -44,7 +45,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
         pointerStripWidth: 2,
         pointerColor: 'lightgray',
         radius: 6,
-        pointerLabelWidth: 100,
+        pointerLabelWidth: windowWidth * 0.07,
         pointerLabelHeight: 90,
         activatePointersOnLongPress: true,
         autoAdjustPointerLabelPosition: false,
@@ -54,13 +55,13 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
               style={{
                 justifyContent: 'center',
                 marginTop: 60,
-                marginLeft: -40,
-                backgroundColor: 'pink',
+                marginLeft: -60,
+                backgroundColor: 'purple',
               }}>
               <Text
                 style={{
-                  color: 'red',
-                  fontSize: 10,
+                  color: 'white',
+                  fontSize: windowHeight * 0.01,
                   marginBottom: 6,
                   textAlign: 'center',
                 }}>
@@ -76,8 +77,9 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
                     fontWeight: 'bold',
                     textAlign: 'center',
                     color: 'black',
+                    fontSize: windowHeight * 0.015,
                   }}>
-                  {items[0].value + '.0' + ' TL'}
+                  {items[0].value + ' TL'}
                 </Text>
               </View>
             </View>

@@ -154,6 +154,7 @@ export default StyleSheet.create({
     color: colors.white,
     textAlign: 'center',
   },
+  disabledButton: {},
   descContainer: {
     width: windowWidth,
     height: windowHeight * 0.03,

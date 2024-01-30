@@ -26,12 +26,14 @@ import {
   addAssetProcess,
   deleteAssetProcess,
   getPortfolioDetailsProcess,
+  getStockDetailProcess,
 } from '../../api';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {colors} from '../../theme';
 import {resetDeleteAsset} from '../../redux/slice/portfolio/delete-asset-slice';
 import {useToast} from '../../hooks/useToast';
+import {resetAddAsset} from '../../redux/slice/portfolio/add-asset-slice';
 
 export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
@@ -57,9 +59,12 @@ export const VarlikDetayScreen = () => {
   const [fiyat1, setFiyat1] = useState('');
   const [fiyat2, setFiyat2] = useState('');
 
-  const {data: StockDetailData, lastPrice: LastPriceStock} = useSelector(
-    state => state.getStockDetail,
-  );
+  const {
+    data: StockDetailData,
+    lastPrice: StokLastPrice,
+    name: StokName,
+  } = useSelector(state => state.getStockDetail);
+
   const {data: CurrencyDetailData} = useSelector(
     state => state.getCurrencyDetail,
   );
@@ -68,7 +73,17 @@ export const VarlikDetayScreen = () => {
     state => state.removeAsset,
   );
 
-  console.log('LastPriceStock', LastPriceStock);
+  const {status: AddAssetStatus, message: AddAssetMessage} = useSelector(
+    state => state.addAsset,
+  );
+
+  console.log('StockDetailData: ', StockDetailData);
+
+  console.log('StokLastPrice', StokLastPrice);
+
+  console.log('AddAssetMessage', AddAssetMessage);
+  console.log('AddAssetStatus', AddAssetStatus);
+
   const lcData = [
     {value: 160.5, date: '1 Apr 2022', label: '1 Apr 2022'},
     {value: 1.8, date: '2 Apr 2022'},
@@ -90,12 +105,20 @@ export const VarlikDetayScreen = () => {
     dispatch,
   );
 
+  useToast(
+    AddAssetStatus,
+    resetAddAsset(),
+    AddAssetMessage,
+    AddAssetMessage,
+    dispatch,
+  );
+
   useEffect(() => {
     if (StockDetailData && StockDetailData.length > 0) {
-      const firstStockItem = StockDetailData[0];
+      const firstStockItem = StokName;
       console.log('nee buuuu', firstStockItem);
-      setFullName(firstStockItem?.name);
-      const words = firstStockItem?.name.split(' ');
+      setFullName(firstStockItem);
+      const words = firstStockItem?.split(' ');
       setCode(words[0] ? words[0].trim() : '');
       setLongName(words.slice(1).join(' ').trim());
     } else if (CurrencyDetailData && CurrencyDetailData.length > 0) {
@@ -152,7 +175,11 @@ export const VarlikDetayScreen = () => {
       miktar1 || (miktar2 && `${miktar1 || '0'}.${miktar2 || '0'}`);
 
     const totalPrice =
-      fiyat1 || fiyat2 ? `${fiyat1 || '0'}.${fiyat2 || '0'}` : '0.0';
+      fiyat1 || fiyat2
+        ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
+        : StokLastPrice
+        ? StokLastPrice
+        : '0.0';
 
     const selectedPortfolioId = await AsyncStorage.getItem(
       'selectedPortfolioId',
@@ -183,9 +210,19 @@ export const VarlikDetayScreen = () => {
         },
       }),
     );
+
+    setMiktar1('');
+    setMiktar2('');
+    setFiyat1('');
+    setFiyat2('');
+    setSelectedDate('');
   };
 
   console.log('selectedDateee', selectedDate);
+  // useEffect(() => {
+  //   dispatch(getStockDetailProcess(code, 5));
+  //   console.log('codeeeeeeeeeeeee', code);
+  // }, [timePeriod]);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -196,7 +233,7 @@ export const VarlikDetayScreen = () => {
         </View>
 
         <View style={style.lineChartContainer}>
-          <LineChartt lcData={lcData} width={340} height={170} />
+          <LineChartt lcData={StockDetailData} width={340} height={170} />
         </View>
 
         <View style={style.options}>
@@ -259,11 +296,21 @@ export const VarlikDetayScreen = () => {
             }>
             <TouchableOpacity
               style={style.saveButtonContainer}
-              onPress={handleAddAsset}>
+              onPress={handleAddAsset}
+              disabled={!miktar1 && !miktar2}>
               <LinearGradient
-                colors={['#05A04D', '#007029']}
+                colors={
+                  !miktar1 && !miktar2
+                    ? ['#007029', '#007029']
+                    : ['#05A04D', '#007029']
+                }
                 style={style.saveButton}>
-                <Text style={style.saveButtonText}>
+                <Text
+                  style={[
+                    style.saveButtonText,
+                    !miktar1 &&
+                      !miktar2 && {...style.saveButtonText, color: 'grey'},
+                  ]}>
                   {t('assetDetailScreen.save')}
                 </Text>
               </LinearGradient>
@@ -290,7 +337,8 @@ export const VarlikDetayScreen = () => {
       <FullScreenLineChartModal
         isAddModalVisible={isAddModalVisible}
         setIsAddModalVisible={setIsAddModalVisible}
-        lcData={lcData}
+        lcData={StockDetailData}
+        header={code}
       />
 
       <TimePeriodModal
