@@ -10,39 +10,31 @@ export const TimePeriodModal = ({
   setIsModalVisible,
   selectedItem,
   setSelectedItem,
+  setSelectedValue,
 }) => {
   const {t} = useTranslation();
 
   const data = [
     {
       text: t('timePeriodModal.today'),
+      value: 2,
     },
     {
       text: t('timePeriodModal.last7days'),
+      value: 7,
     },
     {
       text: t('timePeriodModal.last30days'),
+      value: 30,
     },
     {
       text: t('timePeriodModal.last90days'),
+      value: 90,
     },
-    {
-      text: t('timePeriodModal.last180days'),
-    },
-    {
-      text: t('timePeriodModal.last360days'),
-    },
-    {
-      text: t('timePeriodModal.thisWeek'),
-    },
-    {
-      text: t('timePeriodModal.thisMonth'),
-    },
-    {
-      text: t('timePeriodModal.thisYear'),
-    },
+
     {
       text: t('timePeriodModal.allTime'),
+      value: 90,
     },
   ];
 
@@ -64,6 +56,8 @@ export const TimePeriodModal = ({
 
   const handleItemPress = text => {
     setSelectedItem(text);
+    const selectedValue = data.find(item => item.text === text)?.value;
+    setSelectedValue(selectedValue);
 
     setIsModalVisible(false);
   };

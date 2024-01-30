@@ -28,7 +28,6 @@ export const registerSlice = createSlice({
         state.portfolioId = action.payload?.portfolioId;
       })
       .addCase(registerProcess.rejected, (state, action) => {
-        console.error('Error in registerProcess:', action.error);
         state.status = 'error';
         state.isLoading = false;
         state.message = action.error?.message;

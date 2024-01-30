@@ -63,13 +63,6 @@ export const VarliklarListScreen = () => {
   const {data: EmtiaData} = useSelector(state => state.emtia);
   const {data: GumusData} = useSelector(state => state.silverPrice);
 
-  useEffect(() => {
-    console.log('AllStockLoading', AllStockLoading);
-  }, [AllStockLoading]);
-
-  console.log('AllCurrencyLoading', AllCurrencyLoading);
-  console.log('AllGoldLoading', AllGoldLoading);
-
   const data =
     AllStockData && AllStockData.length
       ? AllStockData
@@ -166,9 +159,10 @@ export const VarliklarListScreen = () => {
         percentText={roundedRate}
         onPress={async () => {
           {
-            console.log('şaşkınımmmmmmmm:', item?.name);
             AllStockData && AllStockData.length
-              ? await dispatch(getStockDetailProcess(item?.name))
+              ? await dispatch(
+                  getStockDetailProcess({name: item?.name, day: 2}),
+                )
               : AllCurrencyData && AllCurrencyData.length
               ? await dispatch(getCurrencyDetailProcess(item?.name))
               : AllGoldData && AllGoldData.length
@@ -188,10 +182,8 @@ export const VarliklarListScreen = () => {
       AllCurrencyLoading == true
     ) {
       setLoading(true);
-      console.log('TRUE OLUNCA');
     } else {
       setLoading(false);
-      console.log('FALSE OLUNCA');
     }
   }, [AllStockLoading, AllGoldLoading, AllCurrencyLoading]);
 
@@ -200,7 +192,6 @@ export const VarliklarListScreen = () => {
       <Header text={text} backIcon />
       {loading ? (
         <>
-          {console.log(AllStockLoading, AllGoldLoading, AllCurrencyLoading)}
           <Loader />
         </>
       ) : (

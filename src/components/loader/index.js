@@ -4,7 +4,6 @@ import {ActivityIndicator} from 'react-native';
 import {colors} from '../../theme';
 
 export const Loader = () => {
-  console.log('şuanda buradaaa');
   return (
     <ActivityIndicator
       style={style.loadingIndicator}

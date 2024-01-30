@@ -17,7 +17,6 @@ export const CalendarModal = ({
   };
 
   const handleConfirm = date => {
-    console.warn('A date has been picked: ', date);
     const dateObject = new Date(date);
 
     const gun = dateObject.getDate();

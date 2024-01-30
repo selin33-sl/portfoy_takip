@@ -44,7 +44,6 @@ export const loginSlice = createSlice({
         state.message = action.payload?.message;
       })
       .addCase(authLogin.rejected, (state, action) => {
-        console.error('Error in authLogin:', action.error);
         state.status = 'error';
         state.isAuthenticated = '0';
         state.isLoading = false;

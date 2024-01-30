@@ -16,6 +16,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
         color: 'white',
         width: 60,
         fontSize: 10,
+        marginLeft: windowWidth * 0.05,
       }}
       xAxisLabelTexts={{color: 'green'}}
       width={width}
@@ -25,6 +26,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       thickness={1}
       startFillColor="rgba(20,105,81,0.3)"
       endFillColor="rgba(20,85,81,0.01)"
+      spacing={60}
       startOpacity={3}
       endOpacity={0.2}
       initialSpacing={20}

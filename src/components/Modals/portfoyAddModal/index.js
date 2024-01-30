@@ -16,8 +16,6 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
   const {status: createPortfolioStatus, message: createPortfolioMessage} =
     useSelector(state => state.createPortfolio);
 
-  console.log('şoşoşoşo', createPortfolioStatus, createPortfolioMessage);
-
   const handleCreatePortfolio = async () => {
     await dispatch(addPortfolioProcess({name}));
     await dispatch(getAllPortfolioProcess());

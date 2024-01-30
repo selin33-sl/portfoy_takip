@@ -40,8 +40,6 @@ export const PortfoyListModal = ({
     state => state.updatePortfolio,
   );
 
-  console.log('statusss', deleteStatus);
-
   useToast(
     deleteStatus,
     resetDeletePortfolio(),
@@ -63,7 +61,6 @@ export const PortfoyListModal = ({
       await dispatch(deletePortfolioProcess(item?._id));
       await dispatch(getAllPortfolioProcess());
     };
-    console.log('editName', editedName);
     const [isEditing, setIsEditing] = useState(false);
     const [editedName, setEditedName] = useState(item?.name);
 
@@ -72,7 +69,6 @@ export const PortfoyListModal = ({
     };
 
     const handleSaveChanges = async () => {
-      console.log('burada neymiş', editedName);
       if (isEditing) {
         await dispatch(
           updatePortfolioProcess({id: item?._id, data: {name: editedName}}),
@@ -84,13 +80,10 @@ export const PortfoyListModal = ({
       }
     };
     const handleNameChange = text => {
-      console.log('texxttt', text);
-      console.log('editedddddd', editedName);
       setEditedName(text);
     };
 
     const handleSelectPortfolio = async () => {
-      console.log(item, 'ITEm');
       await AsyncStorage.setItem('selectedPortfolioId', item?._id);
       await setIsModalVisible(false);
     };

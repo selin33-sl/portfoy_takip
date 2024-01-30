@@ -12,9 +12,7 @@ export const ShareModal = ({isModalVisible, setIsModalVisible, image}) => {
       await Share.open({
         url: `file://${image}`,
       });
-    } catch (error) {
-      console.error('Error sharing image:', error);
-    }
+    } catch (error) {}
   };
 
   return (

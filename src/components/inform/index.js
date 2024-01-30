@@ -27,7 +27,6 @@ export const Inform = ({
   const {t} = useTranslation();
 
   const [clickedRow, setClickedRow] = useState(null);
-  console.log('aaaaaaaaaaaa', clickedRow);
 
   const Row = ({backgroundColor, text, deger, start, end}) => {
     return (

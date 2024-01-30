@@ -31,8 +31,6 @@ export const AuthScreen = () => {
     portfolioId: portfolioId,
   } = useSelector(state => state.register);
 
-  console.log('portfolioId:', portfolioId);
-
   useEffect(() => {
     if (portfolioId) {
       const fetchData = async () => {

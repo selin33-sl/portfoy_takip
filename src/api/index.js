@@ -87,8 +87,8 @@ const getAllStockProcess = createAsyncThunk(
 
 const getStockDetailProcess = createAsyncThunk(
   'getStockDetail/getStockDetailProcess',
-  async (name, day) => {
-    const res = await axios.get(`getStockDetail/${name}/${day ? day : 2}`);
+  async ({name, day}) => {
+    const res = await axios.get(`getStockDetail/${name}/${day}`);
     return res;
   },
 );
