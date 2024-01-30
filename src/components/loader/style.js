@@ -4,8 +4,8 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   loadingIndicator: {
-    width: windowWidth,
-    height: windowHeight,
+    width: windowWidth * 1,
+    height: windowHeight * 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

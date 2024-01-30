@@ -54,19 +54,20 @@ export const HomeScreen = () => {
     useState(false);
 
   const viewRef = useRef();
+  console.log(isAssetInfoModal, 'ÜĞÜĞĞÜĞÜĞÜĞÜĞÜĞÜĞÜĞÜĞÜÜĞĞÜ');
 
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
+  const {data: AssetDetailsData} = useSelector(state => state.getAssetDetails);
   const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
     useSelector(state => state.getPortfolioDetails);
-
-  console.log('assetInfoItem', assetInfoItem);
 
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
   }, []);
 
+  console.log('AssetDetailsData:', AssetDetailsData?.assetDetails);
+
   useEffect(() => {
-    console.log('isPortfoyListModalVisible', isPortfoyListModalVisible);
     if (!isPortfoyListModalVisible) {
       const fetchData = async () => {
         try {
@@ -75,7 +76,6 @@ export const HomeScreen = () => {
           );
 
           setPortfolioId(selectedPortfolioId);
-          console.log('selectedPortfolioId:', selectedPortfolioId);
 
           dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
         } catch (error) {
@@ -94,8 +94,6 @@ export const HomeScreen = () => {
           format: 'png',
           quality: 0.8,
         });
-
-        console.log('Captured Image URI:', uri);
 
         setCapturedImageURI(uri);
 
@@ -134,25 +132,20 @@ export const HomeScreen = () => {
 
   const seriesEspecial = [deger, 100 - deger];
   const sliceColorEspecial = [color, 'grey'];
-
   const handleHidden = () => {
     setHidden(!hidden);
   };
 
   const renderItem = ({item, index, itemIndex}) => {
-    console.log(
-      'NE BU ŞİMDİİ',
-      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets,
-    );
-
+    console.log('assetInfoItem', assetInfoItem);
+    console.log('şş:', item);
     return (
       <ResizableCard
         onPress={assetId => {
-          console.log(assetId, 'oluyoorr gibi gibi'),
-            navigation.navigate('varlikDetay-screen', {
-              page: 'update',
-              assetId: assetId,
-            });
+          navigation.navigate('varlikDetay-screen', {
+            page: 'update',
+            assetId: assetId,
+          });
         }}
         borderColor={
           PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
@@ -163,11 +156,7 @@ export const HomeScreen = () => {
         }
         hidden={hidden}
         infoModalOnPress={() => {
-          setAssetInfoItem(
-            PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets[
-              index
-            ],
-          );
+          setAssetInfoItem(item);
           setIsAssetInfoModal(true);
         }}
       />
@@ -330,7 +319,7 @@ export const HomeScreen = () => {
             setIsAssetDetailsModal={setIsAssetDetailsModal}
           />
           <AssetInfoModal
-            item={assetInfoItem}
+            item={AssetDetailsData?.assetDetails}
             isModalVisible={isAssetInfoModal}
             setIsModalVisible={setIsAssetInfoModal}
           />

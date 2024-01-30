@@ -78,7 +78,7 @@ export default StyleSheet.create({
     width: windowHeight * 0.1,
   },
   textDetailName: {
-    fontSize: windowHeight * 0.022,
+    fontSize: windowHeight * 0.02,
     color: colors.primary2,
     fontWeight: '400',
   },

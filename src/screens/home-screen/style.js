@@ -67,7 +67,7 @@ export default StyleSheet.create({
     marginVertical: windowHeight * 0.02,
   },
   toplamText: {
-    fontSize: windowHeight * 0.035,
+    fontSize: windowHeight * 0.027,
     fontWeight: '400',
     color: 'white',
   },
