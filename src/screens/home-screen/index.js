@@ -23,6 +23,7 @@ import {useTranslation} from 'react-i18next';
 import {colors} from '../../theme';
 import {
   getAllPortfolioProcess,
+  getAssetDetailsProcess,
   getAssetPercentagesProcess,
   getPortfolioDetailsProcess,
 } from '../../api';
@@ -54,7 +55,6 @@ export const HomeScreen = () => {
     useState(false);
 
   const viewRef = useRef();
-  console.log(isAssetInfoModal, 'ÜĞÜĞĞÜĞÜĞÜĞÜĞÜĞÜĞÜĞÜĞÜÜĞĞÜ');
 
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
   const {data: AssetDetailsData} = useSelector(state => state.getAssetDetails);
@@ -114,12 +114,12 @@ export const HomeScreen = () => {
 
   const widthAndHeight = 170;
   const series = [
-    PortfolioDetailsData?.distribution[3]?.percentage,
-    PortfolioDetailsData?.distribution[1]?.percentage,
     PortfolioDetailsData?.distribution[5]?.percentage,
+    PortfolioDetailsData?.distribution[1]?.percentage,
+    PortfolioDetailsData?.distribution[4]?.percentage,
     PortfolioDetailsData?.distribution[0]?.percentage,
     PortfolioDetailsData?.distribution[2]?.percentage,
-    PortfolioDetailsData?.distribution[4]?.percentage,
+    PortfolioDetailsData?.distribution[3]?.percentage,
   ];
   const sliceColor = [
     colors.nakit,
@@ -141,7 +141,19 @@ export const HomeScreen = () => {
     console.log('şş:', item);
     return (
       <ResizableCard
-        onPress={assetId => {
+        onPress={async (assetId, name) => {
+          console.log('homeassetId', assetId);
+          await dispatch(
+            getAssetDetailsProcess({
+              portfolioId: portfolioId,
+              assetId: assetId,
+              type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
+                ?.type,
+              name: name,
+              day: 2,
+            }),
+          );
+
           navigation.navigate('varlikDetay-screen', {
             page: 'update',
             assetId: assetId,
@@ -162,6 +174,11 @@ export const HomeScreen = () => {
       />
     );
   };
+
+  console.log(
+    'bu renk 3401FF olmalı: ',
+    PortfolioDetailsData?.distribution[3]?.color,
+  );
 
   return (
     <LinearGradientContainer>
@@ -260,18 +277,18 @@ export const HomeScreen = () => {
                   setColorCallback={setColor}
                   setDegerCallback={setDeger}
                   setHeaderCallback={setHeader}
-                  borderColor1={PortfolioDetailsData?.distribution[3]?.color}
+                  borderColor1={PortfolioDetailsData?.distribution[5]?.color}
                   borderColor2={PortfolioDetailsData?.distribution[1]?.color}
-                  borderColor3={PortfolioDetailsData?.distribution[5]?.color}
+                  borderColor3={PortfolioDetailsData?.distribution[4]?.color}
                   borderColor4={PortfolioDetailsData?.distribution[0]?.color}
                   borderColor5={PortfolioDetailsData?.distribution[2]?.color}
-                  borderColor6={PortfolioDetailsData?.distribution[4]?.color}
-                  deger1={PortfolioDetailsData?.distribution[3]?.percentage}
+                  borderColor6={PortfolioDetailsData?.distribution[3]?.color}
+                  deger1={PortfolioDetailsData?.distribution[5]?.percentage}
                   deger2={PortfolioDetailsData?.distribution[1]?.percentage}
-                  deger3={PortfolioDetailsData?.distribution[5]?.percentage}
+                  deger3={PortfolioDetailsData?.distribution[4]?.percentage}
                   deger4={PortfolioDetailsData?.distribution[0]?.percentage}
                   deger5={PortfolioDetailsData?.distribution[2]?.percentage}
-                  deger6={PortfolioDetailsData?.distribution[4]?.percentage}
+                  deger6={PortfolioDetailsData?.distribution[3]?.percentage}
                 />
               </View>
             </View>

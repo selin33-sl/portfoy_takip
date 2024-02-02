@@ -26,6 +26,8 @@ import {useTranslation} from 'react-i18next';
 import {
   addAssetProcess,
   deleteAssetProcess,
+  getAssetDetailsProcess,
+  getCurrencyDetailProcess,
   getPortfolioDetailsProcess,
   getStockDetailProcess,
 } from '../../api';
@@ -65,9 +67,13 @@ export const VarlikDetayScreen = () => {
     isLoading: StokLoading,
   } = useSelector(state => state.getStockDetail);
 
-  const {data: CurrencyDetailData} = useSelector(
-    state => state.getCurrencyDetail,
-  );
+  const {
+    data: CurrencyDetailData,
+    lastPrice: CurrencyLastPrice,
+    name: CurrencyName,
+    isLoading: CurrencyLoading,
+    description: CurrencyDescription,
+  } = useSelector(state => state.getCurrencyDetail);
   const {data: GoldDetailData} = useSelector(state => state.getGoldDetail);
   const {status: DeleteAssetStatus, message: DeleteAssetMessage} = useSelector(
     state => state.removeAsset,
@@ -76,6 +82,13 @@ export const VarlikDetayScreen = () => {
   const {status: AddAssetStatus, message: AddAssetMessage} = useSelector(
     state => state.addAsset,
   );
+
+  const {data: AssetDetailsData} = useSelector(state => state.getAssetDetails);
+
+  console.log('CurrencyLastPrice', CurrencyLastPrice);
+  console.log('CurrencyDescription', CurrencyDescription);
+  console.log('StockDetailData', StockDetailData);
+  console.log('AssetDetailsData,', AssetDetailsData);
 
   useToast(
     DeleteAssetStatus,
@@ -101,26 +114,44 @@ export const VarlikDetayScreen = () => {
       setCode(words[0] ? words[0].trim() : '');
       setLongName(words.slice(1).join(' ').trim());
     } else if (CurrencyDetailData && CurrencyDetailData.length > 0) {
-      const firstStockItem = CurrencyDetailData[0];
-      setFullName(firstStockItem?.name);
-      setCode(firstStockItem?.name);
-      setLongName(firstStockItem?.desc);
+      setFullName(CurrencyName);
+      setCode(CurrencyName);
+      setLongName(CurrencyDescription);
     } else if (GoldDetailData && GoldDetailData.length > 0) {
       const firstStockItem = GoldDetailData[0];
       setCode(firstStockItem?.name);
       setLongName('');
+    } else if (
+      AssetDetailsData &&
+      AssetDetailsData.assetDetails &&
+      AssetDetailsData.assetDetails.type == 'Stock'
+    ) {
+      const firstStockItem = AssetDetailsData.assetDetails.name;
+      setFullName(firstStockItem);
+      const words = firstStockItem?.split(' ');
+      setCode(words[0] ? words[0].trim() : '');
+      setLongName(words.slice(1).join(' ').trim());
     }
   }, [StockDetailData, CurrencyDetailData]);
 
   useEffect(() => {
-    if (page == 'update') {
-      setMiktar1('111');
-      setMiktar2('222');
-      setFiyat1('111');
-      setFiyat2('00');
+    if (AssetDetailsData.assetDetails && page == 'update') {
+      const quantityParts = AssetDetailsData.assetDetails.quantity.split('.');
+      const quantityBeforeDot = quantityParts[0];
+      const quantityAfterDot = quantityParts[1];
+
+      const purchasePriceParts =
+        AssetDetailsData.assetDetails.purchasePrice.split('.');
+      const purchasePriceBeforeDot = purchasePriceParts[0];
+      const purchasePriceAfterDot = purchasePriceParts[1];
+
+      setMiktar1(quantityBeforeDot);
+      setMiktar2(quantityAfterDot);
+      setFiyat1(purchasePriceBeforeDot);
+      setFiyat2(purchasePriceAfterDot);
       setSelectedDate('05-12-2023');
     }
-  }, []);
+  }, [AssetDetailsData]);
 
   const handleDeleteAsset = async () => {
     const selectedPortfolioId = await AsyncStorage.getItem(
@@ -147,13 +178,15 @@ export const VarlikDetayScreen = () => {
     const formattedDate = `${day}-${month}-${year}`;
 
     const totalQuantity =
-      miktar1 || (miktar2 && `${miktar1 || '0'}.${miktar2 || '0'}`);
+      miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
 
     const totalPrice =
       fiyat1 || fiyat2
         ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
         : StokLastPrice
         ? StokLastPrice
+        : CurrencyLastPrice
+        ? CurrencyLastPrice
         : '0.0';
 
     const selectedPortfolioId = await AsyncStorage.getItem(
@@ -193,13 +226,27 @@ export const VarlikDetayScreen = () => {
   };
 
   useEffect(() => {
-    setlLoading(loading);
-  }, []);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(getStockDetailProcess({name: code, day: selectedValue}));
+        if (StockDetailData) {
+          await dispatch(
+            getStockDetailProcess({name: code, day: selectedValue}),
+          );
+        } else if (CurrencyDetailData) {
+          await dispatch(
+            getCurrencyDetailProcess({name: CurrencyName, day: selectedValue}),
+          );
+        } else if (AssetDetailsData) {
+          await dispatch(
+            getAssetDetailsProcess({
+              portfolioId: AssetDetailsData?.portfolioId,
+              assetId: AssetDetailsData?.assetDetails?.assetId,
+              type: AssetDetailsData?.assetDetails?.type,
+              name: AssetDetailsData?.assetDetails?.name,
+              day: selectedValue,
+            }),
+          );
+        }
       } catch (error) {
         console.error(error);
       }
@@ -208,125 +255,135 @@ export const VarlikDetayScreen = () => {
     fetchData();
   }, [selectedValue]);
 
+  useEffect(() => {
+    if (StokLoading) {
+      setlLoading(true);
+    }
+    if (CurrencyLoading) {
+      setlLoading(true);
+    } else {
+      setlLoading(false);
+    }
+  }, [StokLoading, CurrencyLoading]);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <LinearGradientContainer>
-        {StokLoading ? (
+        {/* {loading ? (
           <Loader />
         ) : (
-          <>
-            <Header text={code} backIcon />
-            <View style={style.descContainer}>
-              <Text style={style.descText}>{longName}</Text>
-            </View>
+          <> */}
+        <Header text={code} backIcon />
+        <View style={style.descContainer}>
+          <Text style={style.descText}>{longName}</Text>
+        </View>
 
-            <View style={style.lineChartContainer}>
-              <LineChartt lcData={StockDetailData} width={340} height={170} />
-            </View>
+        <View style={style.lineChartContainer}>
+          <LineChartt
+            lcData={
+              StockDetailData
+                ? StockDetailData
+                : CurrencyDetailData
+                ? CurrencyDetailData
+                : AssetDetailsData
+                ? AssetDetailsData.historicalData
+                : null
+            }
+            width={340}
+            height={170}
+          />
+        </View>
 
-            <View style={style.options}>
-              <TouchableOpacity
-                style={style.timePeriodContainer}
-                onPress={() => setTimePeriodVisible(true)}>
-                <Text>{timePeriod}</Text>
-              </TouchableOpacity>
+        <View style={style.options}>
+          <TouchableOpacity
+            style={style.timePeriodContainer}
+            onPress={() => setTimePeriodVisible(true)}>
+            <Text>{timePeriod}</Text>
+          </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
-                <Icon
-                  name={'fit-to-screen-outline'}
-                  size={30}
-                  color={'white'}
-                />
-              </TouchableOpacity>
-            </View>
+          <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
+            <Icon name={'fit-to-screen-outline'} size={30} color={'white'} />
+          </TouchableOpacity>
+        </View>
 
-            <LinearGradient
-              colors={['#10001D', '#44007A']}
-              style={style.inputAreaContainer}>
-              <InputContainer
-                text={t('assetDetailScreen.amount')}
-                typeText={GoldDetailData ? t('common.quantity') : code}
-                value1={miktar1}
-                onChangeText1={setMiktar1}
-                value2={miktar2}
-                onChangeText2={setMiktar2}
+        <LinearGradient
+          colors={['#10001D', '#44007A']}
+          style={style.inputAreaContainer}>
+          <InputContainer
+            text={t('assetDetailScreen.amount')}
+            typeText={GoldDetailData ? t('common.quantity') : code}
+            value1={miktar1}
+            onChangeText1={setMiktar1}
+            value2={miktar2}
+            onChangeText2={setMiktar2}
+          />
+          <InputContainer
+            text={t('assetDetailScreen.price')}
+            typeText={'TL'}
+            value1={fiyat1}
+            onChangeText1={setFiyat1}
+            value2={fiyat2}
+            onChangeText2={setFiyat2}
+          />
+
+          <View style={style.innerAreaContainer}>
+            <Text style={style.headerText}>{t('assetDetailScreen.date')}:</Text>
+            <View style={style.calendarContainer}>
+              <TextInput
+                style={{...style.input1, marginRight: 4}}
+                editable={false}
+                textAlign="center"
+                value={selectedDate}
+                onChangeText={setSelectedDate}
               />
-              <InputContainer
-                text={t('assetDetailScreen.price')}
-                typeText={'TL'}
-                value1={fiyat1}
-                onChangeText1={setFiyat1}
-                value2={fiyat2}
-                onChangeText2={setFiyat2}
-              />
-
-              <View style={style.innerAreaContainer}>
-                <Text style={style.headerText}>
-                  {t('assetDetailScreen.date')}:
+              <TouchableOpacity onPress={() => setDatePickerVisibility(true)}>
+                <Icon name={'calendar-month'} color={'#958EBF'} size={30} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View
+            style={
+              page == 'update'
+                ? {
+                    ...style.buttonsContainer,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingRight: 50,
+                  }
+                : style.buttonsContainer
+            }>
+            <TouchableOpacity
+              style={style.saveButtonContainer}
+              onPress={handleAddAsset}
+              disabled={!miktar1 && !miktar2}>
+              <LinearGradient
+                colors={
+                  !miktar1 && !miktar2
+                    ? ['#007029', '#007029']
+                    : ['#05A04D', '#007029']
+                }
+                style={style.saveButton}>
+                <Text
+                  style={[
+                    style.saveButtonText,
+                    !miktar1 &&
+                      !miktar2 && {...style.saveButtonText, color: 'grey'},
+                  ]}>
+                  {page == 'update' ? 'Güncelle' : t('assetDetailScreen.save')}
                 </Text>
-                <View style={style.calendarContainer}>
-                  <TextInput
-                    style={{...style.input1, marginRight: 4}}
-                    editable={false}
-                    textAlign="center"
-                    value={selectedDate}
-                    onChangeText={setSelectedDate}
-                  />
-                  <TouchableOpacity
-                    onPress={() => setDatePickerVisibility(true)}>
-                    <Icon name={'calendar-month'} color={'#958EBF'} size={30} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <View
-                style={
-                  page == 'update'
-                    ? {
-                        ...style.buttonsContainer,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingRight: 50,
-                      }
-                    : style.buttonsContainer
-                }>
-                <TouchableOpacity
-                  style={style.saveButtonContainer}
-                  onPress={handleAddAsset}
-                  disabled={!miktar1 && !miktar2}>
-                  <LinearGradient
-                    colors={
-                      !miktar1 && !miktar2
-                        ? ['#007029', '#007029']
-                        : ['#05A04D', '#007029']
-                    }
-                    style={style.saveButton}>
-                    <Text
-                      style={[
-                        style.saveButtonText,
-                        !miktar1 &&
-                          !miktar2 && {...style.saveButtonText, color: 'grey'},
-                      ]}>
-                      {t('assetDetailScreen.save')}
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-                {page == 'update' && (
-                  <TouchableOpacity
-                    style={style.deleteContainer}
-                    onPress={() => {
-                      setIsAlertModalVisible(true);
-                    }}>
-                    <Icon
-                      name={'delete-outline'}
-                      color={colors.white}
-                      size={25}
-                    />
-                  </TouchableOpacity>
-                )}
-              </View>
-            </LinearGradient>
-          </>
-        )}
+              </LinearGradient>
+            </TouchableOpacity>
+            {page == 'update' && (
+              <TouchableOpacity
+                style={style.deleteContainer}
+                onPress={() => {
+                  setIsAlertModalVisible(true);
+                }}>
+                <Icon name={'delete-outline'} color={colors.white} size={25} />
+              </TouchableOpacity>
+            )}
+          </View>
+        </LinearGradient>
       </LinearGradientContainer>
       <CalendarModal
         isDatePickerVisible={isDatePickerVisible}

@@ -14,6 +14,7 @@ export const getStockDetailSlice = createSlice({
     resetStockDetail: state => {
       state.data = undefined;
       state.lastPrice = undefined;
+      state.name = undefined;
       state.isLoading = {};
       state.status = {};
       state.message = {};

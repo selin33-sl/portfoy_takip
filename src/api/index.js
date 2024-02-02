@@ -44,6 +44,8 @@ axios.interceptors.request.use(
 const authLogin = createAsyncThunk('auth/login', async data => {
   try {
     const {email, password} = data;
+    console.log(data);
+
     const response = await axios.post(ALTERNATIVE_BASE_URL, data);
     const accessToken = response.data.accessToken;
 
@@ -103,8 +105,8 @@ const getAllCurrencyProcess = createAsyncThunk(
 
 const getCurrencyDetailProcess = createAsyncThunk(
   'getCurrencyDetail/getCurrencyDetailProcess',
-  async name => {
-    const res = await axios.get(`getCurrencyDetail/${name}`);
+  async ({name, day}) => {
+    const res = await axios.get(`getCurrencyDetail/${name}/${day}`);
     return res;
   },
 );
@@ -242,10 +244,10 @@ const deleteAssetProcess = createAsyncThunk(
 
 const getAssetDetailsProcess = createAsyncThunk(
   'getAssetDetails/getAssetDetailsProcess',
-  async ({portfolioId, assetId, type, name}, {rejectWithValue}) => {
+  async ({portfolioId, assetId, type, name, day}, {rejectWithValue}) => {
     try {
       const res = await axios.get(
-        `getAssetDetails/${portfolioId}/${assetId}/${type}/${name}/1`,
+        `getAssetDetails/${portfolioId}/${assetId}/${type}/${name}/${day}`,
       );
       return res;
     } catch (error) {

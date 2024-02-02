@@ -20,34 +20,7 @@ export const ResizableCard = ({
   infoModalOnPress,
 }) => {
   const {t} = useTranslation();
-  const [code, setCode] = useState('');
-  const [commonItem, setCommonItem] = useState();
   const dispatch = useDispatch();
-
-  console.log('COMMON:', commonItem);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const selectedPortfolioId = await AsyncStorage.getItem(
-  //         'selectedPortfolioId',
-  //       );
-
-  //       dispatch(
-  //         getAssetDetailsProcess({
-  //           portfolioId: selectedPortfolioId,
-  //           assetId: commonItem?._id,
-  //           type: commonItem?.type,
-  //           name: commonItem?.name,
-  //         }),
-  //       );
-  //     } catch (error) {
-  //       console.error('Error fetching selectedPortfolioId:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   const [isModalVisible2, setModalVisible2] = useState(false);
   const [modalHeight, setModalHeight] = useState(windowHeight * 0.08); // Modalın başlangıç yüksekliği
@@ -69,10 +42,11 @@ export const ResizableCard = ({
   };
 
   const SmallCard = ({name, price, adet, profit, assetId, item}) => {
+    console.log('AASSSEETTTIIIDD:', assetId);
     return (
       <TouchableOpacity
         style={style.detailContainer}
-        onPress={() => onPress(assetId)}>
+        onPress={() => onPress(assetId, name)}>
         <View style={style.detail1}>
           <Text style={style.textDetailName}>{name}</Text>
           <Text style={style.textDetailPrice}>
@@ -108,6 +82,7 @@ export const ResizableCard = ({
                     assetId: item?._id,
                     type: item?.type,
                     name: item?.name,
+                    day: 1,
                   }),
                 );
               }}>
