@@ -103,9 +103,11 @@ export default StyleSheet.create({
   },
   listContainer: {
     alignItems: 'center',
-    maxHeight: windowHeight * 0.32,
+    justifyContent: 'center',
+    // maxHeight: windowHeight * 0.32,
+    height: 'auto',
     width: windowWidth,
-    paddingBottom: windowHeight * 0.015,
+    paddingBottom: windowHeight * 0.08,
   },
   optionContainer: {
     width: windowWidth,

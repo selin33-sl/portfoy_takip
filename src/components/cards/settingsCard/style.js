@@ -16,14 +16,16 @@ export default StyleSheet.create({
     flexDirection: 'row',
     elevation: 30,
   },
-  innerContainer: {},
+  innerContainer: {
+    height: 'auto',
+  },
 
   row1: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: windowWidth * 0.75,
-    height: windowHeight * 0.04,
+    height: 'auto',
     textAlign: 'auto',
   },
   row2: {

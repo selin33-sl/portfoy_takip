@@ -189,138 +189,141 @@ export const HomeScreen = () => {
             backIcon={false}
             headerOnPress={() => setIsPortfoyListModalVisible(true)}
           />
-          <View style={style.innerContainer}>
-            <View style={style.pieChartContainer}>
-              <View style={style.optionContainer}>
-                <TouchableOpacity
-                  style={style.shareContainer}
-                  // onPress={captureScreen}
-                  onPress={() => setIsModalVisible(true)}>
-                  <Text style={style.birimText}>TL</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={style.shareContainer}
-                  // onPress={captureScreen}
-                  onPress={handleHidden}>
-                  <Icon
-                    name={hidden == true ? 'eye-off-outline' : 'eye-outline'}
-                    size={25}
-                    color={colors.white}
+          <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+            <View style={style.innerContainer}>
+              <View style={style.pieChartContainer}>
+                <View style={style.optionContainer}>
+                  <TouchableOpacity
+                    style={style.shareContainer}
+                    // onPress={captureScreen}
+                    onPress={() => setIsModalVisible(true)}>
+                    <Text style={style.birimText}>TL</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={style.shareContainer}
+                    // onPress={captureScreen}
+                    onPress={handleHidden}>
+                    <Icon
+                      name={hidden == true ? 'eye-off-outline' : 'eye-outline'}
+                      size={25}
+                      color={colors.white}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={style.shareContainer}
+                    // onPress={captureScreen}
+                    onPress={async () => {
+                      await captureScreen();
+                      await setIsShareModalVisible(true);
+                    }}>
+                    <Icon
+                      name={'share-variant-outline'}
+                      size={25}
+                      color={'white'}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View ref={viewRef} collapsable={false} style={style.shareArea}>
+                  <TouchableOpacity
+                    activeOpacity={1.0}
+                    style={style.pieChart}
+                    onPress={() => setEspecial(false)}>
+                    <PieChart
+                      showText
+                      widthAndHeight={widthAndHeight}
+                      series={especial ? seriesEspecial : series}
+                      sliceColor={especial ? sliceColorEspecial : sliceColor}
+                      coverRadius={0.5}
+                    />
+
+                    {especial && (
+                      <TouchableOpacity
+                        style={style.detailIcon}
+                        onPress={async () => {
+                          await dispatch(
+                            getAssetPercentagesProcess({
+                              id: portfolioId,
+                              type:
+                                header == 'Döviz'
+                                  ? 'Currency'
+                                  : header == 'Hisse Senedi'
+                                  ? 'Stock'
+                                  : header == 'Fon'
+                                  ? 'Fund'
+                                  : header == 'Kripto'
+                                  ? 'Crypto'
+                                  : header == 'Altın'
+                                  ? 'Gold'
+                                  : header == 'Türk Lirası'
+                                  ? 'TurkishLira'
+                                  : header,
+                            }),
+                          );
+                          setIsAssetDetailsModal(true);
+                        }}>
+                        <Icon name={'details'} size={30} color={'white'} />
+                      </TouchableOpacity>
+                    )}
+                  </TouchableOpacity>
+
+                  <Inform
+                    especial={especial}
+                    onPress={() => {
+                      setEspecial(true);
+                    }}
+                    setColorCallback={setColor}
+                    setDegerCallback={setDeger}
+                    setHeaderCallback={setHeader}
+                    borderColor1={PortfolioDetailsData?.distribution[5]?.color}
+                    borderColor2={PortfolioDetailsData?.distribution[1]?.color}
+                    borderColor3={PortfolioDetailsData?.distribution[4]?.color}
+                    borderColor4={PortfolioDetailsData?.distribution[0]?.color}
+                    borderColor5={PortfolioDetailsData?.distribution[2]?.color}
+                    borderColor6={PortfolioDetailsData?.distribution[3]?.color}
+                    deger1={PortfolioDetailsData?.distribution[5]?.percentage}
+                    deger2={PortfolioDetailsData?.distribution[1]?.percentage}
+                    deger3={PortfolioDetailsData?.distribution[4]?.percentage}
+                    deger4={PortfolioDetailsData?.distribution[0]?.percentage}
+                    deger5={PortfolioDetailsData?.distribution[2]?.percentage}
+                    deger6={PortfolioDetailsData?.distribution[3]?.percentage}
                   />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={style.shareContainer}
-                  // onPress={captureScreen}
-                  onPress={async () => {
-                    await captureScreen();
-                    await setIsShareModalVisible(true);
-                  }}>
-                  <Icon
-                    name={'share-variant-outline'}
-                    size={25}
-                    color={'white'}
-                  />
-                </TouchableOpacity>
+                </View>
               </View>
 
-              <View ref={viewRef} collapsable={false} style={style.shareArea}>
-                <TouchableOpacity
-                  activeOpacity={1.0}
-                  style={style.pieChart}
-                  onPress={() => setEspecial(false)}>
-                  <PieChart
-                    showText
-                    widthAndHeight={widthAndHeight}
-                    series={especial ? seriesEspecial : series}
-                    sliceColor={especial ? sliceColorEspecial : sliceColor}
-                    coverRadius={0.5}
-                  />
-
-                  {especial && (
-                    <TouchableOpacity
-                      style={style.detailIcon}
-                      onPress={async () => {
-                        await dispatch(
-                          getAssetPercentagesProcess({
-                            id: portfolioId,
-                            type:
-                              header == 'Döviz'
-                                ? 'Currency'
-                                : header == 'Hisse Senedi'
-                                ? 'Stock'
-                                : header == 'Fon'
-                                ? 'Fund'
-                                : header == 'Kripto'
-                                ? 'Crypto'
-                                : header == 'Altın'
-                                ? 'Gold'
-                                : header == 'Türk Lirası'
-                                ? 'TurkishLira'
-                                : header,
-                          }),
-                        );
-                        setIsAssetDetailsModal(true);
-                      }}>
-                      <Icon name={'details'} size={30} color={'white'} />
-                    </TouchableOpacity>
-                  )}
-                </TouchableOpacity>
-
-                <Inform
-                  especial={especial}
-                  onPress={() => {
-                    setEspecial(true);
-                  }}
-                  setColorCallback={setColor}
-                  setDegerCallback={setDeger}
-                  setHeaderCallback={setHeader}
-                  borderColor1={PortfolioDetailsData?.distribution[5]?.color}
-                  borderColor2={PortfolioDetailsData?.distribution[1]?.color}
-                  borderColor3={PortfolioDetailsData?.distribution[4]?.color}
-                  borderColor4={PortfolioDetailsData?.distribution[0]?.color}
-                  borderColor5={PortfolioDetailsData?.distribution[2]?.color}
-                  borderColor6={PortfolioDetailsData?.distribution[3]?.color}
-                  deger1={PortfolioDetailsData?.distribution[5]?.percentage}
-                  deger2={PortfolioDetailsData?.distribution[1]?.percentage}
-                  deger3={PortfolioDetailsData?.distribution[4]?.percentage}
-                  deger4={PortfolioDetailsData?.distribution[0]?.percentage}
-                  deger5={PortfolioDetailsData?.distribution[2]?.percentage}
-                  deger6={PortfolioDetailsData?.distribution[3]?.percentage}
+              <View style={style.toplamContainer}>
+                <Text style={style.toplamText}>
+                  {hidden
+                    ? '****TL'
+                    : `${
+                        PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'
+                      }`}
+                </Text>
+              </View>
+              <View
+                style={{
+                  ...style.totalProfitContainer,
+                  backgroundColor:
+                    PortfolioDetailsData?.portfolio?.totalProfitPercentage > 0
+                      ? 'green'
+                      : 'red',
+                }}>
+                <Text style={style.profitText}>
+                  {PortfolioDetailsData?.portfolio?.totalProfitPercentage}%
+                </Text>
+              </View>
+              <View style={style.listContainer}>
+                {/* <Text>aaaaaaaaaaaa</Text> */}
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  data={PortfolioDetailsData?.portfolio?.portfolioDetails}
+                  renderItem={renderItem}
+                  keyExtractor={(item, index) => index.toString()}
+                  scrollEnabled={false}
                 />
               </View>
             </View>
-
-            <View style={style.toplamContainer}>
-              <Text style={style.toplamText}>
-                {hidden
-                  ? '****TL'
-                  : `${
-                      PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'
-                    }`}
-              </Text>
-            </View>
-            <View
-              style={{
-                ...style.totalProfitContainer,
-                backgroundColor:
-                  PortfolioDetailsData?.portfolio?.totalProfitPercentage > 0
-                    ? 'green'
-                    : 'red',
-              }}>
-              <Text style={style.profitText}>
-                {PortfolioDetailsData?.portfolio?.totalProfitPercentage}%
-              </Text>
-            </View>
-            <View style={style.listContainer}>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                data={PortfolioDetailsData?.portfolio?.portfolioDetails}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            </View>
-          </View>
-
+          </ScrollView>
           <CurrencyModal
             isModalVisible={isModalVisible}
             setIsModalVisible={setIsModalVisible}

@@ -261,7 +261,6 @@ export const VarlikDetayScreen = () => {
       }),
     );
 
-    // Reset form fields if it's an add operation
     if (!isUpdate) {
       setMiktar1('');
       setMiktar2('');
@@ -279,20 +278,6 @@ export const VarlikDetayScreen = () => {
     await handleAddOrUpdateAsset(true);
   };
 
-  // const handleUpdateAsset = async () => {
-  //   await dispatch(
-  //     updateAssetProcess({
-  //       portfolioId: selectedPortfolioId,
-  //       assetId: AssetDetailsData?.assetDetails?.assetId,
-  //       data: {
-  //         quantity: ,
-  //          purchasePrice: ,
-  //          purchaseDate: ,
-  //               },
-  //     }),
-  //   );
-  // };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -307,58 +292,6 @@ export const VarlikDetayScreen = () => {
 
     fetchData();
   }, []);
-
-  // const handleAddAsset = async () => {
-  //   const currentDate = new Date();
-  //   const day = String(currentDate.getDate()).padStart(2, '0');
-  //   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  //   const year = String(currentDate.getFullYear());
-  //   const formattedDate = `${day}-${month}-${year}`;
-
-  //   const totalQuantity =
-  //     miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
-
-  //   const totalPrice =
-  //     fiyat1 || fiyat2
-  //       ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
-  //       : StokLastPrice
-  //       ? StokLastPrice
-  //       : CurrencyLastPrice
-  //       ? CurrencyLastPrice
-  //       : '0.0';
-
-  //   await dispatch(
-  //     addAssetProcess({
-  //       id: selectedPortfolioId,
-  //       data: {
-  //         type:
-  //           text == 'Döviz'
-  //             ? 'Currency'
-  //             : text == 'Hisse Senedi'
-  //             ? 'Stock'
-  //             : text == 'Fon'
-  //             ? 'Fund'
-  //             : text == 'Kripto'
-  //             ? 'Crypto'
-  //             : text == 'Altın'
-  //             ? 'Gold'
-  //             : text == 'Türk Lirası'
-  //             ? 'TurkishLira'
-  //             : text,
-  //         name: fullName,
-  //         quantity: totalQuantity,
-  //         purchasePrice: totalPrice,
-  //         purchaseDate: selectedDate || formattedDate,
-  //       },
-  //     }),
-  //   );
-
-  //   setMiktar1('');
-  //   setMiktar2('');
-  //   setFiyat1('');
-  //   setFiyat2('');
-  //   setSelectedDate('');
-  // };
 
   useEffect(() => {
     const fetchData = async () => {

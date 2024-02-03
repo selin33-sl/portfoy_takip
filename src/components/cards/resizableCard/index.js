@@ -23,19 +23,19 @@ export const ResizableCard = ({
   const dispatch = useDispatch();
 
   const [isModalVisible2, setModalVisible2] = useState(false);
-  const [modalHeight, setModalHeight] = useState(windowHeight * 0.08); // Modalın başlangıç yüksekliği
+  const [modalHeight, setModalHeight] = useState(windowHeight * 0.05); // Modalın başlangıç yüksekliği
   const numItems = sendItem?.length;
   const toggleModal = () => {
     if (isModalVisible2) {
       // Modal kapanırken yüksekliği sıfırla
-      setModalHeight(windowHeight * 0.08);
+      setModalHeight(windowHeight * 0.05);
     }
     setModalVisible2(!isModalVisible2);
   };
 
   const expandModal = () => {
     // Modalı açarken yüksekliği artır
-    const newHeight = windowHeight * 0.1 + numItems * windowHeight * 0.08;
+    const newHeight = 'auto';
     setModalHeight(newHeight);
     toggleModal();
     setModalVisible2(!isModalVisible2);
@@ -116,7 +116,8 @@ export const ResizableCard = ({
       style={{
         ...style.container,
         borderColor: borderColor,
-        maxHeight: isModalVisible2 ? toggleModal : expandModal,
+        height: isModalVisible2 ? 'auto' : windowHeight * 0.08,
+        // maxHeight: isModalVisible2 ? toggleModal : expandModal,
       }}>
       <View
         style={{
@@ -141,6 +142,7 @@ export const ResizableCard = ({
             data={sendItem}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
+            scrollEnabled={false}
           />
         )}
       </View>

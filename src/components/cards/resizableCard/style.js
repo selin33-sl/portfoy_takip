@@ -6,6 +6,7 @@ const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 0.7,
     width: windowWidth * 0.9,
     borderRadius: 15,
@@ -57,7 +58,7 @@ export default StyleSheet.create({
     marginHorizontal: windowWidth * 0.02,
     backgroundColor: colors.white,
     height: windowHeight * 0.08,
-    marginTop: windowHeight * 0.005,
+    marginVertical: windowHeight * 0.005,
     borderRadius: 10,
     paddingVertical: 3,
     justifyContent: 'space-between',
