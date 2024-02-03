@@ -175,10 +175,7 @@ export const HomeScreen = () => {
     );
   };
 
-  console.log(
-    'bu renk 3401FF olmalı: ',
-    PortfolioDetailsData?.distribution[3]?.color,
-  );
+  console.log('buuu ', PortfolioDetailsData?.portfolio?.totalProfitPercentage);
 
   return (
     <LinearGradientContainer>
@@ -300,6 +297,18 @@ export const HomeScreen = () => {
                   : `${
                       PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'
                     }`}
+              </Text>
+            </View>
+            <View
+              style={{
+                ...style.totalProfitContainer,
+                backgroundColor:
+                  PortfolioDetailsData?.portfolio?.totalProfitPercentage > 0
+                    ? 'green'
+                    : 'red',
+              }}>
+              <Text style={style.profitText}>
+                {PortfolioDetailsData?.portfolio?.totalProfitPercentage}%
               </Text>
             </View>
             <View style={style.listContainer}>

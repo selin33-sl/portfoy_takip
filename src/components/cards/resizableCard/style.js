@@ -21,7 +21,7 @@ export default StyleSheet.create({
   halfContainer: {
     paddingHorizontal: windowWidth * 0.05,
     width: windowWidth * 0.9,
-    height: windowHeight * 0.035,
+    minHeight: windowHeight * 0.05,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

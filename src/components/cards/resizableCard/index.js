@@ -35,7 +35,7 @@ export const ResizableCard = ({
 
   const expandModal = () => {
     // Modalı açarken yüksekliği artır
-    const newHeight = windowHeight * 0.08 + numItems * windowHeight * 0.08;
+    const newHeight = windowHeight * 0.1 + numItems * windowHeight * 0.08;
     setModalHeight(newHeight);
     toggleModal();
     setModalVisible2(!isModalVisible2);
@@ -116,12 +116,12 @@ export const ResizableCard = ({
       style={{
         ...style.container,
         borderColor: borderColor,
-        height: isModalVisible2 ? toggleModal : expandModal,
+        maxHeight: isModalVisible2 ? toggleModal : expandModal,
       }}>
       <View
         style={{
           ...style.innerContainer,
-          height: modalHeight,
+          minHeight: modalHeight,
         }}>
         <View style={style.halfContainer}>
           <Text style={style.text}>{tür}</Text>

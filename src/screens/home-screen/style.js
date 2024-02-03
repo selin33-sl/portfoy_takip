@@ -26,6 +26,19 @@ export default StyleSheet.create({
     padding: windowWidth * 0.02,
     justifyContent: 'space-between',
   },
+  totalProfitContainer: {
+    width: 'auto',
+    height: windowHeight * 0.03,
+    paddingHorizontal: windowWidth * 0.02,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    marginBottom: windowHeight * 0.01,
+  },
+  profitText: {
+    color: colors.white,
+    fontSize: windowHeight * 0.015,
+  },
   detailIcon: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -64,7 +77,7 @@ export default StyleSheet.create({
     elevation: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: windowHeight * 0.02,
+    marginVertical: windowHeight * 0.01,
   },
   toplamText: {
     fontSize: windowHeight * 0.027,

@@ -47,9 +47,9 @@ export default StyleSheet.create({
   },
   lineChartContainer: {
     height: windowHeight * 0.26,
+    width: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 20,
   },
   text: {
     fontSize: windowHeight * 0.02,

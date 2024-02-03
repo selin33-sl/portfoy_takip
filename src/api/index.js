@@ -207,10 +207,10 @@ const getPortfolioDetailsProcess = createAsyncThunk(
 
 const addAssetProcess = createAsyncThunk(
   'addAsset/addAssetProcess',
-  async ({id, data}, {rejectWithValue}) => {
+  async ({portfolioId, data}, {rejectWithValue}) => {
     try {
       const {type, name, quantity, purchasePrice, purchaseDate} = data;
-      const res = await axios.post(`addAsset/${id}`, data);
+      const res = await axios.post(`addAsset/${portfolioId}`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -256,6 +256,22 @@ const getAssetDetailsProcess = createAsyncThunk(
   },
 );
 
+const updateAssetProcess = createAsyncThunk(
+  'updateAsset/updateAssetProcess',
+  async ({portfolioId, assetId, data}, {rejectWithValue}) => {
+    try {
+      const {quantity, purchasePrice, purchaseDate} = data;
+      const res = await axios.put(
+        `updateAsset/${portfolioId}/${assetId}`,
+        data,
+      );
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -277,6 +293,7 @@ export {
   getAssetPercentagesProcess,
   deleteAssetProcess,
   getAssetDetailsProcess,
+  updateAssetProcess,
 };
 
 // const createSchoolStaff = createAsyncThunk(

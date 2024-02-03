@@ -30,6 +30,7 @@ import {
   getCurrencyDetailProcess,
   getPortfolioDetailsProcess,
   getStockDetailProcess,
+  updateAssetProcess,
 } from '../../api';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -37,6 +38,10 @@ import {colors} from '../../theme';
 import {resetDeleteAsset} from '../../redux/slice/portfolio/delete-asset-slice';
 import {useToast} from '../../hooks/useToast';
 import {resetAddAsset} from '../../redux/slice/portfolio/add-asset-slice';
+import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
+import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
+import {resetAssetDetails} from '../../redux/slice/portfolio/get-asset-details-slice';
+import {resetUpdateAsset} from '../../redux/slice/portfolio/update-asset-slice';
 
 export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
@@ -59,6 +64,7 @@ export const VarlikDetayScreen = () => {
   const [fiyat1, setFiyat1] = useState('');
   const [fiyat2, setFiyat2] = useState('');
   const [loading, setlLoading] = useState(false);
+  const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
 
   const {
     data: StockDetailData,
@@ -79,6 +85,10 @@ export const VarlikDetayScreen = () => {
     state => state.removeAsset,
   );
 
+  const {status: UpdateAssetStatus, message: UpdateAssetMessage} = useSelector(
+    state => state.updateAsset,
+  );
+
   const {status: AddAssetStatus, message: AddAssetMessage} = useSelector(
     state => state.addAsset,
   );
@@ -87,8 +97,8 @@ export const VarlikDetayScreen = () => {
 
   console.log('CurrencyLastPrice', CurrencyLastPrice);
   console.log('CurrencyDescription', CurrencyDescription);
-  console.log('StockDetailData', StockDetailData);
-  console.log('AssetDetailsData,', AssetDetailsData);
+  console.log('UpdateAssetMessage', UpdateAssetMessage);
+  console.log('UpdateAssetStatus,', UpdateAssetStatus);
 
   useToast(
     DeleteAssetStatus,
@@ -103,6 +113,14 @@ export const VarlikDetayScreen = () => {
     resetAddAsset(),
     AddAssetMessage,
     AddAssetMessage,
+    dispatch,
+  );
+
+  useToast(
+    UpdateAssetStatus,
+    resetUpdateAsset(),
+    UpdateAssetMessage,
+    UpdateAssetMessage,
     dispatch,
   );
 
@@ -135,13 +153,13 @@ export const VarlikDetayScreen = () => {
   }, [StockDetailData, CurrencyDetailData]);
 
   useEffect(() => {
-    if (AssetDetailsData.assetDetails && page == 'update') {
-      const quantityParts = AssetDetailsData.assetDetails.quantity.split('.');
+    if (AssetDetailsData?.assetDetails && page == 'update') {
+      const quantityParts = AssetDetailsData?.assetDetails?.quantity.split('.');
       const quantityBeforeDot = quantityParts[0];
       const quantityAfterDot = quantityParts[1];
 
       const purchasePriceParts =
-        AssetDetailsData.assetDetails.purchasePrice.split('.');
+        AssetDetailsData?.assetDetails?.purchasePrice?.split('.');
       const purchasePriceBeforeDot = purchasePriceParts[0];
       const purchasePriceAfterDot = purchasePriceParts[1];
 
@@ -152,6 +170,16 @@ export const VarlikDetayScreen = () => {
       setSelectedDate('05-12-2023');
     }
   }, [AssetDetailsData]);
+
+  useEffect(() => {
+    if (page == 'update' && StockDetailData) {
+      dispatch(resetStockDetail());
+    } else if (page == 'update' && CurrencyDetailData) {
+      dispatch(resetCurrencyDetail());
+    } else if (page != 'update' && AssetDetailsData) {
+      dispatch(resetAssetDetails());
+    }
+  }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
 
   const handleDeleteAsset = async () => {
     const selectedPortfolioId = await AsyncStorage.getItem(
@@ -170,60 +198,167 @@ export const VarlikDetayScreen = () => {
     navigation.goBack();
   };
 
-  const handleAddAsset = async () => {
+  const getCurrentDateFormatted = () => {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const year = String(currentDate.getFullYear());
-    const formattedDate = `${day}-${month}-${year}`;
+    return `${day}-${month}-${year}`;
+  };
 
-    const totalQuantity =
-      miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
+  const calculateTotalQuantity = (miktar1, miktar2) => {
+    return miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
+  };
 
-    const totalPrice =
-      fiyat1 || fiyat2
-        ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
-        : StokLastPrice
-        ? StokLastPrice
-        : CurrencyLastPrice
-        ? CurrencyLastPrice
-        : '0.0';
+  const calculateTotalPrice = (
+    fiyat1,
+    fiyat2,
+    StokLastPrice,
+    CurrencyLastPrice,
+  ) => {
+    return fiyat1 || fiyat2
+      ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
+      : StokLastPrice || CurrencyLastPrice || '0.0';
+  };
 
-    const selectedPortfolioId = await AsyncStorage.getItem(
-      'selectedPortfolioId',
+  const handleAddOrUpdateAsset = async isUpdate => {
+    const currentDate = getCurrentDateFormatted();
+    const totalQuantity = calculateTotalQuantity(miktar1, miktar2);
+    const totalPrice = calculateTotalPrice(
+      fiyat1,
+      fiyat2,
+      StokLastPrice,
+      CurrencyLastPrice,
     );
+
+    const assetData = {
+      type:
+        text === 'Döviz'
+          ? 'Currency'
+          : text === 'Hisse Senedi'
+          ? 'Stock'
+          : text === 'Fon'
+          ? 'Fund'
+          : text === 'Kripto'
+          ? 'Crypto'
+          : text === 'Altın'
+          ? 'Gold'
+          : text === 'Türk Lirası'
+          ? 'TurkishLira'
+          : text,
+      name: fullName,
+      quantity: totalQuantity,
+      purchasePrice: totalPrice,
+      purchaseDate: selectedDate || currentDate,
+    };
+
+    const process = isUpdate ? updateAssetProcess : addAssetProcess;
     await dispatch(
-      addAssetProcess({
-        id: selectedPortfolioId,
-        data: {
-          type:
-            text == 'Döviz'
-              ? 'Currency'
-              : text == 'Hisse Senedi'
-              ? 'Stock'
-              : text == 'Fon'
-              ? 'Fund'
-              : text == 'Kripto'
-              ? 'Crypto'
-              : text == 'Altın'
-              ? 'Gold'
-              : text == 'Türk Lirası'
-              ? 'TurkishLira'
-              : text,
-          name: fullName,
-          quantity: totalQuantity,
-          purchasePrice: totalPrice,
-          purchaseDate: selectedDate || formattedDate,
-        },
+      process({
+        portfolioId: selectedPortfolioId,
+        assetId: isUpdate ? AssetDetailsData?.assetDetails?.assetId : undefined,
+        data: assetData,
       }),
     );
 
-    setMiktar1('');
-    setMiktar2('');
-    setFiyat1('');
-    setFiyat2('');
-    setSelectedDate('');
+    // Reset form fields if it's an add operation
+    if (!isUpdate) {
+      setMiktar1('');
+      setMiktar2('');
+      setFiyat1('');
+      setFiyat2('');
+      setSelectedDate('');
+    }
   };
+
+  const handleAddAsset = async () => {
+    await handleAddOrUpdateAsset(false);
+  };
+
+  const handleUpdateAsset = async () => {
+    await handleAddOrUpdateAsset(true);
+  };
+
+  // const handleUpdateAsset = async () => {
+  //   await dispatch(
+  //     updateAssetProcess({
+  //       portfolioId: selectedPortfolioId,
+  //       assetId: AssetDetailsData?.assetDetails?.assetId,
+  //       data: {
+  //         quantity: ,
+  //          purchasePrice: ,
+  //          purchaseDate: ,
+  //               },
+  //     }),
+  //   );
+  // };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const selectedPortfolioId = await AsyncStorage.getItem(
+          'selectedPortfolioId',
+        );
+        setSelectedPortfolioId(selectedPortfolioId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // const handleAddAsset = async () => {
+  //   const currentDate = new Date();
+  //   const day = String(currentDate.getDate()).padStart(2, '0');
+  //   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  //   const year = String(currentDate.getFullYear());
+  //   const formattedDate = `${day}-${month}-${year}`;
+
+  //   const totalQuantity =
+  //     miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
+
+  //   const totalPrice =
+  //     fiyat1 || fiyat2
+  //       ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
+  //       : StokLastPrice
+  //       ? StokLastPrice
+  //       : CurrencyLastPrice
+  //       ? CurrencyLastPrice
+  //       : '0.0';
+
+  //   await dispatch(
+  //     addAssetProcess({
+  //       id: selectedPortfolioId,
+  //       data: {
+  //         type:
+  //           text == 'Döviz'
+  //             ? 'Currency'
+  //             : text == 'Hisse Senedi'
+  //             ? 'Stock'
+  //             : text == 'Fon'
+  //             ? 'Fund'
+  //             : text == 'Kripto'
+  //             ? 'Crypto'
+  //             : text == 'Altın'
+  //             ? 'Gold'
+  //             : text == 'Türk Lirası'
+  //             ? 'TurkishLira'
+  //             : text,
+  //         name: fullName,
+  //         quantity: totalQuantity,
+  //         purchasePrice: totalPrice,
+  //         purchaseDate: selectedDate || formattedDate,
+  //       },
+  //     }),
+  //   );
+
+  //   setMiktar1('');
+  //   setMiktar2('');
+  //   setFiyat1('');
+  //   setFiyat2('');
+  //   setSelectedDate('');
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -354,7 +489,7 @@ export const VarlikDetayScreen = () => {
             }>
             <TouchableOpacity
               style={style.saveButtonContainer}
-              onPress={handleAddAsset}
+              onPress={page == 'update' ? handleUpdateAsset : handleAddAsset}
               disabled={!miktar1 && !miktar2}>
               <LinearGradient
                 colors={

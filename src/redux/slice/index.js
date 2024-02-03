@@ -18,3 +18,4 @@ export {default as addAssetSlice} from './portfolio/add-asset-slice';
 export {default as getAssetPercentagesSlice} from './portfolio/get-asset-percentages-slice';
 export {default as deleteAssetSlice} from './portfolio/delete-asset-slice';
 export {default as getAssetDetailsSlice} from './portfolio/get-asset-details-slice';
+export {default as updateAssetSlice} from './portfolio/update-asset-slice';

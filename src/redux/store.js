@@ -25,6 +25,7 @@ import {
   getStockDetailSlice,
   loginSlice,
   registerSlice,
+  updateAssetSlice,
   updatePortfolioSlice,
 } from './slice';
 
@@ -49,6 +50,7 @@ const reducer = combineReducers({
   getAssetPercentages: getAssetPercentagesSlice,
   removeAsset: deleteAssetSlice,
   getAssetDetails: getAssetDetailsSlice,
+  updateAsset: updateAssetSlice,
 });
 
 export const store = configureStore({

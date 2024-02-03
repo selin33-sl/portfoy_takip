@@ -14,11 +14,20 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       // rotateLabel={true}
       xAxisLabelTextStyle={{
         color: 'white',
-        width: 60,
-        fontSize: 10,
+        width: windowWidth * 0.1,
+        fontSize: 9,
         marginLeft: windowWidth * 0.05,
       }}
-      xAxisLabelTexts={{color: 'green'}}
+      // xAxisLabelsVerticalShift={5}
+      // xAxisIndicesColor={'pink'}
+      // xAxisIndicesWidth={1}
+      // xAxisLabelsHeight={5}
+      // xAxisTextNumberOfLines={2}
+      // xAxisLabelTexts={{color: 'green'}}
+      // xAxisThickness={10}
+      // xAxisType="dotted"
+      // showXAxisIndices={false}
+      // dataPointLabelShiftX={10}
       width={width}
       height={height}
       hideDataPoints
@@ -26,17 +35,17 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       thickness={1}
       startFillColor="rgba(20,105,81,0.3)"
       endFillColor="rgba(20,85,81,0.01)"
-      spacing={60}
+      spacing={50}
       startOpacity={3}
       endOpacity={0.2}
       initialSpacing={20}
-      endSpacing={40}
+      endSpacing={50}
       noOfSections={1}
       // maxValue={maxValue}
       yAxisColor="white"
       yAxisThickness={0}
       yAxisIndicesColor={'yellow'}
-      // rulesType="solid"
+      rulesType="solid"
       rulesColor="gray"
       yAxisTextStyle={{color: 'gray'}}
       yAxisSide="right"
@@ -57,7 +66,8 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
               style={{
                 justifyContent: 'center',
                 marginTop: 60,
-                marginLeft: -60,
+                // marginLeft: -60,
+                width: windowWidth * 0.2,
                 backgroundColor: 'purple',
               }}>
               <Text
