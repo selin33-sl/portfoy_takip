@@ -144,7 +144,7 @@ export const VarliklarListScreen = () => {
       <VarlikListCard
         fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
         percent={AllStockData || AllCurrencyData || AllGoldData ? true : false}
-        price={AllGoldData ? item?.price : item?.lastPrice}
+        price={item?.lastPrice}
         code={
           AllStockData
             ? code
@@ -158,6 +158,7 @@ export const VarliklarListScreen = () => {
         color={color}
         percentText={roundedRate}
         onPress={async () => {
+          await navigation.navigate('varlikDetay-screen', {text: text});
           {
             AllStockData && AllStockData.length
               ? await dispatch(
@@ -171,7 +172,6 @@ export const VarliklarListScreen = () => {
               ? await dispatch(getGoldDetailProcess(newGoldName))
               : null;
           }
-          await navigation.navigate('varlikDetay-screen', {text: text});
         }}
       />
     );

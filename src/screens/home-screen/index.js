@@ -30,6 +30,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useMessageAndErrorUser} from '../../hooks/useMessageandError';
 import {resetPortfolioDetails} from '../../redux/slice/portfolio/get-portfolio-details-slice';
+import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
+import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
+import {resetGoldDetail} from '../../redux/slice/varliklar/Detail/get-gold-detail-slice';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -129,6 +132,11 @@ export const HomeScreen = () => {
     colors.altin,
     colors.kripto,
   ];
+  const handleReset = async () => {
+    await dispatch(resetStockDetail());
+    await dispatch(resetCurrencyDetail());
+    await dispatch(resetGoldDetail());
+  };
 
   const seriesEspecial = [deger, 100 - deger];
   const sliceColorEspecial = [color, 'grey'];
@@ -143,6 +151,11 @@ export const HomeScreen = () => {
       <ResizableCard
         onPress={async (assetId, name) => {
           console.log('homeassetId', assetId);
+          navigation.navigate('varlikDetay-screen', {
+            page: 'update',
+            assetId: assetId,
+          });
+          await handleReset();
           await dispatch(
             getAssetDetailsProcess({
               portfolioId: portfolioId,
@@ -153,11 +166,6 @@ export const HomeScreen = () => {
               day: 2,
             }),
           );
-
-          navigation.navigate('varlikDetay-screen', {
-            page: 'update',
-            assetId: assetId,
-          });
         }}
         borderColor={
           PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color

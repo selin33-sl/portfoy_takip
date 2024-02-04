@@ -93,12 +93,14 @@ export const VarlikDetayScreen = () => {
     state => state.addAsset,
   );
 
-  const {data: AssetDetailsData} = useSelector(state => state.getAssetDetails);
+  const {data: AssetDetailsData, isLoading: AssetDetailsLoading} = useSelector(
+    state => state.getAssetDetails,
+  );
 
-  console.log('CurrencyLastPrice', CurrencyLastPrice);
-  console.log('CurrencyDescription', CurrencyDescription);
-  console.log('UpdateAssetMessage', UpdateAssetMessage);
-  console.log('UpdateAssetStatus,', UpdateAssetStatus);
+  console.log('GoldDetailData', GoldDetailData);
+  console.log('AssetDetailsLoading', AssetDetailsLoading);
+  console.log('CurrencyLoading', CurrencyLoading);
+  console.log('StokLoading,', StokLoading);
 
   useToast(
     DeleteAssetStatus,
@@ -150,7 +152,7 @@ export const VarlikDetayScreen = () => {
       setCode(words[0] ? words[0].trim() : '');
       setLongName(words.slice(1).join(' ').trim());
     }
-  }, [StockDetailData, CurrencyDetailData]);
+  }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
 
   useEffect(() => {
     if (AssetDetailsData?.assetDetails && page == 'update') {
@@ -162,12 +164,16 @@ export const VarlikDetayScreen = () => {
         AssetDetailsData?.assetDetails?.purchasePrice?.split('.');
       const purchasePriceBeforeDot = purchasePriceParts[0];
       const purchasePriceAfterDot = purchasePriceParts[1];
-
+      console.log(
+        'ddddddddddddddddd',
+        AssetDetailsData?.assetDetails?.purchaseDate,
+      );
+      const date = AssetDetailsData?.assetDetails?.purchaseDate;
       setMiktar1(quantityBeforeDot);
       setMiktar2(quantityAfterDot);
       setFiyat1(purchasePriceBeforeDot);
       setFiyat2(purchasePriceAfterDot);
-      setSelectedDate('05-12-2023');
+      setSelectedDate(date);
     }
   }, [AssetDetailsData]);
 
@@ -198,14 +204,16 @@ export const VarlikDetayScreen = () => {
     navigation.goBack();
   };
 
+  console.log('selectedDate seçilen bu: ', selectedDate);
+
   const getCurrentDateFormatted = () => {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const year = String(currentDate.getFullYear());
+    const formattedDate = `${day}-${month}-${year}`;
     return `${day}-${month}-${year}`;
   };
-
   const calculateTotalQuantity = (miktar1, miktar2) => {
     return miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
   };
@@ -231,6 +239,7 @@ export const VarlikDetayScreen = () => {
       CurrencyLastPrice,
     );
 
+    console.log('selectedDate', selectedDate);
     const assetData = {
       type:
         text === 'Döviz'
@@ -323,135 +332,142 @@ export const VarlikDetayScreen = () => {
     fetchData();
   }, [selectedValue]);
 
-  useEffect(() => {
-    if (StokLoading) {
-      setlLoading(true);
-    }
-    if (CurrencyLoading) {
-      setlLoading(true);
-    } else {
-      setlLoading(false);
-    }
-  }, [StokLoading, CurrencyLoading]);
-
+  const reverseArray = data => {
+    return Array.isArray(data) ? data.slice().reverse() : data;
+  };
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <LinearGradientContainer>
-        {/* {loading ? (
+        {StokLoading === true ||
+        CurrencyLoading === true ||
+        AssetDetailsLoading === true ? (
           <Loader />
         ) : (
-          <> */}
-        <Header text={code} backIcon />
-        <View style={style.descContainer}>
-          <Text style={style.descText}>{longName}</Text>
-        </View>
+          <>
+            <Header text={code} backIcon />
+            <View style={style.descContainer}>
+              <Text style={style.descText}>{longName}</Text>
+            </View>
 
-        <View style={style.lineChartContainer}>
-          <LineChartt
-            lcData={
-              StockDetailData
-                ? StockDetailData
-                : CurrencyDetailData
-                ? CurrencyDetailData
-                : AssetDetailsData
-                ? AssetDetailsData.historicalData
-                : null
-            }
-            width={340}
-            height={170}
-          />
-        </View>
-
-        <View style={style.options}>
-          <TouchableOpacity
-            style={style.timePeriodContainer}
-            onPress={() => setTimePeriodVisible(true)}>
-            <Text>{timePeriod}</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
-            <Icon name={'fit-to-screen-outline'} size={30} color={'white'} />
-          </TouchableOpacity>
-        </View>
-
-        <LinearGradient
-          colors={['#10001D', '#44007A']}
-          style={style.inputAreaContainer}>
-          <InputContainer
-            text={t('assetDetailScreen.amount')}
-            typeText={GoldDetailData ? t('common.quantity') : code}
-            value1={miktar1}
-            onChangeText1={setMiktar1}
-            value2={miktar2}
-            onChangeText2={setMiktar2}
-          />
-          <InputContainer
-            text={t('assetDetailScreen.price')}
-            typeText={'TL'}
-            value1={fiyat1}
-            onChangeText1={setFiyat1}
-            value2={fiyat2}
-            onChangeText2={setFiyat2}
-          />
-
-          <View style={style.innerAreaContainer}>
-            <Text style={style.headerText}>{t('assetDetailScreen.date')}:</Text>
-            <View style={style.calendarContainer}>
-              <TextInput
-                style={{...style.input1, marginRight: 4}}
-                editable={false}
-                textAlign="center"
-                value={selectedDate}
-                onChangeText={setSelectedDate}
+            <View style={style.lineChartContainer}>
+              <LineChartt
+                lcData={
+                  reverseArray(StockDetailData) ||
+                  reverseArray(CurrencyDetailData) ||
+                  reverseArray(AssetDetailsData?.historicalData)
+                }
+                width={340}
+                height={170}
               />
-              <TouchableOpacity onPress={() => setDatePickerVisibility(true)}>
-                <Icon name={'calendar-month'} color={'#958EBF'} size={30} />
+            </View>
+
+            <View style={style.options}>
+              <TouchableOpacity
+                style={style.timePeriodContainer}
+                onPress={() => setTimePeriodVisible(true)}>
+                <Text>{timePeriod}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
+                <Icon
+                  name={'fit-to-screen-outline'}
+                  size={30}
+                  color={'white'}
+                />
               </TouchableOpacity>
             </View>
-          </View>
-          <View
-            style={
-              page == 'update'
-                ? {
-                    ...style.buttonsContainer,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingRight: 50,
-                  }
-                : style.buttonsContainer
-            }>
-            <TouchableOpacity
-              style={style.saveButtonContainer}
-              onPress={page == 'update' ? handleUpdateAsset : handleAddAsset}
-              disabled={!miktar1 && !miktar2}>
-              <LinearGradient
-                colors={
-                  !miktar1 && !miktar2
-                    ? ['#007029', '#007029']
-                    : ['#05A04D', '#007029']
-                }
-                style={style.saveButton}>
-                <Text
-                  style={[
-                    style.saveButtonText,
-                    !miktar1 &&
-                      !miktar2 && {...style.saveButtonText, color: 'grey'},
-                  ]}>
-                  {page == 'update' ? 'Güncelle' : t('assetDetailScreen.save')}
+
+            <LinearGradient
+              colors={['#10001D', '#44007A']}
+              style={style.inputAreaContainer}>
+              <InputContainer
+                text={t('assetDetailScreen.amount')}
+                typeText={GoldDetailData ? t('common.quantity') : code}
+                value1={miktar1}
+                onChangeText1={setMiktar1}
+                value2={miktar2}
+                onChangeText2={setMiktar2}
+              />
+              <InputContainer
+                text={t('assetDetailScreen.price')}
+                typeText={'TL'}
+                value1={fiyat1}
+                onChangeText1={setFiyat1}
+                value2={fiyat2}
+                onChangeText2={setFiyat2}
+              />
+
+              <View style={style.innerAreaContainer}>
+                <Text style={style.headerText}>
+                  {t('assetDetailScreen.date')}:
                 </Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            {page == 'update' && (
-              <TouchableOpacity
-                style={style.deleteContainer}
-                onPress={() => {
-                  setIsAlertModalVisible(true);
-                }}>
-                <Icon name={'delete-outline'} color={colors.white} size={25} />
-              </TouchableOpacity>
-            )}
-          </View>
-        </LinearGradient>
+                <View style={style.calendarContainer}>
+                  <TextInput
+                    style={{...style.input1, marginRight: 4}}
+                    editable={false}
+                    textAlign="center"
+                    value={selectedDate}
+                    onChangeText={setSelectedDate}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setDatePickerVisibility(true)}>
+                    <Icon name={'calendar-month'} color={'#958EBF'} size={30} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View
+                style={
+                  page == 'update'
+                    ? {
+                        ...style.buttonsContainer,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingRight: 50,
+                      }
+                    : style.buttonsContainer
+                }>
+                <TouchableOpacity
+                  style={style.saveButtonContainer}
+                  onPress={
+                    page == 'update' ? handleUpdateAsset : handleAddAsset
+                  }
+                  disabled={!miktar1 && !miktar2}>
+                  <LinearGradient
+                    colors={
+                      !miktar1 && !miktar2
+                        ? ['#007029', '#007029']
+                        : ['#05A04D', '#007029']
+                    }
+                    style={style.saveButton}>
+                    <Text
+                      style={[
+                        style.saveButtonText,
+                        !miktar1 &&
+                          !miktar2 && {...style.saveButtonText, color: 'grey'},
+                      ]}>
+                      {page == 'update'
+                        ? 'Güncelle'
+                        : t('assetDetailScreen.save')}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+                {page == 'update' && (
+                  <TouchableOpacity
+                    style={style.deleteContainer}
+                    onPress={() => {
+                      setIsAlertModalVisible(true);
+                    }}>
+                    <Icon
+                      name={'delete-outline'}
+                      color={colors.white}
+                      size={25}
+                    />
+                  </TouchableOpacity>
+                )}
+              </View>
+            </LinearGradient>
+          </>
+        )}
       </LinearGradientContainer>
       <CalendarModal
         isDatePickerVisible={isDatePickerVisible}
