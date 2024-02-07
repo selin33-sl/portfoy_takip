@@ -9,3 +9,4 @@ export * from './Setting/settingLanguage-screen';
 export * from './auth-screen';
 export * from './degerlendirmeler-screen';
 export * from './bildirimDetay-screen';
+export * from './splash-screen';

@@ -1,6 +1,5 @@
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image} from 'react-native';
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Animated, {
   useSharedValue,

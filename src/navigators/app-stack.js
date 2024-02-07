@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 import {toastComp} from '../components';
 import {AuthStack} from './auth-stack';
 import {useDispatch, useSelector} from 'react-redux';
+import {SplashScreen} from '../screens';
 
 export const AppStack = () => {
   const [isConnected, setIsConnected] = useState(true);
@@ -29,10 +30,12 @@ export const AppStack = () => {
     }
   }, [isConnected]);
 
+  console.log('authhhhhhh', isAuthenticated);
+
   return (
     <NavigationContainer>
       {isAuthenticated == '-1' ? (
-        <AuthStack />
+        <SplashScreen />
       ) : isAuthenticated == '0' ? (
         <AuthStack />
       ) : isAuthenticated == '1' ? (
@@ -41,5 +44,17 @@ export const AppStack = () => {
 
       <Toast />
     </NavigationContainer>
+
+    // <NavigationContainer>
+    //   {isAuthenticated == '-1' ? (
+    //      <SplashScreen />
+    //   ) : isAuthenticated == '0' ? (
+    //     <AuthStack />
+    //   ) : isAuthenticated == '1' ? (
+    //     <BottomTabs />
+    //   ) : null}
+
+    //   <Toast />
+    // </NavigationContainer>
   );
 };
