@@ -63,6 +63,10 @@ export const VarliklarListScreen = () => {
   const {data: EmtiaData} = useSelector(state => state.emtia);
   const {data: GumusData} = useSelector(state => state.silverPrice);
 
+  console.log('AllCurrencyLoading', AllCurrencyLoading);
+  console.log('AllStockLoading', AllStockLoading);
+  console.log('AllGoldLoading', AllGoldLoading);
+
   const data =
     AllStockData && AllStockData.length
       ? AllStockData
@@ -159,6 +163,8 @@ export const VarliklarListScreen = () => {
         percentText={roundedRate}
         onPress={async () => {
           await navigation.navigate('varlikDetay-screen', {text: text});
+          console.log('item?.name', item?.name);
+
           {
             AllStockData && AllStockData.length
               ? await dispatch(
@@ -169,7 +175,7 @@ export const VarliklarListScreen = () => {
                   getCurrencyDetailProcess({name: item?.name, day: 2}),
                 )
               : AllGoldData && AllGoldData.length
-              ? await dispatch(getGoldDetailProcess(newGoldName))
+              ? await dispatch(getGoldDetailProcess(item?.name, 2))
               : null;
           }
         }}
@@ -177,42 +183,34 @@ export const VarliklarListScreen = () => {
     );
   };
 
-  useEffect(() => {
-    if (
-      AllStockLoading == true ||
-      AllGoldLoading == true ||
-      AllCurrencyLoading == true
-    ) {
-      setLoading(true);
-    } else {
-      setLoading(false);
-    }
-  }, [AllStockLoading, AllGoldLoading, AllCurrencyLoading]);
-
   return (
     <LinearGradientContainer>
-      <Header text={text} backIcon />
-      {loading ? (
+      {AllStockLoading === true ||
+      AllGoldLoading === true ||
+      AllCurrencyLoading === true ? (
         <>
           <Loader />
         </>
       ) : (
-        <View style={style.innerContainer}>
-          <SearchBar
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            onClear={() => setSearchTerm('')}
-          />
-
-          <View style={style.listContainer}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={item => item._id.toString()}
+        <>
+          <Header text={text} backIcon />
+          <View style={style.innerContainer}>
+            <SearchBar
+              value={searchTerm}
+              onChangeText={setSearchTerm}
+              onClear={() => setSearchTerm('')}
             />
+
+            <View style={style.listContainer}>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={item => item._id.toString()}
+              />
+            </View>
           </View>
-        </View>
+        </>
       )}
     </LinearGradientContainer>
   );

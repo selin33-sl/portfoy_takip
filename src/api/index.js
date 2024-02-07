@@ -121,9 +121,14 @@ const getAllGoldProcess = createAsyncThunk(
 
 const getGoldDetailProcess = createAsyncThunk(
   'getGoldDetail/getGoldDetailProcess',
-  async name => {
-    const res = await axios.get(`getGoldDetail/${name}`);
-    return res;
+  async ({data, day}, {rejectWithValue}) => {
+    try {
+      const {name} = data;
+      const res = await axios.get(`/getGoldDetail/${day}`, data);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
   },
 );
 

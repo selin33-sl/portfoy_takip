@@ -28,6 +28,7 @@ import {
   deleteAssetProcess,
   getAssetDetailsProcess,
   getCurrencyDetailProcess,
+  getGoldDetailProcess,
   getPortfolioDetailsProcess,
   getStockDetailProcess,
   updateAssetProcess,
@@ -80,7 +81,14 @@ export const VarlikDetayScreen = () => {
     isLoading: CurrencyLoading,
     description: CurrencyDescription,
   } = useSelector(state => state.getCurrencyDetail);
-  const {data: GoldDetailData} = useSelector(state => state.getGoldDetail);
+
+  const {
+    data: GoldDetailData,
+    lastPrice: GoldLastPrice,
+    name: GoldName,
+    isLoading: GoldLoading,
+  } = useSelector(state => state.getGoldDetail);
+
   const {status: DeleteAssetStatus, message: DeleteAssetMessage} = useSelector(
     state => state.removeAsset,
   );
@@ -99,8 +107,8 @@ export const VarlikDetayScreen = () => {
 
   console.log('GoldDetailData', GoldDetailData);
   console.log('AssetDetailsLoading', AssetDetailsLoading);
-  console.log('CurrencyLoading', CurrencyLoading);
-  console.log('StokLoading,', StokLoading);
+  console.log('GoldLastPrice', GoldLastPrice);
+  console.log('GoldName,', GoldName);
 
   useToast(
     DeleteAssetStatus,
@@ -127,6 +135,10 @@ export const VarlikDetayScreen = () => {
   );
 
   useEffect(() => {
+    console.log(
+      'AssetDetailsData.assetDetails',
+      AssetDetailsData?.assetDetails,
+    );
     if (StockDetailData && StockDetailData.length > 0) {
       const firstStockItem = StokName;
       setFullName(firstStockItem);
@@ -138,19 +150,37 @@ export const VarlikDetayScreen = () => {
       setCode(CurrencyName);
       setLongName(CurrencyDescription);
     } else if (GoldDetailData && GoldDetailData.length > 0) {
-      const firstStockItem = GoldDetailData[0];
-      setCode(firstStockItem?.name);
+      const firstStockItem = GoldName;
+      setCode(firstStockItem);
       setLongName('');
     } else if (
       AssetDetailsData &&
       AssetDetailsData.assetDetails &&
       AssetDetailsData.assetDetails.type == 'Stock'
     ) {
-      const firstStockItem = AssetDetailsData.assetDetails.name;
+      const firstStockItem = AssetDetailsData?.assetDetails?.name;
       setFullName(firstStockItem);
       const words = firstStockItem?.split(' ');
       setCode(words[0] ? words[0].trim() : '');
       setLongName(words.slice(1).join(' ').trim());
+    } else if (
+      AssetDetailsData &&
+      AssetDetailsData.assetDetails &&
+      AssetDetailsData.assetDetails.type == 'Currency'
+    ) {
+      const firstStockItem = AssetDetailsData?.assetDetails?.name;
+      setFullName(firstStockItem);
+      setCode(firstStockItem);
+      setLongName('');
+    } else if (
+      AssetDetailsData &&
+      AssetDetailsData.assetDetails &&
+      AssetDetailsData.assetDetails.type == 'Gold'
+    ) {
+      const firstStockItem = AssetDetailsData?.assetDetails?.name;
+      setFullName(firstStockItem);
+      setCode(firstStockItem);
+      setLongName('');
     }
   }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
 
@@ -223,10 +253,11 @@ export const VarlikDetayScreen = () => {
     fiyat2,
     StokLastPrice,
     CurrencyLastPrice,
+    GoldLastPrice,
   ) => {
     return fiyat1 || fiyat2
       ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
-      : StokLastPrice || CurrencyLastPrice || '0.0';
+      : StokLastPrice || CurrencyLastPrice || GoldLastPrice || '0.0';
   };
 
   const handleAddOrUpdateAsset = async isUpdate => {
@@ -237,6 +268,7 @@ export const VarlikDetayScreen = () => {
       fiyat2,
       StokLastPrice,
       CurrencyLastPrice,
+      GoldLastPrice,
     );
 
     console.log('selectedDate', selectedDate);
@@ -313,6 +345,10 @@ export const VarlikDetayScreen = () => {
           await dispatch(
             getCurrencyDetailProcess({name: CurrencyName, day: selectedValue}),
           );
+        } else if (GoldDetailData) {
+          await dispatch(
+            getGoldDetailProcess({day: selectedValue, data: {name: GoldName}}),
+          );
         } else if (AssetDetailsData) {
           await dispatch(
             getAssetDetailsProcess({
@@ -340,6 +376,7 @@ export const VarlikDetayScreen = () => {
       <LinearGradientContainer>
         {StokLoading === true ||
         CurrencyLoading === true ||
+        GoldLoading === true ||
         AssetDetailsLoading === true ? (
           <Loader />
         ) : (
@@ -354,6 +391,7 @@ export const VarlikDetayScreen = () => {
                 lcData={
                   reverseArray(StockDetailData) ||
                   reverseArray(CurrencyDetailData) ||
+                  reverseArray(GoldDetailData) ||
                   reverseArray(AssetDetailsData?.historicalData)
                 }
                 width={340}

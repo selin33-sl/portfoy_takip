@@ -1,6 +1,7 @@
 export * from './header';
 export * from './inform';
 export * from './loader';
+export * from './notFound';
 export * from './linearGradient';
 export * from './portfoyComponent';
 export * from './Cards/varliklarCard';

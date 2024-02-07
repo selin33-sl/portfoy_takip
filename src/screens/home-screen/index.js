@@ -11,6 +11,7 @@ import {
   Inform,
   LinearGradientContainer,
   Loader,
+  NotFound,
   PortfoyComponent,
   PortfoyListModal,
   ResizableCard,
@@ -124,14 +125,25 @@ export const HomeScreen = () => {
     PortfolioDetailsData?.distribution[2]?.percentage,
     PortfolioDetailsData?.distribution[3]?.percentage,
   ];
-  const sliceColor = [
-    colors.nakit,
-    colors.doviz,
-    colors.fon,
-    colors.hisseSenedi,
-    colors.altin,
-    colors.kripto,
-  ];
+
+  const totalPercentage = series.reduce((acc, curr) => acc - curr, 0);
+
+  console.log('tootttaalll', totalPercentage);
+
+  const sliceColor =
+    totalPercentage === 0
+      ? ['grey']
+      : [
+          colors.nakit,
+          colors.doviz,
+          colors.fon,
+          colors.hisseSenedi,
+          colors.altin,
+          colors.kripto,
+        ];
+
+  console.log();
+
   const handleReset = async () => {
     await dispatch(resetStockDetail());
     await dispatch(resetCurrencyDetail());
@@ -240,7 +252,13 @@ export const HomeScreen = () => {
                     <PieChart
                       showText
                       widthAndHeight={widthAndHeight}
-                      series={especial ? seriesEspecial : series}
+                      series={
+                        especial
+                          ? seriesEspecial
+                          : totalPercentage === 0
+                          ? [100]
+                          : series
+                      }
                       sliceColor={especial ? sliceColorEspecial : sliceColor}
                       coverRadius={0.5}
                     />
@@ -321,14 +339,20 @@ export const HomeScreen = () => {
                 </Text>
               </View>
               <View style={style.listContainer}>
-                {/* <Text>aaaaaaaaaaaa</Text> */}
-                <FlatList
-                  showsVerticalScrollIndicator={false}
-                  data={PortfolioDetailsData?.portfolio?.portfolioDetails}
-                  renderItem={renderItem}
-                  keyExtractor={(item, index) => index.toString()}
-                  scrollEnabled={false}
-                />
+                {PortfolioDetailsData?.portfolio?.portfolioDetails?.length ===
+                0 ? (
+                  <NotFound
+                    text={'Portföyünüzde herhangi bir varlık bulunmamaktadır.'}
+                  />
+                ) : (
+                  <FlatList
+                    showsVerticalScrollIndicator={false}
+                    data={PortfolioDetailsData?.portfolio?.portfolioDetails}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => index.toString()}
+                    scrollEnabled={false}
+                  />
+                )}
               </View>
             </View>
           </ScrollView>
