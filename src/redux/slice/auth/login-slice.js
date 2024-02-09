@@ -28,7 +28,6 @@ export const loginSlice = createSlice({
     },
     savePortfolioId: (state, action) => {
       state.portfolioId = action.payload;
-      // await AsyncStorage.setItem('defaultPortfolioId', action.payload);
     },
     resetAuth: state => {
       state.status = undefined;

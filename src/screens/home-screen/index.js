@@ -48,7 +48,6 @@ export const HomeScreen = () => {
   const [isAssetDetailsModal, setIsAssetDetailsModal] = useState(false);
   const [isAssetInfoModal, setIsAssetInfoModal] = useState(false);
   const [assetInfoItem, setAssetInfoItem] = useState('');
-  const [portfolioId, setPortfolioId] = useState('');
   const [especial, setEspecial] = useState(false);
   const [capturedImageURI, setCapturedImageURI] = useState(null);
   const [hidden, setHidden] = useState(false);
@@ -74,7 +73,27 @@ export const HomeScreen = () => {
 
     const fetchData = async () => {
       try {
-        dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
+        // await AsyncStorage.removeItem('accessToken');
+
+        defaultPortfolioId != undefined &&
+          (await AsyncStorage.setItem(
+            'defaultPortfolioId',
+            defaultPortfolioId,
+          ));
+
+        const saveID = await AsyncStorage.getItem('defaultPortfolioId');
+
+        defaultPortfolioId === undefined && dispatch(savePortfolioId(saveID));
+
+        defaultPortfolioId != undefined
+          ? (console.log('bu ilk:', defaultPortfolioId),
+            dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId})))
+          : saveID
+          ? (console.log('bu da sonraki:', saveID),
+            dispatch(getPortfolioDetailsProcess({id: saveID})))
+          : null;
+
+        console.log('SAVE:', saveID);
       } catch (error) {
         console.error('Error fetching selectedPortfolioId:', error);
       }
@@ -82,6 +101,19 @@ export const HomeScreen = () => {
 
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   const saveID = AsyncStorage.getItem('defaultPortfolioId');
+  //   console.log('bu ilk:', defaultPortfolioId),
+  //     console.log('bu da sonraki:', saveID),
+  //     defaultPortfolioId != undefined
+  //       ? (console.log('bu ilk:', defaultPortfolioId),
+  //         dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId})))
+  //       : savedID
+  //       ? (console.log('bu da sonraki:', savedID),
+  //         dispatch(getPortfolioDetailsProcess({id: savedID})))
+  //       : null;
+  // }, []);
 
   useEffect(() => {
     if (!isPortfoyListModalVisible) {
@@ -200,8 +232,6 @@ export const HomeScreen = () => {
       />
     );
   };
-
-  console.log('buuu ', PortfolioDetailsData?.portfolio?.totalProfitPercentage);
 
   return (
     <LinearGradientContainer>

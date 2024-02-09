@@ -65,7 +65,7 @@ export const VarlikDetayScreen = () => {
   const [fiyat1, setFiyat1] = useState('');
   const [fiyat2, setFiyat2] = useState('');
   const [loading, setlLoading] = useState(false);
-  const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
+  // const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
 
   const {
     data: StockDetailData,
@@ -104,11 +104,12 @@ export const VarlikDetayScreen = () => {
   const {data: AssetDetailsData, isLoading: AssetDetailsLoading} = useSelector(
     state => state.getAssetDetails,
   );
+  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
   console.log('GoldDetailData', GoldDetailData);
   console.log('AssetDetailsLoading', AssetDetailsLoading);
   console.log('GoldLastPrice', GoldLastPrice);
-  console.log('GoldName,', GoldName);
+  console.log('defaultPortfolioId,', defaultPortfolioId);
 
   useToast(
     DeleteAssetStatus,
@@ -222,16 +223,16 @@ export const VarlikDetayScreen = () => {
   //REDUCER YAPACAĞIZ PORTFOLİO ID İÇİN
 
   const handleDeleteAsset = async () => {
-    const selectedPortfolioId = await AsyncStorage.getItem(
-      'selectedPortfolioId',
-    );
+    // const selectedPortfolioId = await AsyncStorage.getItem(
+    //   'selectedPortfolioId',
+    // );
     await dispatch(
       deleteAssetProcess({
-        portfolioId: selectedPortfolioId,
+        portfolioId: defaultPortfolioId,
         assetId: assetId,
       }),
     );
-    await dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
+    await dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
 
     setIsAlertModalVisible(false);
 
@@ -303,7 +304,7 @@ export const VarlikDetayScreen = () => {
     const process = isUpdate ? updateAssetProcess : addAssetProcess;
     await dispatch(
       process({
-        portfolioId: selectedPortfolioId,
+        portfolioId: defaultPortfolioId,
         assetId: isUpdate ? AssetDetailsData?.assetDetails?.assetId : undefined,
         data: assetData,
       }),
@@ -326,21 +327,21 @@ export const VarlikDetayScreen = () => {
     await handleAddOrUpdateAsset(true);
   };
 
-  //BU KISIM İÇİN REDUCER OLUŞTURULACAK
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const selectedPortfolioId = await AsyncStorage.getItem(
-          'selectedPortfolioId',
-        );
-        setSelectedPortfolioId(selectedPortfolioId);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  // //BU KISIM İÇİN REDUCER OLUŞTURULACAK
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // const selectedPortfolioId = await AsyncStorage.getItem(
+  //       //   'selectedPortfolioId',
+  //       // );
+  //       setSelectedPortfolioId(def);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   //BU KISIM İÇİN REDUCER OLUŞTURULACAK
 

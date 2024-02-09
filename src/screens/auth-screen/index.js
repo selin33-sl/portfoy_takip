@@ -7,7 +7,12 @@ import {
   TextinputCard,
 } from '../../components';
 import {useTranslation} from 'react-i18next';
-import {authLogin, getAllPortfolioProcess, registerProcess} from '../../api';
+import {
+  authLogin,
+  getAllPortfolioProcess,
+  getPortfolioDetailsProcess,
+  registerProcess,
+} from '../../api';
 import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import {resetRegister} from '../../redux/slice/auth/register-slice';
@@ -35,16 +40,19 @@ export const AuthScreen = () => {
     state => state.auth,
   );
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
+
   useEffect(() => {
     if (portfolioId) {
       const fetchData = async () => {
         try {
-          await AsyncStorage.setItem('selectedPortfolioId', portfolioId);
+          // await AsyncStorage.setItem('selectedPortfolioId', portfolioId);
 
-          console.log('portfolioId:', portfolioId);
+          // console.log('portfolioId:', portfolioId);
 
-          const veli = await AsyncStorage.getItem('selectedPortfolioId');
-          console.log(veli, 'ASYYYYYNC');
+          // const veli = await AsyncStorage.getItem('selectedPortfolioId');
+          // console.log(veli, 'ASYYYYYNC');
+
+          dispatch(getPortfolioDetailsProcess({id: portfolioId}));
         } catch (error) {
           console.error('Error fetching selectedPortfolioId:', error);
         }
@@ -119,7 +127,7 @@ export const AuthScreen = () => {
     }
     // requestNotificationPermission(); // Bildirim izni iste
     await dispatch(authLogin({email, password}));
-    await dispatch(getAllPortfolioProcess());
+    // await dispatch(getAllPortfolioProcess());
   };
 
   // const handleEmailChange = text => {

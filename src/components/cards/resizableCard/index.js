@@ -5,8 +5,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import style from './style';
-import {colors} from '../../../theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getAssetDetailsProcess} from '../../../api';
 import {resetAssetDetails} from '../../../redux/slice/portfolio/get-asset-details-slice';
 
@@ -21,6 +19,7 @@ export const ResizableCard = ({
 }) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
+  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
   const [isModalVisible2, setModalVisible2] = useState(false);
   const [modalHeight, setModalHeight] = useState(windowHeight * 0.05); // Modalın başlangıç yüksekliği
@@ -42,7 +41,6 @@ export const ResizableCard = ({
   };
 
   const SmallCard = ({name, price, adet, profit, assetId, item}) => {
-    console.log('AASSSEETTTIIIDD:', assetId);
     return (
       <TouchableOpacity
         style={style.detailContainer}
@@ -69,16 +67,12 @@ export const ResizableCard = ({
             <TouchableOpacity
               style={style.infoButtonContainer}
               onPress={async () => {
-                const selectedPortfolioId = await AsyncStorage.getItem(
-                  'selectedPortfolioId',
-                );
-
                 await dispatch(resetAssetDetails());
                 infoModalOnPress();
 
                 await dispatch(
                   getAssetDetailsProcess({
-                    portfolioId: selectedPortfolioId,
+                    portfolioId: defaultPortfolioId,
                     assetId: item?._id,
                     type: item?.type,
                     name: item?.name,
