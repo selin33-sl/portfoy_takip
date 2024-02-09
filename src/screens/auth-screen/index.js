@@ -7,11 +7,11 @@ import {
   TextinputCard,
 } from '../../components';
 import {useTranslation} from 'react-i18next';
-import {authLogin, registerProcess} from '../../api';
+import {authLogin, getAllPortfolioProcess, registerProcess} from '../../api';
 import {useDispatch, useSelector} from 'react-redux';
 import NetInfo from '@react-native-community/netinfo';
 import {resetRegister} from '../../redux/slice/auth/register-slice';
-import {resetAuth} from '../../redux/slice/auth/login-slice';
+import {resetAuth, savePortfolioId} from '../../redux/slice/auth/login-slice';
 import {useToast} from '../../hooks/useToast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,6 +31,10 @@ export const AuthScreen = () => {
     portfolioId: portfolioId,
   } = useSelector(state => state.register);
 
+  const {status: loginStatus, message: loginMessage} = useSelector(
+    state => state.auth,
+  );
+  const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
   useEffect(() => {
     if (portfolioId) {
       const fetchData = async () => {
@@ -100,7 +104,7 @@ export const AuthScreen = () => {
     await dispatch(registerProcess({username, password, email}));
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!isConnected) {
       Alert.alert(
         'İnternet Bağlantısı Yok',
@@ -114,7 +118,8 @@ export const AuthScreen = () => {
       return;
     }
     // requestNotificationPermission(); // Bildirim izni iste
-    dispatch(authLogin({email, password}));
+    await dispatch(authLogin({email, password}));
+    await dispatch(getAllPortfolioProcess());
   };
 
   // const handleEmailChange = text => {
@@ -128,6 +133,26 @@ export const AuthScreen = () => {
   //     setEmailValid(false);
   //   }
   // };
+
+  useEffect(() => {
+    if (loginStatus === 'success') {
+      console.log('ABOOOOOOO');
+    }
+  }, [loginStatus]);
+
+  // useEffect(() => {
+  //   console.log(
+  //     'AllPortfolioData.portfolios[0]._id:11111',
+  //     AllPortfolioData?.portfolios[0]._id,
+  //   );
+  //   if (AllPortfolioData && AllPortfolioData.portfolios.length > 0) {
+  //     console.log(
+  //       'AllPortfolioData.portfolios[0]._id:22222',
+  //       AllPortfolioData.portfolios[0]._id,
+  //     );
+  //     dispatch(savePortfolioId(AllPortfolioData.portfolios[0]._id));
+  //   }
+  // }, [AllPortfolioData, loginStatus]);
 
   return (
     <ScrollView>

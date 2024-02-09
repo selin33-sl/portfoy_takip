@@ -23,6 +23,8 @@ export const AppStack = () => {
       console.log(accessToken, 'ACCESSTOKEN');
       const tokenCreationTime = await AsyncStorage.getItem('tokenCreationTime');
       const tokenCreationTimeUTC = new Date(parseInt(tokenCreationTime));
+      console.log(tokenCreationTime, 'tokenCreationTime');
+      console.log(tokenCreationTimeUTC, 'tokenCreationTimeUTC');
 
       const tokenCreationTimee = new Date(
         parseInt(tokenCreationTime),
@@ -33,18 +35,26 @@ export const AppStack = () => {
         tokenCreationTimeUTC.getTime() + 1 * 24 * 60 * 60 * 1000,
       );
 
+      console.log(expirationTimeUTC, 'expirationTimeUTC');
+
       if (accessToken && tokenCreationTimee) {
         if (currentTimeUTC >= expirationTimeUTC) {
           // Token süresi dolmuş, kullanıcıyı oturum açmaya yönlendirin.
           AsyncStorage.removeItem('accessToken');
           AsyncStorage.removeItem('tokenCreationTime');
-          dispatch(changeAuthentication('0'));
+          setTimeout(() => {
+            dispatch(changeAuthentication('0'));
+          }, 3000);
         } else {
           // Token hala geçerli, oturumu açın.
-          dispatch(changeAuthentication('1'));
+          setTimeout(() => {
+            dispatch(changeAuthentication('1'));
+          }, 3000);
         }
       } else {
-        dispatch(changeAuthentication('0'));
+        setTimeout(() => {
+          dispatch(changeAuthentication('0'));
+        }, 3000);
       }
     };
 

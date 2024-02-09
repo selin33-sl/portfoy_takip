@@ -34,6 +34,7 @@ import {resetPortfolioDetails} from '../../redux/slice/portfolio/get-portfolio-d
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
 import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
 import {resetGoldDetail} from '../../redux/slice/varliklar/Detail/get-gold-detail-slice';
+import {savePortfolioId} from '../../redux/slice/auth/login-slice';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -62,26 +63,31 @@ export const HomeScreen = () => {
 
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
   const {data: AssetDetailsData} = useSelector(state => state.getAssetDetails);
+  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
   const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
     useSelector(state => state.getPortfolioDetails);
 
+  console.log('default portfolio:', defaultPortfolioId);
+
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
-  }, []);
 
-  console.log('AssetDetailsData:', AssetDetailsData?.assetDetails);
+    const fetchData = async () => {
+      try {
+        dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
+      } catch (error) {
+        console.error('Error fetching selectedPortfolioId:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (!isPortfoyListModalVisible) {
       const fetchData = async () => {
         try {
-          const selectedPortfolioId = await AsyncStorage.getItem(
-            'selectedPortfolioId',
-          );
-
-          setPortfolioId(selectedPortfolioId);
-
-          dispatch(getPortfolioDetailsProcess({id: selectedPortfolioId}));
+          dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
         } catch (error) {
           console.error('Error fetching selectedPortfolioId:', error);
         }
@@ -170,7 +176,7 @@ export const HomeScreen = () => {
           await handleReset();
           await dispatch(
             getAssetDetailsProcess({
-              portfolioId: portfolioId,
+              portfolioId: defaultPortfolioId,
               assetId: assetId,
               type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
                 ?.type,
@@ -269,7 +275,7 @@ export const HomeScreen = () => {
                         onPress={async () => {
                           await dispatch(
                             getAssetPercentagesProcess({
-                              id: portfolioId,
+                              id: defaultPortfolioId,
                               type:
                                 header == 'Döviz'
                                   ? 'Currency'

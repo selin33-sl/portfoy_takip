@@ -54,7 +54,7 @@ const authLogin = createAsyncThunk('auth/login', async data => {
     await AsyncStorage.setItem('accessToken', accessToken);
     await AsyncStorage.setItem('tokenCreationTime', currentTime.toString());
 
-    return accessToken;
+    return response;
   } catch (error) {
     throw error.response.data;
   }

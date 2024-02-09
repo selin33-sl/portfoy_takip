@@ -23,6 +23,7 @@ import {useToast} from '../../../hooks/useToast';
 import {resetUpdatePortfolio} from '../../../redux/slice/portfolio/update-portfolio-slice';
 import {resetAllPortfolio} from '../../../redux/slice/portfolio/get-all-portfolio-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {savePortfolioId} from '../../../redux/slice/auth/login-slice';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -84,7 +85,8 @@ export const PortfoyListModal = ({
     };
 
     const handleSelectPortfolio = async () => {
-      await AsyncStorage.setItem('selectedPortfolioId', item?._id);
+      // await AsyncStorage.setItem('selectedPortfolioId', item?._id);
+      await dispatch(savePortfolioId(item?._id));
       await setIsModalVisible(false);
     };
     return (

@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {authLogin} from '../../../api';
+import {authLogin, getAllPortfolioProcess} from '../../../api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loginSlice = createSlice({
   name: 'auth',
@@ -7,6 +8,7 @@ export const loginSlice = createSlice({
     accessToken: null,
     status: undefined,
     isAuthenticated: '-1',
+    portfolioId: undefined,
     isLoading: {},
     message: undefined,
   },
@@ -24,6 +26,10 @@ export const loginSlice = createSlice({
     changeAuthentication: (state, action) => {
       state.isAuthenticated = action.payload;
     },
+    savePortfolioId: (state, action) => {
+      state.portfolioId = action.payload;
+      // await AsyncStorage.setItem('defaultPortfolioId', action.payload);
+    },
     resetAuth: state => {
       state.status = undefined;
       state.isLoading = {};
@@ -37,10 +43,11 @@ export const loginSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(authLogin.fulfilled, (state, action) => {
-        state.accessToken = action.payload;
+        state.accessToken = action.payload.data.accessToken;
         state.status = 'success';
         state.isAuthenticated = '1';
         state.isLoading = false;
+        state.portfolioId = action.payload.data.defaultPortfolioId;
         state.message = action.payload?.message;
       })
       .addCase(authLogin.rejected, (state, action) => {
@@ -52,7 +59,8 @@ export const loginSlice = createSlice({
   },
 });
 
-export const {resetAuth, changeAuthentication} = loginSlice.actions;
+export const {resetAuth, changeAuthentication, savePortfolioId} =
+  loginSlice.actions;
 
 // export const { setCredentials, logOut } = loginSlice.actions;
 

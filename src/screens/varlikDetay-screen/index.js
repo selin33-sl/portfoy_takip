@@ -207,6 +207,8 @@ export const VarlikDetayScreen = () => {
     }
   }, [AssetDetailsData]);
 
+  //HOOK YAPACCAĞIZ BUNA
+
   useEffect(() => {
     if (page == 'update' && StockDetailData) {
       dispatch(resetStockDetail());
@@ -216,6 +218,8 @@ export const VarlikDetayScreen = () => {
       dispatch(resetAssetDetails());
     }
   }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
+
+  //REDUCER YAPACAĞIZ PORTFOLİO ID İÇİN
 
   const handleDeleteAsset = async () => {
     const selectedPortfolioId = await AsyncStorage.getItem(
@@ -231,19 +235,22 @@ export const VarlikDetayScreen = () => {
 
     setIsAlertModalVisible(false);
 
-    navigation.goBack();
+    navigation.navigate('home-screen');
   };
 
   console.log('selectedDate seçilen bu: ', selectedDate);
 
+  //CALEDAR MODALDA KULLANILAN FORMAT İLE BU FONKSİYONU TEK FONKSİYONDA BİRLEŞTİRECĞİZ
+
   const getCurrentDateFormatted = () => {
     const currentDate = new Date();
+    console.log();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const year = String(currentDate.getFullYear());
-    const formattedDate = `${day}-${month}-${year}`;
     return `${day}-${month}-${year}`;
   };
+
   const calculateTotalQuantity = (miktar1, miktar2) => {
     return miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
   };
@@ -319,6 +326,7 @@ export const VarlikDetayScreen = () => {
     await handleAddOrUpdateAsset(true);
   };
 
+  //BU KISIM İÇİN REDUCER OLUŞTURULACAK
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -333,6 +341,8 @@ export const VarlikDetayScreen = () => {
 
     fetchData();
   }, []);
+
+  //BU KISIM İÇİN REDUCER OLUŞTURULACAK
 
   useEffect(() => {
     const fetchData = async () => {
