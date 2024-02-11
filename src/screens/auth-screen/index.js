@@ -1,4 +1,11 @@
-import {View, Text, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+  TextInput,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import style from './style';
 import {
@@ -18,7 +25,18 @@ import NetInfo from '@react-native-community/netinfo';
 import {resetRegister} from '../../redux/slice/auth/register-slice';
 import {resetAuth, savePortfolioId} from '../../redux/slice/auth/login-slice';
 import {useToast} from '../../hooks/useToast';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useForm, Controller} from 'react-hook-form';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  username: yup.string().required('Username is required'),
+  email: yup.string().required('Email is required').email('Invalid email'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(6, 'Password must contain at least 8 characters'),
+});
 
 export const AuthScreen = () => {
   const {t} = useTranslation();
@@ -39,19 +57,24 @@ export const AuthScreen = () => {
   const {status: loginStatus, message: loginMessage} = useSelector(
     state => state.auth,
   );
-  const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+      password: '',
+      username: '',
+    },
+  });
 
   useEffect(() => {
     if (portfolioId) {
       const fetchData = async () => {
         try {
-          // await AsyncStorage.setItem('selectedPortfolioId', portfolioId);
-
-          // console.log('portfolioId:', portfolioId);
-
-          // const veli = await AsyncStorage.getItem('selectedPortfolioId');
-          // console.log(veli, 'ASYYYYYNC');
-
           dispatch(getPortfolioDetailsProcess({id: portfolioId}));
         } catch (error) {
           console.error('Error fetching selectedPortfolioId:', error);
@@ -60,12 +83,6 @@ export const AuthScreen = () => {
 
       fetchData();
     }
-
-    // if (portfolioId) {
-    //   AsyncStorage.setItem('selectedPortfolioId', portfolioId);
-    // }
-    // const veli = AsyncStorage.getItem('selectedPortfolioId');
-    // console.log(veli, 'ASYYYYYNC');
   }, [portfolioId]);
 
   useToast(
@@ -88,31 +105,21 @@ export const AuthScreen = () => {
 
   const handleRegisterScreen = () => {
     setRegister(!register);
-    setEmail('');
-    setUsername('');
-    setPassword('');
+    // setEmail('');
+    // setUsername('');
+    // setPassword('');
     dispatch(resetRegister());
     dispatch(resetAuth());
   };
 
-  // const handleLogin = () => {
-  //   navigation.navigate('bottom-tabs');
-  // };
-
-  const handleRegister = async () => {
-    if (register && (username === '' || password === '' || email === '')) {
-      Alert.alert('Uyarı', 'Lütfen bütün alanları doldurunuz.');
-      return;
-    }
-    // if (!isEmailValid) {
-    //   Alert.alert('Uyarı', 'Lütfen geçerli bir e-posta adresi giriniz.');
-    //   return;
-    // }
+  const handleRegister = async formData => {
+    setEmail(formData?.email);
+    setPassword(formData?.password);
 
     await dispatch(registerProcess({username, password, email}));
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async formData => {
     if (!isConnected) {
       Alert.alert(
         'İnternet Bağlantısı Yok',
@@ -120,47 +127,11 @@ export const AuthScreen = () => {
       );
       return;
     }
+    setEmail(formData?.email);
+    setPassword(formData?.password);
 
-    if (email === '' || password === '') {
-      Alert.alert('Uyarı', 'Lütfen kullanıcı adınızı ve şifrenizi giriniz.');
-      return;
-    }
-    // requestNotificationPermission(); // Bildirim izni iste
     await dispatch(authLogin({email, password}));
-    // await dispatch(getAllPortfolioProcess());
   };
-
-  // const handleEmailChange = text => {
-  //   setEmail(text);
-
-  //   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-  //   if (emailRegex.test(text)) {
-  //     setEmailValid(true);
-  //   } else {
-  //     setEmailValid(false);
-  //   }
-  // };
-
-  useEffect(() => {
-    if (loginStatus === 'success') {
-      console.log('ABOOOOOOO');
-    }
-  }, [loginStatus]);
-
-  // useEffect(() => {
-  //   console.log(
-  //     'AllPortfolioData.portfolios[0]._id:11111',
-  //     AllPortfolioData?.portfolios[0]._id,
-  //   );
-  //   if (AllPortfolioData && AllPortfolioData.portfolios.length > 0) {
-  //     console.log(
-  //       'AllPortfolioData.portfolios[0]._id:22222',
-  //       AllPortfolioData.portfolios[0]._id,
-  //     );
-  //     dispatch(savePortfolioId(AllPortfolioData.portfolios[0]._id));
-  //   }
-  // }, [AllPortfolioData, loginStatus]);
 
   return (
     <ScrollView>
@@ -195,38 +166,49 @@ export const AuthScreen = () => {
             <View style={style.inputContainer}>
               {register ? (
                 <TextinputCard
-                  value={username}
-                  setValue={setUsername}
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  errors={errors.username}
+                  name={'username'}
                   placeholder={t('registerScreen.userName')}
-                  name={'account'}
+                  iconName={'account'}
                 />
               ) : null}
 
               <TextinputCard
-                value={email}
-                setValue={setEmail}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                errors={errors.email}
                 placeholder={'Email'}
-                name={'email-outline'}
+                name={'email'}
+                iconName={'email-outline'}
                 keyboardType={'email-address'}
               />
+
               <TextinputCard
-                value={password}
-                setValue={setPassword}
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                errors={errors.password}
+                name={'password'}
                 secureText={true}
                 placeholder={t('common.password')}
-                name={'lock-outline'}
+                iconName={'lock-outline'}
               />
-
-              {/* {register ? (
-              <TextinputCard
-                placeholder={t('registerScreen.repeatPasword')}
-                name={'lock-outline'}
-              />
-            ) : null} */}
             </View>
+
             <TouchableOpacity
               style={style.buttonContainer}
-              onPress={register ? handleRegister : handleLogin}>
+              onPress={
+                register
+                  ? handleSubmit(handleRegister)
+                  : handleSubmit(handleLogin)
+              }>
               <Text style={style.buttonText}>
                 {register ? t('common.register') : t('common.login')}
               </Text>

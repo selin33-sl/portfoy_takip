@@ -6,7 +6,7 @@ const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   container: {
     width: windowWidth,
-    height: windowHeight * 0.09,
+    height: windowHeight * 0.1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
@@ -29,5 +29,12 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.lilac,
     borderRadius: 20,
+  },
+  inputContainer: {
+    height: 'auto',
+  },
+  errorText: {
+    color: 'red',
+    marginLeft: windowWidth * 0.05,
   },
 });
