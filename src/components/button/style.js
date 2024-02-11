@@ -12,7 +12,7 @@ export default StyleSheet.create({
     marginHorizontal: windowWidth * 0.01,
   },
   text: {
-    fontSize: windowHeight * 0.017,
+    fontSize: windowHeight * 0.018,
     color: '#ffffff',
   },
 });

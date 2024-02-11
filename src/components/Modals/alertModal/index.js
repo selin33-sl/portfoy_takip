@@ -41,11 +41,15 @@ export const AlertModal = ({
             </Text>
             <View style={style.buttonContainer}>
               <Button
+                color1={'red'}
+                color2={'#FF4F4F'}
                 text={'İptal'}
                 buttonStyle={style.cancelButton}
                 onPress={() => setIsModalVisible(false)}
               />
               <Button
+                color1={'#8D00FF'}
+                color2={'#B356FF'}
                 text={'Sil'}
                 buttonStyle={style.deleteButton}
                 onPress={handleDelete}

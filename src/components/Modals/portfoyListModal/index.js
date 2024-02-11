@@ -6,7 +6,7 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,6 +24,8 @@ import {resetUpdatePortfolio} from '../../../redux/slice/portfolio/update-portfo
 import {resetAllPortfolio} from '../../../redux/slice/portfolio/get-all-portfolio-slice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {savePortfolioId} from '../../../redux/slice/auth/login-slice';
+import {Button} from '../../button';
+import {AlertModal} from '../alertModal';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -33,6 +35,9 @@ export const PortfoyListModal = ({
 }) => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
+
+  const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
+  const [id, setId] = useState('');
 
   const {status: deleteStatus, message: deleteMessage} = useSelector(
     state => state.deletePortfolio,
@@ -57,11 +62,13 @@ export const PortfoyListModal = ({
     dispatch,
   );
 
+  useEffect(() => {
+    if (deleteStatus && deleteStatus === 'success') {
+      setIsAlertModalVisible(false);
+    }
+  }, [deleteStatus]);
+
   const Cart = ({item}) => {
-    const handleDeletePortfolio = async () => {
-      await dispatch(deletePortfolioProcess(item?._id));
-      await dispatch(getAllPortfolioProcess());
-    };
     const [isEditing, setIsEditing] = useState(false);
     const [editedName, setEditedName] = useState(item?.name);
 
@@ -112,7 +119,12 @@ export const PortfoyListModal = ({
             }}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleDeletePortfolio} style={style.button}>
+        <TouchableOpacity
+          onPress={() => {
+            setId(item?._id);
+            setIsAlertModalVisible(true);
+          }}
+          style={style.button}>
           <Icon
             name={'delete-outline'}
             size={25}
@@ -125,55 +137,67 @@ export const PortfoyListModal = ({
     );
   };
 
+  const handleDeletePortfolio = async () => {
+    await dispatch(deletePortfolioProcess(id));
+    await dispatch(getAllPortfolioProcess());
+  };
+
   const renderItem = ({item}) => {
     return <Cart item={item} />;
   };
 
   return (
-    <Modal
-      visible={isModalVisible}
-      animationType="slide"
-      transparent={true}
-      onRequestClose={() => setIsModalVisible(false)}>
-      <View style={style.container}>
-        <LinearGradient
-          colors={['#10001D', '#44007A']}
-          style={style.innerContainer}>
-          <View style={style.iconsContainer}>
-            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-              <Icon
-                name={'close'}
-                size={32}
-                style={{
-                  color: 'white',
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <View style={style.headerContainer}>
-            <Text style={style.text}>{t('portfoyListModal.myPortfolio')}</Text>
-          </View>
-          <FlatList
-            contentContainerStyle={{flexGrow: 1}}
-            showsVerticalScrollIndicator={false}
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-
+    <>
+      <Modal
+        visible={isModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setIsModalVisible(false)}>
+        <View style={style.container}>
           <LinearGradient
-            colors={['#150193', '#6354BA']}
-            style={style.addPortfoyContainer}>
-            <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
-              <Text style={style.addPortfoyText}>
-                {' '}
-                + {t('portfoyListModal.addPortfolio')}
+            colors={['#10001D', '#44007A']}
+            style={style.innerContainer}>
+            <View style={style.iconsContainer}>
+              <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                <Icon
+                  name={'close'}
+                  size={32}
+                  style={{
+                    color: 'white',
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <View style={style.headerContainer}>
+              <Text style={style.text}>
+                {t('portfoyListModal.myPortfolio')}
               </Text>
-            </TouchableOpacity>
+            </View>
+            <FlatList
+              contentContainerStyle={{flexGrow: 1}}
+              showsVerticalScrollIndicator={false}
+              data={data}
+              renderItem={renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+            <Button
+              color1={'#150193'}
+              color2={'#6354BA'}
+              textStyle={style.addPortfoyText}
+              text={`+ ${t('portfoyListModal.addPortfolio')}`}
+              buttonStyle={style.addPortfoyContainer}
+              onPress={() => setIsAddModalVisible(true)}
+            />
           </LinearGradient>
-        </LinearGradient>
-      </View>
-    </Modal>
+        </View>
+      </Modal>
+
+      <AlertModal
+        handleDelete={handleDeletePortfolio}
+        isModalVisible={isAlertModalVisible}
+        setIsModalVisible={setIsAlertModalVisible}
+      />
+    </>
   );
 };

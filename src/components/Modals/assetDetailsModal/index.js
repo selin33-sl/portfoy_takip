@@ -6,6 +6,7 @@ import {ProgressBar, MD3Colors} from 'react-native-paper';
 import style from './style';
 import {useDispatch, useSelector} from 'react-redux';
 import {colors} from '../../../theme';
+import {NotFound} from '../../notFound';
 
 export const AssetDetailsModal = ({
   isAssetDetailsModal,
@@ -69,12 +70,18 @@ export const AssetDetailsModal = ({
           </View>
 
           <View style={style.listContainer}>
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={AssetPercentageData}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {AssetPercentageData?.length === 0 ? (
+              <NotFound
+                text={'Portföyünüzde herhangi bir varlık bulunmamaktadır.'}
+              />
+            ) : (
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={AssetPercentageData}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            )}
           </View>
         </LinearGradient>
       </View>

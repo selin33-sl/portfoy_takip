@@ -226,12 +226,7 @@ export const VarlikDetayScreen = () => {
     }
   }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
 
-  //REDUCER YAPACAĞIZ PORTFOLİO ID İÇİN
-
   const handleDeleteAsset = async () => {
-    // const selectedPortfolioId = await AsyncStorage.getItem(
-    //   'selectedPortfolioId',
-    // );
     await dispatch(
       deleteAssetProcess({
         portfolioId: defaultPortfolioId,

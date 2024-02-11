@@ -62,7 +62,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   inputContainer: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
+    backgroundColor: 'red',
     width: windowWidth * 0.8,
     height: windowHeight * 0.07,
     borderRadius: 10,
@@ -71,7 +72,13 @@ export default StyleSheet.create({
   },
   textInput: {
     justifyContent: 'center',
-    alignItems: 'center',
-    color: colors.black,
+    color: colors.white,
+    borderWidth: 0.2,
+    borderColor: colors.white,
+    width: windowWidth * 0.8,
+    height: windowHeight * 0.07,
+    borderRadius: 5,
+    marginTop: windowHeight * 0.01,
+    marginBottom: windowHeight * 0.2,
   },
 });

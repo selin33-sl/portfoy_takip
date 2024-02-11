@@ -7,6 +7,8 @@ import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {addPortfolioProcess, getAllPortfolioProcess} from '../../../api';
 import {useToast} from '../../../hooks/useToast';
+import {colors} from '../../../theme';
+import {Button} from '../../button';
 
 export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
   const {t} = useTranslation();
@@ -60,25 +62,30 @@ export const PortfoyAddModal = ({isAddModalVisible, setIsAddModalVisible}) => {
               {t('portfoyAddModal.namePortfolio')}:{' '}
             </Text>
           </View>
-          <View style={style.inputContainer}>
-            <TextInput
-              style={style.textInput}
-              value={name}
-              onChangeText={setName}
-              placeholder={t('portfoyAddModal.writePortfolioName')}
-              placeholderTextColor={'#D3D3D3'}
-            />
-          </View>
-
-          <LinearGradient
-            colors={['#150193', '#6354BA']}
-            style={style.addPortfoyContainer}>
-            <TouchableOpacity onPress={handleCreatePortfolio}>
+          <TextInput
+            style={style.textInput}
+            value={name}
+            onChangeText={setName}
+            placeholder={t('portfoyAddModal.writePortfolioName')}
+            placeholderTextColor={'grey'}
+          />
+          <Button
+            color1={'#150193'}
+            color2={'#6354BA'}
+            textStyle={style.addPortfoyText}
+            text={t('portfoyAddModal.create')}
+            buttonStyle={style.addPortfoyContainer}
+            onPress={() => handleCreatePortfolio()}
+          />
+          {/* <TouchableOpacity onPress={handleCreatePortfolio}>
+            <LinearGradient
+              colors={['#150193', '#6354BA']}
+              style={style.addPortfoyContainer}>
               <Text style={style.addPortfoyText}>
                 {t('portfoyAddModal.create')}
               </Text>
-            </TouchableOpacity>
-          </LinearGradient>
+            </LinearGradient>
+          </TouchableOpacity> */}
         </LinearGradient>
       </View>
     </Modal>
