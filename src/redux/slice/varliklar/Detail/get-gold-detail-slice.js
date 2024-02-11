@@ -7,14 +7,10 @@ export const getGoldDetailSlice = createSlice({
     status: {},
     message: {},
     data: undefined,
-    lastPrice: undefined,
-    name: undefined,
   },
   reducers: {
     resetGoldDetail: state => {
       state.data = undefined;
-      state.lastPrice = undefined;
-      state.name = undefined;
       state.isLoading = {};
       state.status = {};
       state.message = {};
@@ -30,9 +26,7 @@ export const getGoldDetailSlice = createSlice({
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
-          (state.lastPrice = action.payload?.data?.lastPrice),
-          (state.name = action.payload?.data?.name),
-          (state.data = action.payload?.data?.data);
+          (state.data = action.payload?.data);
       })
       .addCase(getGoldDetailProcess.rejected, (state, action) => {
         state.isLoading = false;

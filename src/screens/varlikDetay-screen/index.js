@@ -50,7 +50,7 @@ export const VarlikDetayScreen = () => {
   const {t} = useTranslation();
   const {params: {page = 0, text, assetId} = {}} = useRoute();
 
-  const [longName, setLongName] = useState('');
+  const [desc, setDesc] = useState('');
   const [code, setCode] = useState('');
   const [fullName, setFullName] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -69,22 +69,22 @@ export const VarlikDetayScreen = () => {
 
   const {
     data: StockDetailData,
-    lastPrice: StokLastPrice,
-    name: StokName,
+    // lastPrice: StokLastPrice,
+    // name: StokName,
     isLoading: StokLoading,
   } = useSelector(state => state.getStockDetail);
 
   const {
     data: CurrencyDetailData,
-    lastPrice: CurrencyLastPrice,
-    name: CurrencyName,
+    // lastPrice: CurrencyLastPrice,
+    // name: CurrencyName,
     isLoading: CurrencyLoading,
-    description: CurrencyDescription,
+    // description: CurrencyDescription,
   } = useSelector(state => state.getCurrencyDetail);
 
   const {
     data: GoldDetailData,
-    lastPrice: GoldLastPrice,
+    // lastPrice: GoldLastPrice,
     name: GoldName,
     isLoading: GoldLoading,
   } = useSelector(state => state.getGoldDetail);
@@ -106,9 +106,9 @@ export const VarlikDetayScreen = () => {
   );
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
-  console.log('GoldDetailData', GoldDetailData);
+  console.log('StockDetailData', StockDetailData);
   console.log('AssetDetailsLoading', AssetDetailsLoading);
-  console.log('GoldLastPrice', GoldLastPrice);
+  // console.log('GoldLastPrice', GoldLastPrice);
   console.log('defaultPortfolioId,', defaultPortfolioId);
 
   useToast(
@@ -140,30 +140,34 @@ export const VarlikDetayScreen = () => {
       'AssetDetailsData.assetDetails',
       AssetDetailsData?.assetDetails,
     );
-    if (StockDetailData && StockDetailData.length > 0) {
-      const firstStockItem = StokName;
-      setFullName(firstStockItem);
-      const words = firstStockItem?.split(' ');
-      setCode(words[0] ? words[0].trim() : '');
-      setLongName(words.slice(1).join(' ').trim());
-    } else if (CurrencyDetailData && CurrencyDetailData.length > 0) {
-      setFullName(CurrencyName);
-      setCode(CurrencyName);
-      setLongName(CurrencyDescription);
-    } else if (GoldDetailData && GoldDetailData.length > 0) {
-      const firstStockItem = GoldName;
-      setCode(firstStockItem);
-      setLongName('');
+    if (StockDetailData) {
+      setCode(StockDetailData?.name);
+      setDesc(StockDetailData?.description);
+      setFullName(`${StockDetailData?.name} ${StockDetailData?.description}`);
+    } else if (CurrencyDetailData) {
+      setCode(CurrencyDetailData?.name);
+      setDesc(CurrencyDetailData?.description);
+      setFullName(
+        `${CurrencyDetailData?.name} ${CurrencyDetailData?.description}`,
+      );
+    } else if (GoldDetailData) {
+      setCode(GoldDetailData?.name);
+      setDesc('');
+      setFullName(`${GoldDetailData?.name}`);
     } else if (
       AssetDetailsData &&
       AssetDetailsData.assetDetails &&
       AssetDetailsData.assetDetails.type == 'Stock'
     ) {
+      console.log(
+        'AssetDetailsData?.assetDetails',
+        AssetDetailsData?.assetDetails,
+      );
       const firstStockItem = AssetDetailsData?.assetDetails?.name;
       setFullName(firstStockItem);
       const words = firstStockItem?.split(' ');
       setCode(words[0] ? words[0].trim() : '');
-      setLongName(words.slice(1).join(' ').trim());
+      setDesc(words.slice(1).join(' ').trim());
     } else if (
       AssetDetailsData &&
       AssetDetailsData.assetDetails &&
@@ -172,7 +176,7 @@ export const VarlikDetayScreen = () => {
       const firstStockItem = AssetDetailsData?.assetDetails?.name;
       setFullName(firstStockItem);
       setCode(firstStockItem);
-      setLongName('');
+      setDesc('');
     } else if (
       AssetDetailsData &&
       AssetDetailsData.assetDetails &&
@@ -181,9 +185,11 @@ export const VarlikDetayScreen = () => {
       const firstStockItem = AssetDetailsData?.assetDetails?.name;
       setFullName(firstStockItem);
       setCode(firstStockItem);
-      setLongName('');
+      setDesc('');
     }
   }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
+
+  console.log('fullll', fullName);
 
   useEffect(() => {
     if (AssetDetailsData?.assetDetails && page == 'update') {
@@ -274,9 +280,9 @@ export const VarlikDetayScreen = () => {
     const totalPrice = calculateTotalPrice(
       fiyat1,
       fiyat2,
-      StokLastPrice,
-      CurrencyLastPrice,
-      GoldLastPrice,
+      StockDetailData?.lastPrice,
+      CurrencyDetailData?.lastPrice,
+      GoldDetailData?.lastPrice,
     );
 
     console.log('selectedDate', selectedDate);
@@ -327,22 +333,6 @@ export const VarlikDetayScreen = () => {
     await handleAddOrUpdateAsset(true);
   };
 
-  // //BU KISIM İÇİN REDUCER OLUŞTURULACAK
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       // const selectedPortfolioId = await AsyncStorage.getItem(
-  //       //   'selectedPortfolioId',
-  //       // );
-  //       setSelectedPortfolioId(def);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   //BU KISIM İÇİN REDUCER OLUŞTURULACAK
 
   useEffect(() => {
@@ -354,11 +344,11 @@ export const VarlikDetayScreen = () => {
           );
         } else if (CurrencyDetailData) {
           await dispatch(
-            getCurrencyDetailProcess({name: CurrencyName, day: selectedValue}),
+            getCurrencyDetailProcess({name: code, day: selectedValue}),
           );
         } else if (GoldDetailData) {
           await dispatch(
-            getGoldDetailProcess({day: selectedValue, data: {name: GoldName}}),
+            getGoldDetailProcess({day: selectedValue, data: {name: code}}),
           );
         } else if (AssetDetailsData) {
           await dispatch(
@@ -394,15 +384,15 @@ export const VarlikDetayScreen = () => {
           <>
             <Header text={code} backIcon />
             <View style={style.descContainer}>
-              <Text style={style.descText}>{longName}</Text>
+              <Text style={style.descText}>{desc}</Text>
             </View>
 
             <View style={style.lineChartContainer}>
               <LineChartt
                 lcData={
-                  reverseArray(StockDetailData) ||
-                  reverseArray(CurrencyDetailData) ||
-                  reverseArray(GoldDetailData) ||
+                  reverseArray(StockDetailData?.data) ||
+                  reverseArray(CurrencyDetailData?.data) ||
+                  reverseArray(GoldDetailData?.data) ||
                   reverseArray(AssetDetailsData?.historicalData)
                 }
                 width={340}

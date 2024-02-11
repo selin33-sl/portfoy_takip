@@ -83,6 +83,8 @@ export const HomeScreen = () => {
 
         const saveID = await AsyncStorage.getItem('defaultPortfolioId');
 
+        console.log('savee neee 111', saveID);
+
         defaultPortfolioId === undefined && dispatch(savePortfolioId(saveID));
 
         defaultPortfolioId != undefined
@@ -102,23 +104,19 @@ export const HomeScreen = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const saveID = AsyncStorage.getItem('defaultPortfolioId');
-  //   console.log('bu ilk:', defaultPortfolioId),
-  //     console.log('bu da sonraki:', saveID),
-  //     defaultPortfolioId != undefined
-  //       ? (console.log('bu ilk:', defaultPortfolioId),
-  //         dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId})))
-  //       : savedID
-  //       ? (console.log('bu da sonraki:', savedID),
-  //         dispatch(getPortfolioDetailsProcess({id: savedID})))
-  //       : null;
-  // }, []);
-
   useEffect(() => {
     if (!isPortfoyListModalVisible) {
       const fetchData = async () => {
         try {
+          defaultPortfolioId != undefined &&
+            (await AsyncStorage.setItem(
+              'defaultPortfolioId',
+              defaultPortfolioId,
+            ));
+
+          const saveID = await AsyncStorage.getItem('defaultPortfolioId');
+
+          console.log('savee neee', saveID);
           dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
         } catch (error) {
           console.error('Error fetching selectedPortfolioId:', error);
