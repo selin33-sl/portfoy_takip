@@ -23,7 +23,7 @@ export const registerSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(registerProcess.fulfilled, (state, action) => {
-        (state.status = action.payload?.status), (state.isLoading = false);
+        (state.status = 'success'), (state.isLoading = false);
         state.message = action.payload?.message;
         state.portfolioId = action.payload?.portfolioId;
       })

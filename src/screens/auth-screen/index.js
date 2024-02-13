@@ -29,15 +29,6 @@ import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const schema = yup.object().shape({
-  username: yup.string().required('Username is required'),
-  email: yup.string().required('Email is required').email('Invalid email'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(6, 'Password must contain at least 8 characters'),
-});
-
 export const AuthScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
@@ -47,6 +38,15 @@ export const AuthScreen = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('7@7.com');
   const [password, setPassword] = useState('123456');
+
+  const schema = yup.object().shape({
+    username: register ? yup.string().required('Username is required') : null,
+    email: yup.string().required('Email is required').email('Invalid email'),
+    password: yup
+      .string()
+      .required('Password is required')
+      .min(6, 'Password must contain at least 6 characters'),
+  });
 
   const {
     status: registerStatus,
@@ -62,6 +62,7 @@ export const AuthScreen = () => {
     control,
     handleSubmit,
     formState: {errors},
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -70,6 +71,20 @@ export const AuthScreen = () => {
       username: '',
     },
   });
+
+  useEffect(() => {
+    reset({
+      email: '',
+      password: '',
+      username: '',
+    });
+  }, [register]);
+
+  useEffect(() => {
+    if (registerStatus && registerStatus === 'success') {
+      setRegister(false);
+    }
+  }, [registerStatus]);
 
   useEffect(() => {
     if (portfolioId) {
@@ -105,32 +120,33 @@ export const AuthScreen = () => {
 
   const handleRegisterScreen = () => {
     setRegister(!register);
-    // setEmail('');
-    // setUsername('');
-    // setPassword('');
+
     dispatch(resetRegister());
     dispatch(resetAuth());
   };
 
-  const handleRegister = async formData => {
-    setEmail(formData?.email);
-    setPassword(formData?.password);
-
-    await dispatch(registerProcess({username, password, email}));
-  };
-
-  const handleLogin = async formData => {
-    if (!isConnected) {
-      Alert.alert(
-        'İnternet Bağlantısı Yok',
-        'Lütfen internet bağlantınızı kontrol ediniz..',
+  const handleLoginorRegister = async formData => {
+    console.log('handleLoginorRegister', formData);
+    if (register === true) {
+      await dispatch(
+        registerProcess({
+          username: formData?.username,
+          email: formData?.email,
+          password: formData?.password,
+        }),
       );
-      return;
+    } else {
+      if (!isConnected) {
+        Alert.alert(
+          'İnternet Bağlantısı Yok',
+          'Lütfen internet bağlantınızı kontrol ediniz..',
+        );
+        return;
+      }
+      await dispatch(
+        authLogin({email: formData?.email, password: formData?.password}),
+      );
     }
-    setEmail(formData?.email);
-    setPassword(formData?.password);
-
-    await dispatch(authLogin({email, password}));
   };
 
   return (
@@ -204,11 +220,7 @@ export const AuthScreen = () => {
 
             <TouchableOpacity
               style={style.buttonContainer}
-              onPress={
-                register
-                  ? handleSubmit(handleRegister)
-                  : handleSubmit(handleLogin)
-              }>
+              onPress={handleSubmit(handleLoginorRegister)}>
               <Text style={style.buttonText}>
                 {register ? t('common.register') : t('common.login')}
               </Text>
