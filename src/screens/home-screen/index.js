@@ -35,6 +35,7 @@ import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-det
 import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
 import {resetGoldDetail} from '../../redux/slice/varliklar/Detail/get-gold-detail-slice';
 import {savePortfolioId} from '../../redux/slice/auth/login-slice';
+import {resetAssetDetails} from '../../redux/slice/portfolio/get-asset-details-slice';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -181,6 +182,7 @@ export const HomeScreen = () => {
   console.log();
 
   const handleReset = async () => {
+    await dispatch(resetAssetDetails());
     await dispatch(resetStockDetail());
     await dispatch(resetCurrencyDetail());
     await dispatch(resetGoldDetail());

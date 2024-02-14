@@ -23,12 +23,13 @@ export const registerSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(registerProcess.fulfilled, (state, action) => {
-        (state.status = 'success'), (state.isLoading = false);
+        state.status = action.payload.status;
+        state.isLoading = false;
         state.message = action.payload?.message;
         state.portfolioId = action.payload?.portfolioId;
       })
       .addCase(registerProcess.rejected, (state, action) => {
-        state.status = 'error';
+        state.status = action.payload.status;
         state.isLoading = false;
         state.message = action.error?.message;
       });

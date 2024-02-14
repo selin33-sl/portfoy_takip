@@ -135,61 +135,29 @@ export const VarlikDetayScreen = () => {
     dispatch,
   );
 
-  useEffect(() => {
-    console.log(
-      'AssetDetailsData.assetDetails',
-      AssetDetailsData?.assetDetails,
-    );
-    if (StockDetailData) {
-      setCode(StockDetailData?.name);
-      setDesc(StockDetailData?.description);
-      setFullName(`${StockDetailData?.name} ${StockDetailData?.description}`);
-    } else if (CurrencyDetailData) {
-      setCode(CurrencyDetailData?.name);
-      setDesc(CurrencyDetailData?.description);
-      setFullName(
-        `${CurrencyDetailData?.name} ${CurrencyDetailData?.description}`,
-      );
-    } else if (GoldDetailData) {
-      setCode(GoldDetailData?.name);
-      setDesc('');
-      setFullName(`${GoldDetailData?.name}`);
-    } else if (
-      AssetDetailsData &&
-      AssetDetailsData.assetDetails &&
-      AssetDetailsData.assetDetails.type == 'Stock'
-    ) {
-      console.log(
-        'AssetDetailsData?.assetDetails',
-        AssetDetailsData?.assetDetails,
-      );
-      const firstStockItem = AssetDetailsData?.assetDetails?.name;
-      setFullName(firstStockItem);
-      const words = firstStockItem?.split(' ');
-      setCode(words[0] ? words[0].trim() : '');
-      setDesc(words.slice(1).join(' ').trim());
-    } else if (
-      AssetDetailsData &&
-      AssetDetailsData.assetDetails &&
-      AssetDetailsData.assetDetails.type == 'Currency'
-    ) {
-      const firstStockItem = AssetDetailsData?.assetDetails?.name;
-      setFullName(firstStockItem);
-      setCode(firstStockItem);
-      setDesc('');
-    } else if (
-      AssetDetailsData &&
-      AssetDetailsData.assetDetails &&
-      AssetDetailsData.assetDetails.type == 'Gold'
-    ) {
-      const firstStockItem = AssetDetailsData?.assetDetails?.name;
-      setFullName(firstStockItem);
-      setCode(firstStockItem);
-      setDesc('');
-    }
-  }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
+  let data;
 
-  console.log('fullll', fullName);
+  useEffect(() => {
+    if (StockDetailData) {
+      data = StockDetailData;
+    } else if (CurrencyDetailData) {
+      data = CurrencyDetailData;
+    } else if (GoldDetailData) {
+      data = GoldDetailData;
+    } else {
+      data = AssetDetailsData;
+    }
+    console.log('dataaaa', data);
+    if (!AssetDetailsData) {
+      setFullName(data?.fullName);
+      setDesc(data?.description);
+      setCode(data?.name);
+    } else {
+      setFullName(data?.assetDetails?.fullName);
+      setDesc(data?.assetDetails?.description);
+      setCode(data?.assetDetails?.name);
+    }
+  }, [StockDetailData, CurrencyDetailData, GoldDetailData, AssetDetailsData]);
 
   useEffect(() => {
     if (AssetDetailsData?.assetDetails && page == 'update') {

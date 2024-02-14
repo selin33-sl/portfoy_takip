@@ -43,14 +43,14 @@ export const loginSlice = createSlice({
       })
       .addCase(authLogin.fulfilled, (state, action) => {
         state.accessToken = action.payload.data.accessToken;
-        state.status = 'success';
+        state.status = action.payload.status;
         state.isAuthenticated = '1';
         state.isLoading = false;
         state.portfolioId = action.payload.data.defaultPortfolioId;
         state.message = action.payload?.message;
       })
       .addCase(authLogin.rejected, (state, action) => {
-        state.status = 'error';
+        state.status = action.payload.status;
         state.isAuthenticated = '0';
         state.isLoading = false;
         state.message = action.error?.message;

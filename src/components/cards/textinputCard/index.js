@@ -2,12 +2,9 @@ import {View, Text, TextInput, Dimensions} from 'react-native';
 import React from 'react';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useToast} from '../../hooks/useToast';
-import {useForm, Controller} from 'react-hook-form';
-import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
-const windowWidth = Dimensions.get('window').width;
+import {Controller} from 'react-hook-form';
+
 const windowHeight = Dimensions.get('window').height;
 
 export const TextinputCard = ({
