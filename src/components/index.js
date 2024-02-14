@@ -22,7 +22,7 @@ export * from './Modals/fullScreenLineChartModal';
 export * from './Modals/timePeriodModal';
 export * from './Modals/uygulamaHakkindaModal';
 export * from './Cards/circleOptionCard';
-export * from './Cards/bildirimCard';
+export * from './Cards/bildirimAndLanguageCard';
 export * from './inputContainer';
 export * from './Modals/shareModal';
 export * from './Modals/assetDetailsModal';

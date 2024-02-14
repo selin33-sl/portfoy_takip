@@ -481,7 +481,12 @@ export const VarlikDetayScreen = () => {
       <FullScreenLineChartModal
         isAddModalVisible={isAddModalVisible}
         setIsAddModalVisible={setIsAddModalVisible}
-        lcData={StockDetailData}
+        lcData={
+          reverseArray(StockDetailData?.data) ||
+          reverseArray(CurrencyDetailData?.data) ||
+          reverseArray(GoldDetailData?.data) ||
+          reverseArray(AssetDetailsData?.historicalData)
+        }
         header={code}
       />
 
