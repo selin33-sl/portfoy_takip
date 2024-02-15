@@ -46,6 +46,8 @@ export const PortfoyListModal = ({
     state => state.updatePortfolio,
   );
 
+  console.log('deleteMessage', deleteMessage);
+
   useToast(
     deleteStatus,
     resetDeletePortfolio(),
@@ -62,11 +64,11 @@ export const PortfoyListModal = ({
     dispatch,
   );
 
-  useEffect(() => {
-    if (deleteStatus && deleteStatus === 'success') {
-      setIsAlertModalVisible(false);
-    }
-  }, [deleteStatus]);
+  // useEffect(() => {
+  //   if (deleteStatus && deleteStatus === 'success') {
+  //     setIsAlertModalVisible(false);
+  //   }
+  // }, [deleteStatus]);
 
   const Cart = ({item}) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -140,6 +142,7 @@ export const PortfoyListModal = ({
   const handleDeletePortfolio = async () => {
     await dispatch(deletePortfolioProcess(id));
     await dispatch(getAllPortfolioProcess());
+    setIsAlertModalVisible(false);
   };
 
   const renderItem = ({item}) => {

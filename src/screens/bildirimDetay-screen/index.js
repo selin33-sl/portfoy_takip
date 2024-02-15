@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {useNavigation, useRoute} from '@react-navigation/native';
@@ -16,14 +16,21 @@ export const BildirimDetayScreen = () => {
   return (
     <LinearGradientContainer>
       <Header backIcon text={t('headers.notificationDetail')} />
-      <View style={style.innerContainer}>
-        <Text style={style.text}>{body}</Text>
-        {image && image.length ? (
-          <View style={style.imageContainer}>
-            <Image source={{uri: image}} size={50} style={style.image} />
-          </View>
-        ) : null}
-      </View>
+      <ScrollView>
+        <View style={style.innerContainer}>
+          <Text style={style.text}>{body}</Text>
+          {image && image.length ? (
+            <View style={style.imageContainer}>
+              <Image
+                source={{uri: image}}
+                size={50}
+                style={style.image}
+                resizeMode="contain"
+              />
+            </View>
+          ) : null}
+        </View>
+      </ScrollView>
     </LinearGradientContainer>
   );
 };

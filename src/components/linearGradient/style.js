@@ -7,6 +7,6 @@ export default StyleSheet.create({
   container: {
     width: windowWidth,
     height: windowHeight,
-    // alignItems: 'center',
+    alignItems: 'center',
   },
 });

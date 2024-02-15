@@ -14,7 +14,6 @@ export default StyleSheet.create({
   },
 
   imageContainer: {
-    width: windowWidth,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: windowHeight * 0.02,

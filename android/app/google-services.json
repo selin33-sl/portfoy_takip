@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "675691614360",
+    "project_id": "portfoy-takip-81887",
+    "storage_bucket": "portfoy-takip-81887.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675691614360:android:d86875c1b46da6bf0580ed",
+        "android_client_info": {
+          "package_name": "com.portfoytakip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOuRbrXx9uuTnkwYYJelwD1XaW_rnm87Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
