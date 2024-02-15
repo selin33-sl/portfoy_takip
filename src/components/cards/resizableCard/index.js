@@ -16,6 +16,8 @@ export const ResizableCard = ({
   sendItem,
   onPress,
   infoModalOnPress,
+  reviews,
+  textColor,
 }) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
@@ -47,7 +49,15 @@ export const ResizableCard = ({
         onPress={() => onPress(assetId, name)}>
         <View style={style.detail1}>
           <Text style={style.textDetailName}>{name}</Text>
-          <Text style={style.textDetailPrice}>
+          <Text
+            style={
+              reviews
+                ? {
+                    ...style.textDetailPrice,
+                    color: price > 0 ? 'green' : 'red',
+                  }
+                : style.textDetailPrice
+            }>
             {hidden ? '****' : price} TL
           </Text>
         </View>
@@ -96,7 +106,7 @@ export const ResizableCard = ({
       <SmallCard
         item={item}
         name={name}
-        price={item.totalAssetValue}
+        price={reviews ? item.profitValue : item.totalAssetValue}
         adet={item.quantity}
         assetId={item._id}
         profit={item.profitPercentage}

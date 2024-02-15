@@ -4,7 +4,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   container: {
-    width: windowWidth * 0.31,
+    width: windowWidth * 0.45,
     height: windowWidth * 0.1,
     borderRadius: 50,
     alignItems: 'center',

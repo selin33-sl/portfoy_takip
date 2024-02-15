@@ -12,6 +12,7 @@ export const CustomArea = ({
   totalChange,
   onPress,
 }) => {
+  console.log('totalChange', totalChange);
   return (
     <View style={style.elips}>
       <TouchableOpacity style={style.headerElips} onPress={onPress}>
@@ -20,24 +21,36 @@ export const CustomArea = ({
       </TouchableOpacity>
 
       <View style={style.innerElips}>
-        <Text style={style.numberText}>{totalAmount} TL</Text>
+        <Text
+          style={{
+            ...style.numberText,
+            color: totalAmount > 0 ? '#00ff83' : 'red',
+          }}>
+          {totalAmount} TL
+        </Text>
 
         <View style={style.rateContainer}>
-          <TouchableOpacity style={style.rateButton}>
+          {/* <TouchableOpacity style={style.rateButton}>
             <Text style={style.text1}>Günlük</Text>
             <LinearGradient
               colors={['#746F96', '#AEAEAE']}
               style={style.innerRate}>
               <Text>{dailyChange}</Text>
             </LinearGradient>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={style.rateButton}>
             <Text style={style.text1}>Toplam</Text>
             <LinearGradient
               colors={['#746F96', '#AEAEAE']}
               style={style.innerRate}>
-              <Text>{totalChange}</Text>
+              <Text
+                style={{
+                  ...style.totalChangeText,
+                  color: totalChange > 0 ? '#00ff83' : 'red',
+                }}>
+                %{totalChange}
+              </Text>
             </LinearGradient>
           </TouchableOpacity>
 
@@ -46,7 +59,7 @@ export const CustomArea = ({
             <LinearGradient
               colors={['#746F96', '#AEAEAE']}
               style={style.innerRateGrafik}>
-              <Icon name={'chart-line'} size={25} color={'#00ff83'} />
+              <Icon name={'chart-line'} size={22} color={'#00ff83'} />
             </LinearGradient>
           </TouchableOpacity>
         </View>

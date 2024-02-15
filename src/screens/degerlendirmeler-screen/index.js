@@ -10,7 +10,7 @@ import {
 } from '../../components';
 import style from './style';
 import {images} from '../../assets';
-
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../theme';
@@ -19,89 +19,27 @@ import {CustomArea} from '../../components/customArea';
 export const DegerlendirmelerScreen = () => {
   const {t} = useTranslation();
 
-  const data = [
-    {
-      tür: t('headers.assetsHeaders.foreignCurrency'),
-      name: 'THYAO1',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 1,
-    },
-    {
-      tür: t('headers.assetsHeaders.foreignCurrency'),
-      name: 'THYAO2',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 2,
-    },
-    {
-      tür: t('headers.assetsHeaders.foreignCurrency'),
-      name: 'THYAO3',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 3,
-    },
-    {
-      tür: t('headers.assetsHeaders.fund'),
-      name: 'THYAO4',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 4,
-    },
-    {
-      tür: t('headers.assetsHeaders.fund'),
-      name: 'THYAO5',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 5,
-    },
-    {
-      tür: t('headers.assetsHeaders.fund'),
-      name: 'THYAO6',
-      price: '2.230,00',
-      adet: '10.00',
-      _id: 6,
-    },
-  ];
-
   const [option, setOption] = useState('1');
   const [isPortfoyListModalVisible, setIsPortfoyListModalVisible] =
     useState(false);
   const [isPortfoyAddModalVisible, setIsPortfoyAddModalVisible] =
     useState(false);
 
-  const getUniqueTurItems = data => {
-    const uniqueTurItems = {};
-    data.forEach(item => {
-      const tur = item.tür;
-      if (!uniqueTurItems[tur]) {
-        uniqueTurItems[tur] = item;
-      }
-    });
-    return Object.values(uniqueTurItems);
-  };
+  const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
+    useSelector(state => state.getPortfolioDetails);
 
-  const uniqueTurItems = getUniqueTurItems(data);
-
-  const renderItem = ({item}) => {
-    const {tür} = item;
-    const itemsWithSameTur = data.filter(dataItem => dataItem.tür === tür);
-
+  const renderItem = ({item, index}) => {
     return (
       <ResizableCard
+        onPress={() => {}}
         borderColor={
-          tür == t('headers.assetsHeaders.foreignCurrency')
-            ? colors.doviz
-            : tür == t('headers.assetsHeaders.fund')
-            ? colors.fon
-            : null
+          PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
         }
-        tür={tür}
-        sendItem={itemsWithSameTur.map(({name, price, adet}) => ({
-          name,
-          price,
-          adet,
-        }))}
+        tür={PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type}
+        sendItem={
+          PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
+        }
+        reviews={true}
       />
     );
   };
@@ -116,31 +54,26 @@ export const DegerlendirmelerScreen = () => {
             text={t('reviewsScreen.profit/loss')}
             onPress={() => setOption('1')}
           />
+
           <CircleOptionCard
             color={option == '2' ? '#6D688C' : '#AEAEAE'}
-            text={t('reviewsScreen.totalCost')}
-            onPress={() => setOption('2')}
-          />
-          <CircleOptionCard
-            color={option == '3' ? '#6D688C' : '#AEAEAE'}
             text={t('reviewsScreen.averageCost')}
-            onPress={() => setOption('3')}
+            onPress={() => setOption('2')}
           />
         </View>
 
         <View style={style.elipsContainer}>
           <CustomArea
-            portfoyName={'PORTFÖY_1'}
-            totalAmount={'15.855'}
-            dailyChange={'%21,1'}
-            totalChange={'%4,3'}
+            portfoyName={PortfolioDetailsData?.portfolio?.name}
+            totalAmount={PortfolioDetailsData?.portfolio?.profitValue}
+            totalChange={PortfolioDetailsData?.portfolio?.totalProfitPercentage}
             onPress={() => setIsPortfoyListModalVisible(true)}
           />
         </View>
         <View style={style.listContainer}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={uniqueTurItems}
+            data={PortfolioDetailsData?.portfolio?.portfolioDetails}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
           />

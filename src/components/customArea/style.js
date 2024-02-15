@@ -5,12 +5,13 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   innerRate: {
-    width: windowWidth * 0.23,
+    width: 'auto',
     height: windowHeight * 0.05,
     borderRadius: 50,
     elevation: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: windowWidth * 0.02,
   },
   innerRateGrafik: {
     width: windowWidth * 0.15,
@@ -24,11 +25,16 @@ export default StyleSheet.create({
   rateButton: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: 'auto',
+    marginLeft: windowWidth * 0.02,
   },
   text1: {
     fontSize: windowHeight * 0.01,
     fontWeight: '200',
     color: colors.white,
+  },
+  totalChangeText: {
+    fontSize: windowHeight * 0.016,
   },
 
   innerContainer: {
@@ -37,7 +43,7 @@ export default StyleSheet.create({
   },
   numberText: {
     color: colors.white,
-    fontSize: windowHeight * 0.03,
+    fontSize: windowHeight * 0.025,
   },
   innerElips: {
     height: windowHeight * 0.25,
@@ -48,7 +54,7 @@ export default StyleSheet.create({
   },
   rateContainer: {
     marginTop: 20,
-    width: windowWidth * 0.7,
+    width: 'auto',
     height: windowHeight * 0.07,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -64,7 +70,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.rgbLight,
-    width: windowWidth * 0.4,
+    width: 'auto',
+    paddingHorizontal: windowWidth * 0.02,
     height: windowHeight * 0.05,
     elevation: 25,
   },

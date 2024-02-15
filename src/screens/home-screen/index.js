@@ -29,8 +29,6 @@ import {
   getPortfolioDetailsProcess,
 } from '../../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useMessageAndErrorUser} from '../../hooks/useMessageandError';
-import {resetPortfolioDetails} from '../../redux/slice/portfolio/get-portfolio-details-slice';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
 import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
 import {resetGoldDetail} from '../../redux/slice/varliklar/Detail/get-gold-detail-slice';
@@ -194,7 +192,7 @@ export const HomeScreen = () => {
     setHidden(!hidden);
   };
 
-  const renderItem = ({item, index, itemIndex}) => {
+  const renderItem = ({item, index}) => {
     console.log('assetInfoItem', assetInfoItem);
     console.log('şş:', item);
     return (
