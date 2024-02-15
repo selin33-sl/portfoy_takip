@@ -32,6 +32,7 @@ export const PortfoyListModal = ({
   setIsModalVisible,
   setIsAddModalVisible,
   data,
+  list,
 }) => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
@@ -184,14 +185,16 @@ export const PortfoyListModal = ({
               renderItem={renderItem}
               keyExtractor={(item, index) => index.toString()}
             />
-            <Button
-              color1={'#150193'}
-              color2={'#6354BA'}
-              textStyle={style.addPortfoyText}
-              text={`+ ${t('portfoyListModal.addPortfolio')}`}
-              buttonStyle={style.addPortfoyContainer}
-              onPress={() => setIsAddModalVisible(true)}
-            />
+            {list ? null : (
+              <Button
+                color1={'#150193'}
+                color2={'#6354BA'}
+                textStyle={style.addPortfoyText}
+                text={`+ ${t('portfoyListModal.addPortfolio')}`}
+                buttonStyle={style.addPortfoyContainer}
+                onPress={() => setIsAddModalVisible(true)}
+              />
+            )}
           </LinearGradient>
         </View>
       </Modal>

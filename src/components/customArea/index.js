@@ -8,7 +8,6 @@ import style from './style';
 export const CustomArea = ({
   portfoyName,
   totalAmount,
-  dailyChange,
   totalChange,
   onPress,
 }) => {
