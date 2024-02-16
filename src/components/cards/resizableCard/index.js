@@ -17,7 +17,7 @@ export const ResizableCard = ({
   onPress,
   infoModalOnPress,
   reviews,
-  textColor,
+  option,
 }) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ export const ResizableCard = ({
     setModalVisible2(!isModalVisible2);
   };
 
-  const SmallCard = ({name, price, adet, profit, assetId, item}) => {
+  const SmallCard = ({name, price, adet, profit, assetId, item, total}) => {
     return (
       <TouchableOpacity
         style={style.detailContainer}
@@ -51,14 +51,14 @@ export const ResizableCard = ({
           <Text style={style.textDetailName}>{name}</Text>
           <Text
             style={
-              reviews
+              option == 1
                 ? {
                     ...style.textDetailPrice,
                     color: price > 0 ? 'green' : 'red',
                   }
                 : style.textDetailPrice
             }>
-            {hidden ? '****' : price} TL
+            {hidden ? '****' : price} {option == 2 ? 'TL/Adet' : 'TL'}
           </Text>
         </View>
         <View style={style.detail2}>
@@ -67,31 +67,49 @@ export const ResizableCard = ({
             {t('common.quantity')}
           </Text>
           <View style={style.profitInfoContainer}>
-            <View
-              style={{
-                ...style.profitContainer,
-                backgroundColor: profit > 0 ? 'green' : 'red',
-              }}>
-              <Text style={style.profitText}>{profit}%</Text>
-            </View>
-            <TouchableOpacity
-              style={style.infoButtonContainer}
-              onPress={async () => {
-                await dispatch(resetAssetDetails());
-                infoModalOnPress();
+            {option == 1 ? (
+              <View
+                style={{
+                  ...style.profitContainer,
+                  backgroundColor: profit > 0 ? 'green' : 'red',
+                }}>
+                <Text style={style.profitText}>{profit}%</Text>
+              </View>
+            ) : option == 2 ? (
+              <Text style={style.textDetailNumber}>{total} TL</Text>
+            ) : (
+              <>
+                <View
+                  style={{
+                    ...style.profitContainer,
+                    backgroundColor: profit > 0 ? 'green' : 'red',
+                  }}>
+                  <Text style={style.profitText}>{profit}%</Text>
+                </View>
+                <TouchableOpacity
+                  style={style.infoButtonContainer}
+                  onPress={async () => {
+                    await dispatch(resetAssetDetails());
+                    infoModalOnPress();
 
-                await dispatch(
-                  getAssetDetailsProcess({
-                    portfolioId: defaultPortfolioId,
-                    assetId: item?._id,
-                    type: item?.type,
-                    name: item?.name,
-                    day: 1,
-                  }),
-                );
-              }}>
-              <Icon name={'information-variant'} color={'black'} size={20} />
-            </TouchableOpacity>
+                    await dispatch(
+                      getAssetDetailsProcess({
+                        portfolioId: defaultPortfolioId,
+                        assetId: item?._id,
+                        type: item?.type,
+                        name: item?.name,
+                        day: 1,
+                      }),
+                    );
+                  }}>
+                  <Icon
+                    name={'information-variant'}
+                    color={'black'}
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
       </TouchableOpacity>
@@ -106,8 +124,15 @@ export const ResizableCard = ({
       <SmallCard
         item={item}
         name={name}
-        price={reviews ? item.profitValue : item.totalAssetValue}
+        price={
+          option == 1
+            ? item.purchasePrice
+            : option == 2
+            ? item.profitValue
+            : item.totalAssetValue
+        }
         adet={item.quantity}
+        total={item.totalPurchasePrice}
         assetId={item._id}
         profit={item.profitPercentage}
       />

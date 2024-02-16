@@ -10,6 +10,7 @@ export const CustomArea = ({
   totalAmount,
   totalChange,
   onPress,
+  option,
 }) => {
   console.log('totalChange', totalChange);
   return (
@@ -27,41 +28,33 @@ export const CustomArea = ({
           }}>
           {totalAmount} TL
         </Text>
+        {option == 1 ? (
+          <View style={style.rateContainer}>
+            <TouchableOpacity style={style.rateButton}>
+              <Text style={style.text1}>Toplam</Text>
+              <LinearGradient
+                colors={['#746F96', '#AEAEAE']}
+                style={style.innerRate}>
+                <Text
+                  style={{
+                    ...style.totalChangeText,
+                    color: totalChange > 0 ? '#00ff83' : 'red',
+                  }}>
+                  %{totalChange}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
 
-        <View style={style.rateContainer}>
-          {/* <TouchableOpacity style={style.rateButton}>
-            <Text style={style.text1}>Günlük</Text>
-            <LinearGradient
-              colors={['#746F96', '#AEAEAE']}
-              style={style.innerRate}>
-              <Text>{dailyChange}</Text>
-            </LinearGradient>
-          </TouchableOpacity> */}
-
-          <TouchableOpacity style={style.rateButton}>
-            <Text style={style.text1}>Toplam</Text>
-            <LinearGradient
-              colors={['#746F96', '#AEAEAE']}
-              style={style.innerRate}>
-              <Text
-                style={{
-                  ...style.totalChangeText,
-                  color: totalChange > 0 ? '#00ff83' : 'red',
-                }}>
-                %{totalChange}
-              </Text>
-            </LinearGradient>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={style.rateButton}>
-            <Text style={style.text1}>Grafik</Text>
-            <LinearGradient
-              colors={['#746F96', '#AEAEAE']}
-              style={style.innerRateGrafik}>
-              <Icon name={'chart-line'} size={22} color={'#00ff83'} />
-            </LinearGradient>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity style={style.rateButton}>
+              <Text style={style.text1}>Grafik</Text>
+              <LinearGradient
+                colors={['#746F96', '#AEAEAE']}
+                style={style.innerRateGrafik}>
+                <Icon name={'chart-line'} size={22} color={'#00ff83'} />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
     </View>
   );

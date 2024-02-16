@@ -52,6 +52,7 @@ export const DegerlendirmelerScreen = () => {
           PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
         }
         reviews={true}
+        option={option}
       />
     );
   };
@@ -63,19 +64,7 @@ export const DegerlendirmelerScreen = () => {
       ) : (
         <>
           <Header text={t('headers.reviews')} />
-          {/* <View style={style.optionsContainer}>
-            <CircleOptionCard
-              color={option == '1' ? '#6D688C' : '#AEAEAE'}
-              text={t('reviewsScreen.profit/loss')}
-              onPress={() => setOption('1')}
-            />
 
-            <CircleOptionCard
-              color={option == '2' ? '#6D688C' : '#AEAEAE'}
-              text={t('reviewsScreen.averageCost')}
-              onPress={() => setOption('2')}
-            />
-          </View> */}
           <View style={style.innerContainer}>
             <View style={style.optionsContainer}>
               <CircleOptionCard
@@ -93,8 +82,13 @@ export const DegerlendirmelerScreen = () => {
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
               <View style={style.elipsContainer}>
                 <CustomArea
+                  option={option}
                   portfoyName={PortfolioDetailsData?.portfolio?.name}
-                  totalAmount={PortfolioDetailsData?.portfolio?.profitValue}
+                  totalAmount={
+                    option == 1
+                      ? PortfolioDetailsData?.portfolio?.profitValue
+                      : PortfolioDetailsData?.portfolio?.totalPurchaseValue
+                  }
                   totalChange={
                     PortfolioDetailsData?.portfolio?.totalProfitPercentage
                   }
