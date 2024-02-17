@@ -121,10 +121,10 @@ const getAllGoldProcess = createAsyncThunk(
 
 const getGoldDetailProcess = createAsyncThunk(
   'getGoldDetail/getGoldDetailProcess',
-  async ({data, day}, {rejectWithValue}) => {
+  async ({data}, {rejectWithValue}) => {
     try {
-      const {name} = data;
-      const res = await axios.get(`/getGoldDetail/${day}`, data);
+      const {name, day} = data;
+      const res = await axios.post(`/getGoldDetail`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -249,11 +249,10 @@ const deleteAssetProcess = createAsyncThunk(
 
 const getAssetDetailsProcess = createAsyncThunk(
   'getAssetDetails/getAssetDetailsProcess',
-  async ({portfolioId, assetId, type, name, day}, {rejectWithValue}) => {
+  async ({data}, {rejectWithValue}) => {
     try {
-      const res = await axios.get(
-        `getAssetDetails/${portfolioId}/${assetId}/${type}/${name}/${day}`,
-      );
+      const {portfolioId, assetId, type, name, numberOfDays} = data;
+      const res = await axios.post(`getAssetDetails`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);

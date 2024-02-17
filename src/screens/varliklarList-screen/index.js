@@ -175,7 +175,9 @@ export const VarliklarListScreen = () => {
                   getCurrencyDetailProcess({name: item?.name, day: 2}),
                 )
               : AllGoldData && AllGoldData.length
-              ? await dispatch(getGoldDetailProcess(item?.name, 2))
+              ? await dispatch(
+                  getGoldDetailProcess({data: {name: item?.name, day: 2}}),
+                )
               : null;
           }
         }}

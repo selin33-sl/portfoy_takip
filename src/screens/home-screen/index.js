@@ -206,12 +206,14 @@ export const HomeScreen = () => {
           await handleReset();
           await dispatch(
             getAssetDetailsProcess({
-              portfolioId: defaultPortfolioId,
-              assetId: assetId,
-              type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
-                ?.type,
-              name: name,
-              day: 2,
+              data: {
+                portfolioId: defaultPortfolioId,
+                assetId: assetId,
+                type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
+                  ?.type,
+                name: name,
+                numberOfDays: 2,
+              },
             }),
           );
         }}
