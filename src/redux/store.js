@@ -8,6 +8,7 @@ import logger from 'redux-logger';
 import {
   addAssetSlice,
   addPortfolioSlice,
+  assetDataSlice,
   deleteAssetSlice,
   deletePortfolioSlice,
   getAllCurrencySlice,
@@ -22,6 +23,8 @@ import {
   getGumusSlice,
   getKriptoSlice,
   getPortfolioDetailsSlice,
+  getSearchCurrencySlice,
+  getSearchGoldSlice,
   getSearchStockSlice,
   getStockDetailSlice,
   loginSlice,
@@ -53,6 +56,9 @@ const reducer = combineReducers({
   getAssetDetails: getAssetDetailsSlice,
   updateAsset: updateAssetSlice,
   searchStock: getSearchStockSlice,
+  searchCurrency: getSearchCurrencySlice,
+  searchGold: getSearchGoldSlice,
+  assetData: assetDataSlice,
 });
 
 export const store = configureStore({

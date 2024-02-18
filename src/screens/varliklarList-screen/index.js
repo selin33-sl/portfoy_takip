@@ -18,6 +18,7 @@ import {
   getCurrencyDetailProcess,
   getGoldDetailProcess,
   getKriptoProcess,
+  getSearchStockProcess,
   getStockDetailProcess,
 } from '../../api';
 import {resetAllStock} from '../../redux/slice/varliklar/All/get-all-stock-slice';
@@ -34,6 +35,7 @@ import {
 } from '../../redux/slice/varliklar/All/get-all-gold-slice';
 import {useTranslation} from 'react-i18next';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
+import {resetSearchStock} from '../../redux/slice/varliklar/Search/get-search-stock-slice';
 
 export const VarliklarListScreen = () => {
   const {t} = useTranslation();
@@ -43,7 +45,7 @@ export const VarliklarListScreen = () => {
 
   const navigation = useNavigation();
   const route = useRoute();
-  const {text} = route.params;
+  const {text, value} = route.params;
 
   useEffect(() => {
     dispatch(resetStockDetail());
@@ -58,29 +60,47 @@ export const VarliklarListScreen = () => {
   const {data: AllGoldData, isLoading: AllGoldLoading} = useSelector(
     state => state.getAllGold,
   );
-
+  const {data: SearchData, isLoading: SearchLoading} = useSelector(
+    state => state.searchStock,
+  );
+  const {data: assetData} = useSelector(state => state.assetData);
   const {data: KriptoData} = useSelector(state => state.cripto);
-  const {data: EmtiaData} = useSelector(state => state.emtia);
-  const {data: GumusData} = useSelector(state => state.silverPrice);
 
   console.log('AllCurrencyLoading', AllCurrencyLoading);
   console.log('AllStockLoading', AllStockLoading);
   console.log('AllGoldLoading', AllGoldLoading);
 
+  let filteredData;
+
+  console.log('qqqqqqqqqqqqqqqqqqqqqqqq', value);
+
   const data =
-    AllStockData && AllStockData.length
+    value == 'AllStockData'
       ? AllStockData
-      : AllCurrencyData && AllCurrencyData.length
-      ? AllCurrencyData
-      : AllGoldData && AllGoldData.length
+      : value == 'AllGoldData'
       ? AllGoldData
-      : KriptoData && KriptoData.length
-      ? KriptoData
-      : EmtiaData && EmtiaData.length
-      ? EmtiaData
-      : GumusData && GumusData.length
-      ? GumusData
+      : value == 'AllCurrencyData'
+      ? AllCurrencyData
       : null;
+
+  const search = async () => {
+    if (value == 'AllStockData' && searchTerm != '') {
+      await dispatch(getSearchStockProcess({data: searchTerm}));
+    } else {
+      filteredData = data;
+    }
+  };
+
+  useEffect(() => {
+    search();
+  }, [searchTerm]);
+
+  // useEffect(() => {
+  //   search();
+  // }, []);
+
+  console.log('SearchData,', SearchData?.data);
+  console.log('data,', data);
 
   useEffect(() => {
     if (text == t('headers.assetsHeaders.stock')) {
@@ -90,28 +110,9 @@ export const VarliklarListScreen = () => {
     } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
       dispatch(getKriptoProcess());
     } else if (text == t('headers.assetsHeaders.goldSilver')) {
-      // dispatch(getEmtiaProcess());
-      // dispatch(getGumusProcess());
       dispatch(getAllGoldProcess());
     }
-    dispatch(resetAllStock());
-    dispatch(resetAllCurrency());
-    dispatch(resetAllGold());
-
-    dispatch(resetGumus());
-    dispatch(resetEmtia());
-    dispatch(resetKripto());
   }, []);
-
-  // const filteredData = data?.filter(item => {
-  //   const code = item?.code
-  //     ? item?.code.toLowerCase()
-  //     : item?.name
-  //     ? item?.name.toLowerCase()
-  //     : '';
-  //   const searchTermLower = searchTerm.toLowerCase();
-  //   return code.includes(searchTermLower);
-  // });
 
   const renderItem = ({item}) => {
     let code = '';
@@ -206,7 +207,7 @@ export const VarliklarListScreen = () => {
             <View style={style.listContainer}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={data}
+                data={assetData}
                 renderItem={renderItem}
                 keyExtractor={item => item._id.toString()}
               />

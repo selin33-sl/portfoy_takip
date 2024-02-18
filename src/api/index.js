@@ -287,6 +287,29 @@ const getSearchStockProcess = createAsyncThunk(
     }
   },
 );
+const getSearchCurrencyProcess = createAsyncThunk(
+  'searchCurrency/getSearchCurrencyProcess',
+  async ({data}, {rejectWithValue}) => {
+    try {
+      const res = await axios.post(`searchCurrency/${data}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
+const getSearchGoldProcess = createAsyncThunk(
+  'searchGold/getSearchGoldProcess',
+  async ({data}, {rejectWithValue}) => {
+    try {
+      const res = await axios.post(`searchGold/${data}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export {
   authLogin,
@@ -311,4 +334,6 @@ export {
   getAssetDetailsProcess,
   updateAssetProcess,
   getSearchStockProcess,
+  getSearchCurrencyProcess,
+  getSearchGoldProcess,
 };
