@@ -19,3 +19,4 @@ export {default as getAssetPercentagesSlice} from './portfolio/get-asset-percent
 export {default as deleteAssetSlice} from './portfolio/delete-asset-slice';
 export {default as getAssetDetailsSlice} from './portfolio/get-asset-details-slice';
 export {default as updateAssetSlice} from './portfolio/update-asset-slice';
+export {default as getSearchStockSlice} from './varliklar/Search/get-search-stock';

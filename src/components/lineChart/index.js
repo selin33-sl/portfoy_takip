@@ -14,8 +14,9 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       // rotateLabel={true}
       xAxisLabelTextStyle={{
         color: 'white',
-        width: windowWidth * 0.1,
-        fontSize: 9,
+        width: windowWidth * 0.15,
+        backgroundColor: 'purple',
+        fontSize: windowHeight * 0.01,
         marginLeft: windowWidth * 0.05,
       }}
       // xAxisLabelsVerticalShift={5}
@@ -28,14 +29,14 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
       // xAxisType="dotted"
       // showXAxisIndices={false}
       // dataPointLabelShiftX={10}
-      width={width}
-      height={height}
+      width={windowWidth * 0.85}
+      height={windowHeight * 0.2}
       hideDataPoints
       color="#00ff83"
       thickness={1}
       startFillColor="rgba(20,105,81,0.3)"
       endFillColor="rgba(20,85,81,0.01)"
-      spacing={50}
+      spacing={10}
       startOpacity={3}
       endOpacity={0.2}
       initialSpacing={20}
@@ -58,7 +59,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
         radius: 6,
         pointerLabelWidth: windowWidth * 0.07,
         pointerLabelHeight: 90,
-        activatePointersOnLongPress: true,
+        activatePointersOnLongPress: false,
         autoAdjustPointerLabelPosition: false,
         pointerLabelComponent: items => {
           return (

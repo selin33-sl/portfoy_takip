@@ -47,10 +47,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   lineChartContainer: {
-    height: windowHeight * 0.26,
-    width: 'auto',
+    height: windowHeight * 0.25,
+    width: windowWidth,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    backgroundColor: 'red',
   },
   text: {
     fontSize: windowHeight * 0.02,

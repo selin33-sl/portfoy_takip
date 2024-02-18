@@ -316,11 +316,13 @@ export const VarlikDetayScreen = () => {
         } else if (AssetDetailsData) {
           await dispatch(
             getAssetDetailsProcess({
-              portfolioId: AssetDetailsData?.portfolioId,
-              assetId: AssetDetailsData?.assetDetails?.assetId,
-              type: AssetDetailsData?.assetDetails?.type,
-              name: AssetDetailsData?.assetDetails?.name,
-              day: selectedValue,
+              data: {
+                portfolioId: AssetDetailsData?.portfolioId,
+                assetId: AssetDetailsData?.assetDetails?.assetId,
+                type: AssetDetailsData?.assetDetails?.type,
+                name: AssetDetailsData?.assetDetails?.name,
+                numberOfDays: selectedValue,
+              },
             }),
           );
         }
@@ -358,8 +360,6 @@ export const VarlikDetayScreen = () => {
                   reverseArray(GoldDetailData?.data) ||
                   reverseArray(AssetDetailsData?.historicalData)
                 }
-                width={340}
-                height={170}
               />
             </View>
 

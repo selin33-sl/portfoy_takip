@@ -22,6 +22,7 @@ import {
   getGumusSlice,
   getKriptoSlice,
   getPortfolioDetailsSlice,
+  getSearchStockSlice,
   getStockDetailSlice,
   loginSlice,
   registerSlice,
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   removeAsset: deleteAssetSlice,
   getAssetDetails: getAssetDetailsSlice,
   updateAsset: updateAssetSlice,
+  searchStock: getSearchStockSlice,
 });
 
 export const store = configureStore({

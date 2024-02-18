@@ -117,13 +117,10 @@ export const ResizableCard = ({
   };
 
   const renderItem = ({item}) => {
-    const words = item?.name.split(' ');
-    const name = words[0] ? words[0].trim() : '';
-
     return (
       <SmallCard
         item={item}
-        name={name}
+        name={item?.name}
         price={
           option == 1
             ? item.purchasePrice

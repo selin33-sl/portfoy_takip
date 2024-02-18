@@ -276,6 +276,18 @@ const updateAssetProcess = createAsyncThunk(
   },
 );
 
+const getSearchStockProcess = createAsyncThunk(
+  'searchStock/getSearchStockProcess',
+  async ({data}, {rejectWithValue}) => {
+    try {
+      const res = await axios.post(`searchStock/${data}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -298,37 +310,5 @@ export {
   deleteAssetProcess,
   getAssetDetailsProcess,
   updateAssetProcess,
+  getSearchStockProcess,
 };
-
-// const createSchoolStaff = createAsyncThunk(
-//   "createSchoolStaff/createSchoolStaff",
-//   async ({ id, data }, { rejectWithValue }) => {
-//     try {
-//       const { name, email, password, role, phoneNumber, subjectId } = data;
-//       const response = await axios.post(
-//         `/school/createSchoolStaff/${id}/staff`,
-//         data
-//       );
-//       return response;
-//     } catch (error) {
-//       throw rejectWithValue(error.response.data);
-//     }
-//   }
-// );
-
-// const handleSave = async (formikValues) => {
-//   await dispatch(
-//     createSchoolStaff({
-//       id: params.tab,
-//       data: {
-//         name: formikValues.name,
-//         email: formikValues.email,
-//         password: formikValues.password,
-//         subjectId: formikValues.subjectId,
-//         phoneNumber: formikValues.phoneNumber,
-//         role: "TEACHER",
-//       },
-//     })
-//   );
-//   await dispatch(getTeacherBySchoolId(params.tab));
-// };

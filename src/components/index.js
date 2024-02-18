@@ -11,7 +11,7 @@ export * from './Modals/portfoyListModal';
 export * from './Cards/varlikListCard';
 export * from './searchBar';
 export * from './Modals/calendarModal';
-export * from './Cards/lineChart';
+export * from './lineChart';
 export * from './Modals/portfoyAddModal';
 export * from './button';
 export * from './Cards/settingsCard';

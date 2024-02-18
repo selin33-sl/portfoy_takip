@@ -1,6 +1,6 @@
 import {View, Text, Modal, Dimensions, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {LineChartt} from '../../Cards/lineChart';
+import {LineChartt} from '../../lineChart';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
