@@ -21,21 +21,9 @@ import {
   getSearchStockProcess,
   getStockDetailProcess,
 } from '../../api';
-import {resetAllStock} from '../../redux/slice/varliklar/All/get-all-stock-slice';
-import {
-  resetAllCurrency,
-  resetDoviz,
-} from '../../redux/slice/varliklar/All/get-all-currency-slice';
-import {resetKripto} from '../../redux/slice/varliklar/get-kripto-slice';
-import {resetEmtia} from '../../redux/slice/varliklar/get-emtia-slice';
-import {resetGumus} from '../../redux/slice/varliklar/get-gumus-slice';
-import {
-  resetAllGold,
-  resetAltin,
-} from '../../redux/slice/varliklar/All/get-all-gold-slice';
+
 import {useTranslation} from 'react-i18next';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
-import {resetSearchStock} from '../../redux/slice/varliklar/Search/get-search-stock-slice';
 
 export const VarliklarListScreen = () => {
   const {t} = useTranslation();
@@ -66,22 +54,11 @@ export const VarliklarListScreen = () => {
   const {data: assetData} = useSelector(state => state.assetData);
   const {data: KriptoData} = useSelector(state => state.cripto);
 
-  console.log('AllCurrencyLoading', AllCurrencyLoading);
-  console.log('AllStockLoading', AllStockLoading);
-  console.log('AllGoldLoading', AllGoldLoading);
-
   let filteredData;
 
-  console.log('qqqqqqqqqqqqqqqqqqqqqqqq', value);
+  console.log('qqqqqqqqqqqqqqqqqqqqqqqq', assetData);
 
-  const data =
-    value == 'AllStockData'
-      ? AllStockData
-      : value == 'AllGoldData'
-      ? AllGoldData
-      : value == 'AllCurrencyData'
-      ? AllCurrencyData
-      : null;
+  const data = assetData;
 
   const search = async () => {
     if (value == 'AllStockData' && searchTerm != '') {
@@ -100,24 +77,25 @@ export const VarliklarListScreen = () => {
   // }, []);
 
   console.log('SearchData,', SearchData?.data);
-  console.log('data,', data);
 
-  useEffect(() => {
-    if (text == t('headers.assetsHeaders.stock')) {
-      dispatch(getAllStockProcess());
-    } else if (text == t('headers.assetsHeaders.foreignCurrency')) {
-      dispatch(getAllCurrencyProcess());
-    } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
-      dispatch(getKriptoProcess());
-    } else if (text == t('headers.assetsHeaders.goldSilver')) {
-      dispatch(getAllGoldProcess());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (text == t('headers.assetsHeaders.stock')) {
+  //     dispatch(getAllStockProcess());
+  //   } else if (text == t('headers.assetsHeaders.foreignCurrency')) {
+  //     dispatch(getAllCurrencyProcess());
+  //   } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
+  //     dispatch(getKriptoProcess());
+  //   } else if (text == t('headers.assetsHeaders.goldSilver')) {
+  //     dispatch(getAllGoldProcess());
+  //   }
+  // }, []);
 
   const renderItem = ({item}) => {
     let code = '';
     let fullName = '';
     let newGoldName = '';
+
+    console.log('itemmm', item);
 
     if (AllStockData) {
       const words = item?.name.split(' ');
@@ -207,7 +185,7 @@ export const VarliklarListScreen = () => {
             <View style={style.listContainer}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={assetData}
+                data={assetData?.data}
                 renderItem={renderItem}
                 keyExtractor={item => item._id.toString()}
               />

@@ -1,5 +1,11 @@
-import {View, Text, TextInput, Dimensions} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState} from 'react';
 import style from './style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -17,6 +23,12 @@ export const TextinputCard = ({
   rules,
   errors,
 }) => {
+  const [isPasswordVisible, setPasswordVisibility] = useState(!secureText);
+
+  const togglePasswordVisibility = () => {
+    console.log(secureText);
+    setPasswordVisibility(!isPasswordVisible);
+  };
   return (
     <View style={style.container}>
       <View
@@ -32,21 +44,36 @@ export const TextinputCard = ({
           control={control}
           rules={rules}
           render={({field: {onChange, value}}) => (
-            <TextInput
-              style={
-                errors
-                  ? {...style.textInput, borderColor: 'red'}
-                  : style.textInput
-              }
-              value={value}
-              onChangeText={onChange}
-              placeholder={placeholder}
-              keyboardType={keyboardType}
-              secureTextEntry={secureText}
-            />
+            <>
+              <TextInput
+                style={
+                  errors
+                    ? {...style.textInput, borderColor: 'red'}
+                    : style.textInput
+                }
+                value={value}
+                onChangeText={onChange}
+                placeholder={placeholder}
+                keyboardType={keyboardType}
+                secureTextEntry={!isPasswordVisible}
+              />
+
+              {secureText && (
+                <View style={style.passworVisibleButton}>
+                  <TouchableOpacity onPress={togglePasswordVisibility}>
+                    <Icon
+                      name={isPasswordVisible ? 'eye-off' : 'eye'}
+                      size={20}
+                      color={'white'}
+                    />
+                  </TouchableOpacity>
+                </View>
+              )}
+            </>
           )}
           name={name}
         />
+
         {errors && <Text style={style.errorText}>{errors.message}</Text>}
       </View>
     </View>

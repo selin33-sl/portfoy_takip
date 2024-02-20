@@ -37,4 +37,12 @@ export default StyleSheet.create({
     color: 'red',
     marginLeft: windowWidth * 0.05,
   },
+  passworVisibleButton: {
+    position: 'absolute',
+    width: windowWidth * 0.65,
+    height: windowWidth * 0.15,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: windowWidth * 0.05,
+  },
 });

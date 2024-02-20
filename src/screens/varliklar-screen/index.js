@@ -11,6 +11,9 @@ import {
   getAllCurrencyProcess,
   getAllGoldProcess,
   getAllStockProcess,
+  getSearchCurrencyProcess,
+  getSearchGoldProcess,
+  getSearchStockProcess,
 } from '../../api';
 
 export const VarliklarScreen = () => {
@@ -20,21 +23,21 @@ export const VarliklarScreen = () => {
 
   useEffect(() => {
     if (AssetData == undefined) {
-      dispatch(getAllStockProcess());
-      dispatch(getAllCurrencyProcess());
-      dispatch(getAllGoldProcess());
+      dispatch(getSearchStockProcess({data: ''}));
+      dispatch(getSearchCurrencyProcess({data: ''}));
+      dispatch(getSearchGoldProcess({searchParam: ''}));
     }
   }, []);
 
   const {data: AllStockData, isLoading: AllStockLoading} = useSelector(
-    state => state.getAllStock,
+    state => state.searchStock,
   );
 
   const {data: AllCurrencyData, isLoading: AllCurrencyLoading} = useSelector(
-    state => state.getAllCurrency,
+    state => state.searchCurrency,
   );
   const {data: AllGoldData, isLoading: AllGoldLoading} = useSelector(
-    state => state.getAllGold,
+    state => state.searchGold,
   );
   const {data: AssetData} = useSelector(state => state.assetData);
 
