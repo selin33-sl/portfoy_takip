@@ -312,6 +312,18 @@ const getSearchGoldProcess = createAsyncThunk(
   },
 );
 
+const getPortfolioTypeDetailsProcess = createAsyncThunk(
+  'getPortfolioTypeDetails/getPortfolioTypeDetailsProcess',
+  async ({id, type}, {rejectWithValue}) => {
+    try {
+      const res = await axios.get(`getPortfolioTypeDetails/${id}/${type}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -337,4 +349,5 @@ export {
   getSearchStockProcess,
   getSearchCurrencyProcess,
   getSearchGoldProcess,
+  getPortfolioTypeDetailsProcess,
 };

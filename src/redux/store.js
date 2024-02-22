@@ -23,6 +23,7 @@ import {
   getGumusSlice,
   getKriptoSlice,
   getPortfolioDetailsSlice,
+  getPortfolioTypeDetailsSlice,
   getSearchCurrencySlice,
   getSearchGoldSlice,
   getSearchStockSlice,
@@ -61,6 +62,7 @@ const reducer = combineReducers({
   searchGold: getSearchGoldSlice,
   assetData: assetDataSlice,
   searchAssetData: searchAssetDataSlice,
+  getPortfolioTypeDetails: getPortfolioTypeDetailsSlice,
 });
 
 export const store = configureStore({

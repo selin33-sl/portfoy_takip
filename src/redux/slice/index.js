@@ -24,3 +24,4 @@ export {default as getSearchCurrencySlice} from './varliklar/Search/get-search-c
 export {default as getSearchGoldSlice} from './varliklar/Search/get-search-gold-slice';
 export {default as assetDataSlice} from './global/asset-data-slice';
 export {default as searchAssetDataSlice} from './global/search-asset-data-slice';
+export {default as getPortfolioTypeDetailsSlice} from './portfolio/get-portfolio-type-details-slice';
