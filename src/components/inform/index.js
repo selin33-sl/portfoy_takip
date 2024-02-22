@@ -2,6 +2,8 @@ import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import style from './style';
+import {useDispatch} from 'react-redux';
+import {setInformSelectedHeader} from '../../redux/slice/global/inform-selected-header-slice';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -25,13 +27,15 @@ export const Inform = ({
   setDegerCallback,
 }) => {
   const {t} = useTranslation();
+  const dispatch = useDispatch();
 
   const [clickedRow, setClickedRow] = useState(null);
 
   const Row = ({backgroundColor, text, deger, start, end}) => {
     return (
       <TouchableOpacity
-        onPress={() => {
+        onPress={async () => {
+          await dispatch(setInformSelectedHeader({data: text}));
           setClickedRow({
             start,
             end,

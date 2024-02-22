@@ -25,3 +25,4 @@ export {default as getSearchGoldSlice} from './varliklar/Search/get-search-gold-
 export {default as assetDataSlice} from './global/asset-data-slice';
 export {default as searchAssetDataSlice} from './global/search-asset-data-slice';
 export {default as getPortfolioTypeDetailsSlice} from './portfolio/get-portfolio-type-details-slice';
+export {default as informSelectedHeaderSlice} from './global/inform-selected-header-slice';

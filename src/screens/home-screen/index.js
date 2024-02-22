@@ -27,6 +27,7 @@ import {
   getAssetDetailsProcess,
   getAssetPercentagesProcess,
   getPortfolioDetailsProcess,
+  getPortfolioTypeDetailsProcess,
 } from '../../api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
@@ -64,8 +65,14 @@ export const HomeScreen = () => {
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
   const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
     useSelector(state => state.getPortfolioDetails);
+  const {data: PortfolioTypeDetailsData} = useSelector(
+    state => state.getPortfolioTypeDetails,
+  );
+  const {data: InformSelectedData} = useSelector(
+    state => state.informSelectedHeader,
+  );
 
-  console.log('default portfolio:', defaultPortfolioId);
+  console.log('InformSelectedData:', InformSelectedData);
 
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
@@ -135,11 +142,6 @@ export const HomeScreen = () => {
         });
 
         setCapturedImageURI(uri);
-
-        // Ekran görüntüsünü paylaşma
-        // await Share.open({
-        //   url: `file://${uri}`,
-        // });
       } else {
         console.error('Ref mevcut değil.');
       }
@@ -307,19 +309,19 @@ export const HomeScreen = () => {
                             getAssetPercentagesProcess({
                               id: defaultPortfolioId,
                               type:
-                                header == 'Döviz'
+                                InformSelectedData == 'Döviz'
                                   ? 'Currency'
-                                  : header == 'Hisse Senedi'
+                                  : InformSelectedData == 'Hisse Senedi'
                                   ? 'Stock'
-                                  : header == 'Fon'
+                                  : InformSelectedData == 'Fon'
                                   ? 'Fund'
-                                  : header == 'Kripto'
+                                  : InformSelectedData == 'Kripto'
                                   ? 'Crypto'
-                                  : header == 'Altın'
+                                  : InformSelectedData == 'Altın'
                                   ? 'Gold'
-                                  : header == 'Türk Lirası'
+                                  : InformSelectedData == 'Türk Lirası'
                                   ? 'TurkishLira'
-                                  : header,
+                                  : InformSelectedData,
                             }),
                           );
                           setIsAssetDetailsModal(true);
@@ -331,8 +333,28 @@ export const HomeScreen = () => {
 
                   <Inform
                     especial={especial}
-                    onPress={() => {
+                    onPress={async () => {
+                      console.log('headerrrr:', header);
                       setEspecial(true);
+                      await dispatch(
+                        getPortfolioTypeDetailsProcess({
+                          id: defaultPortfolioId,
+                          type:
+                            header == 'Döviz'
+                              ? 'Currency'
+                              : header == 'Hisse Senedi'
+                              ? 'Stock'
+                              : header == 'Fon'
+                              ? 'Fund'
+                              : header == 'Kripto'
+                              ? 'Crypto'
+                              : header == 'Altın'
+                              ? 'Gold'
+                              : header == 'Türk Lirası'
+                              ? 'TurkishLira'
+                              : header,
+                        }),
+                      );
                     }}
                     setColorCallback={setColor}
                     setDegerCallback={setDeger}

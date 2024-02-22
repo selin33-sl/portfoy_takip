@@ -28,6 +28,7 @@ import {
   getSearchGoldSlice,
   getSearchStockSlice,
   getStockDetailSlice,
+  informSelectedHeaderSlice,
   loginSlice,
   registerSlice,
   searchAssetDataSlice,
@@ -63,6 +64,7 @@ const reducer = combineReducers({
   assetData: assetDataSlice,
   searchAssetData: searchAssetDataSlice,
   getPortfolioTypeDetails: getPortfolioTypeDetailsSlice,
+  informSelectedHeader: informSelectedHeaderSlice,
 });
 
 export const store = configureStore({
