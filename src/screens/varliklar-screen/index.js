@@ -6,11 +6,8 @@ import {Header, LinearGradientContainer, VarliklarCard} from '../../components';
 import style from './style';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import {assetData} from '../../redux/slice/global/asset-data-slice';
+import {setAssetData} from '../../redux/slice/global/asset-data-slice';
 import {
-  getAllCurrencyProcess,
-  getAllGoldProcess,
-  getAllStockProcess,
   getSearchCurrencyProcess,
   getSearchGoldProcess,
   getSearchStockProcess,
@@ -22,29 +19,23 @@ export const VarliklarScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (AssetData == undefined) {
-      dispatch(getSearchStockProcess({data: ''}));
-      dispatch(getSearchCurrencyProcess({data: ''}));
-      dispatch(getSearchGoldProcess({searchParam: ''}));
-    }
+    console.log('çalıştı mı');
+    dispatch(getSearchStockProcess({data: ''}));
+    dispatch(getSearchCurrencyProcess({data: ''}));
+    dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
   }, []);
 
-  const {data: AllStockData, isLoading: AllStockLoading} = useSelector(
-    state => state.searchStock,
-  );
+  const {data: AllStockData} = useSelector(state => state.searchStock);
 
-  const {data: AllCurrencyData, isLoading: AllCurrencyLoading} = useSelector(
-    state => state.searchCurrency,
-  );
-  const {data: AllGoldData, isLoading: AllGoldLoading} = useSelector(
-    state => state.searchGold,
-  );
+  const {data: AllCurrencyData} = useSelector(state => state.searchCurrency);
+  const {data: AllGoldData} = useSelector(state => state.searchGold);
   const {data: AssetData} = useSelector(state => state.assetData);
 
   const data = [
     {
       text: t('headers.assetsHeaders.turkisLira'),
       value: AllStockData,
+      type: 'turkisLira',
       iconName: 'currency-try',
       backgroundColor: '#3401FF',
       _id: 1,
@@ -52,6 +43,7 @@ export const VarliklarScreen = () => {
     {
       text: t('headers.assetsHeaders.goldSilver'),
       value: AllGoldData,
+      type: 'gold',
       iconName: 'gold',
       backgroundColor: '#FF7A00',
       _id: 2,
@@ -60,6 +52,7 @@ export const VarliklarScreen = () => {
       text: t('headers.assetsHeaders.foreignCurrency'),
       iconName: 'money-symbol',
       value: AllCurrencyData,
+      type: 'currency',
       backgroundColor: '#00EFFE',
       doviz: true,
       _id: 3,
@@ -68,6 +61,7 @@ export const VarliklarScreen = () => {
       text: t('headers.assetsHeaders.fund'),
       iconName: 'file-multiple-outline',
       backgroundColor: '#FF007A',
+      type: 'fund',
       value: AllGoldData,
       _id: 4,
     },
@@ -75,6 +69,7 @@ export const VarliklarScreen = () => {
       text: t('headers.assetsHeaders.stock'),
       iconName: 'chart-line',
       value: AllStockData,
+      type: 'stock',
       backgroundColor: '#BCFE00',
       _id: 5,
     },
@@ -82,6 +77,7 @@ export const VarliklarScreen = () => {
       text: t('headers.assetsHeaders.cryptoCurrrency'),
       iconName: 'currency-btc',
       backgroundColor: '#DB00FF',
+      type: 'crypto',
       value: AllGoldData,
       _id: 6,
     },
@@ -95,7 +91,7 @@ export const VarliklarScreen = () => {
             text: item.text,
             value: item.value,
           });
-          dispatch(assetData(item.value));
+          dispatch(setAssetData({data: item.value, type: item.type}));
         }}
         backgroundColor={item.backgroundColor}
         text={item.text}

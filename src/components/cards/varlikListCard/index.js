@@ -10,7 +10,6 @@ export const VarlikListCard = ({
   percent,
   fullNameText,
   percentText,
-  color,
   price,
 }) => {
   return (
@@ -26,7 +25,13 @@ export const VarlikListCard = ({
           }>
           {fullName ? <Text style={style.text2}>{fullNameText}</Text> : null}
           {percent ? (
-            <Text style={{...style.text2, color: color}}>%{percentText}</Text>
+            <Text
+              style={{
+                ...style.text2,
+                color: parseFloat(percentText) < 0 ? 'red' : 'green',
+              }}>
+              {percentText} %
+            </Text>
           ) : null}
         </View>
       </View>

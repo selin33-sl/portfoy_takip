@@ -1,5 +1,5 @@
 import {View, Text, BackHandler, FlatList} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
@@ -18,6 +18,8 @@ import {
   getCurrencyDetailProcess,
   getGoldDetailProcess,
   getKriptoProcess,
+  getSearchCurrencyProcess,
+  getSearchGoldProcess,
   getSearchStockProcess,
   getStockDetailProcess,
 } from '../../api';
@@ -29,6 +31,8 @@ export const VarliklarListScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchData, setSearchData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
@@ -48,23 +52,70 @@ export const VarliklarListScreen = () => {
   const {data: AllGoldData, isLoading: AllGoldLoading} = useSelector(
     state => state.getAllGold,
   );
-  const {data: SearchData, isLoading: SearchLoading} = useSelector(
+  const {data: SearchStockData, isLoading: SearchStockLoading} = useSelector(
     state => state.searchStock,
   );
-  const {data: assetData} = useSelector(state => state.assetData);
-  const {data: KriptoData} = useSelector(state => state.cripto);
+  const {data: SearchCurrencyData, isLoading: SearchCurrencyLoading} =
+    useSelector(state => state.searchCurrency);
+  const {data: assetData, type: assetType} = useSelector(
+    state => state.assetData,
+  );
 
-  let filteredData;
+  const debounce = (func, delay) => {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  };
 
-  console.log('qqqqqqqqqqqqqqqqqqqqqqqq', assetData);
+  const searchAsset = async searchQuery => {
+    try {
+      if (assetType == 'stock') {
+        await dispatch(getSearchStockProcess({data: searchQuery}));
+      } else if (assetType == 'currency') {
+        await dispatch(getSearchCurrencyProcess({data: searchQuery}));
+      }
+    } catch (error) {
+      console.error('Error during search:', error);
+      // Handle error
+    }
+  };
 
-  const data = assetData;
+  const debouncedSearch = useCallback(debounce(searchAsset, 500), []);
+
+  useEffect(() => {
+    if (searchTerm != '') {
+      debouncedSearch(searchTerm);
+    } else if (!searchTerm == '') {
+      dispatch(getSearchStockProcess({data: ''}));
+      dispatch(getSearchCurrencyProcess({data: ''}));
+      dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      setFilteredData(SearchStockData?.data);
+    } else {
+      setFilteredData(assetData?.data);
+    }
+  }, [searchTerm, SearchStockData]);
 
   const search = async () => {
-    if (value == 'AllStockData' && searchTerm != '') {
+    if (assetType == 'stock' && searchTerm != '') {
       await dispatch(getSearchStockProcess({data: searchTerm}));
-    } else {
-      filteredData = data;
+      setSearchData(SearchStockData?.data);
+
+      console.log('SearchStockData1111,', SearchStockData?.data);
+    } else if (assetType == 'currency' && searchTerm != '') {
+      await dispatch(getSearchCurrencyProcess({data: searchTerm}));
+      setSearchData(SearchCurrencyData?.data);
+
+      // console.log('SearchStockData1111,', SearchStockData?.data);
+      // console.log('SearchCurrencyData,', SearchCurrencyData?.data);
     }
   };
 
@@ -72,88 +123,33 @@ export const VarliklarListScreen = () => {
     search();
   }, [searchTerm]);
 
-  // useEffect(() => {
-  //   search();
-  // }, []);
-
-  console.log('SearchData,', SearchData?.data);
-
-  // useEffect(() => {
-  //   if (text == t('headers.assetsHeaders.stock')) {
-  //     dispatch(getAllStockProcess());
-  //   } else if (text == t('headers.assetsHeaders.foreignCurrency')) {
-  //     dispatch(getAllCurrencyProcess());
-  //   } else if (text == t('headers.assetsHeaders.cryptoCurrrency')) {
-  //     dispatch(getKriptoProcess());
-  //   } else if (text == t('headers.assetsHeaders.goldSilver')) {
-  //     dispatch(getAllGoldProcess());
-  //   }
-  // }, []);
-
   const renderItem = ({item}) => {
-    let code = '';
-    let fullName = '';
-    let newGoldName = '';
-
-    console.log('itemmm', item);
-
-    if (AllStockData) {
-      const words = item?.name.split(' ');
-      code = words[0] ? words[0].trim() : '';
-      fullName = words.slice(1).join(' ').trim();
-    }
-
-    if (AllGoldData) {
-      const words = item?.name.split(' ');
-      newGoldName = words[0] ? words[0].trim() : '';
-    }
-
-    // item.rate'den renk ve yuvarlanmış değeri al
-    let rateValue = parseFloat(item?.changePercent);
-    let roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
-
-    // `AllCurrencyData` durumu için `changePercent` değerini düzenle
-    if (AllCurrencyData || AllGoldData) {
-      rateValue = parseFloat(
-        item?.changePercent.replace('%', '').replace(',', '.'),
-      );
-      roundedRate = `${Math.abs(rateValue).toFixed(2)}`;
-    }
-
-    // Renk belirleme
-    const color = rateValue < 0 ? 'red' : 'green';
+    // // item.rate'den renk ve yuvarlanmış değeri al
+    // let rateValue = parseFloat(item?.changePercent);
+    // let roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
 
     return (
       <VarlikListCard
-        fullName={AllStockData || AllCurrencyData || KriptoData ? true : false}
-        percent={AllStockData || AllCurrencyData || AllGoldData ? true : false}
+        fullName
+        percent
         price={item?.lastPrice}
-        code={
-          AllStockData
-            ? code
-            : AllCurrencyData || AllGoldData
-            ? item?.name
-            : null
-        }
-        fullNameText={
-          AllStockData ? fullName : AllCurrencyData ? item?.desc : null
-        }
-        color={color}
-        percentText={roundedRate}
+        code={item?.name}
+        fullNameText={item?.desc}
+        percentText={item?.changePercent}
         onPress={async () => {
           await navigation.navigate('varlikDetay-screen', {text: text});
           console.log('item?.name', item?.name);
 
           {
-            AllStockData && AllStockData.length
+            assetType == 'stock'
               ? await dispatch(
                   getStockDetailProcess({name: item?.name, day: 2}),
                 )
-              : AllCurrencyData && AllCurrencyData.length
+              : assetType == 'currency'
               ? await dispatch(
                   getCurrencyDetailProcess({name: item?.name, day: 2}),
                 )
-              : AllGoldData && AllGoldData.length
+              : assetType == 'gold'
               ? await dispatch(
                   getGoldDetailProcess({data: {name: item?.name, day: 2}}),
                 )
@@ -166,9 +162,7 @@ export const VarliklarListScreen = () => {
 
   return (
     <LinearGradientContainer>
-      {AllStockLoading === true ||
-      AllGoldLoading === true ||
-      AllCurrencyLoading === true ? (
+      {SearchCurrencyLoading === true ? (
         <>
           <Loader />
         </>
@@ -185,7 +179,7 @@ export const VarliklarListScreen = () => {
             <View style={style.listContainer}>
               <FlatList
                 showsVerticalScrollIndicator={false}
-                data={assetData?.data}
+                data={filteredData}
                 renderItem={renderItem}
                 keyExtractor={item => item._id.toString()}
               />

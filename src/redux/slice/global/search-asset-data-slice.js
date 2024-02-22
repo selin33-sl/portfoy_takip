@@ -1,13 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-export const assetDataSlice = createSlice({
-  name: 'assetData',
+export const searchAssetDataSlice = createSlice({
+  name: 'searchAssetData',
   initialState: {
     data: undefined,
     type: undefined,
   },
   reducers: {
-    setAssetData: (state, action) => {
+    setSearchAssetData: (state, action) => {
       const {data, type} = action.payload;
       state.data = data;
       state.type = type;
@@ -15,5 +15,5 @@ export const assetDataSlice = createSlice({
   },
 });
 
-export const {setAssetData} = assetDataSlice.actions;
-export default assetDataSlice.reducer;
+export const {setSearchAssetData} = searchAssetDataSlice.actions;
+export default searchAssetDataSlice.reducer;
