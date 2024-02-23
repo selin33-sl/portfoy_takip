@@ -179,8 +179,6 @@ export const HomeScreen = () => {
           colors.kripto,
         ];
 
-  console.log();
-
   const handleReset = async () => {
     await dispatch(resetAssetDetails());
     await dispatch(resetStockDetail());
@@ -188,52 +186,112 @@ export const HomeScreen = () => {
     await dispatch(resetGoldDetail());
   };
 
-  const seriesEspecial = [deger, 100 - deger];
+  const seriesColor = PortfolioTypeDetailsData?.assets?.map(item => item.color);
+  console.log('seriesColor', seriesColor);
+  const seriesEspecial = PortfolioTypeDetailsData?.assets?.map(
+    item => item.assetPercentage,
+  );
+  console.log('seriesEspecial', seriesEspecial);
+
   const sliceColorEspecial = [color, 'grey'];
   const handleHidden = () => {
     setHidden(!hidden);
   };
 
   const renderItem = ({item, index}) => {
-    console.log('assetInfoItem', assetInfoItem);
+    console.log(
+      'PortfolioTypeDetailsData?.assets',
+      PortfolioTypeDetailsData?.assets,
+    );
     console.log('şş:', item);
+    console.log(
+      ' PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type',
+      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type,
+    );
+    if (especial && index !== 0) {
+      // Eğer especial true ise ve index 0 değilse (yani sadece ilk öğeyi göster)
+      return null; // Diğer öğeleri gösterme
+    }
     return (
-      <ResizableCard
-        onPress={async (assetId, name) => {
-          console.log('homeassetId', assetId);
-          navigation.navigate('varlikDetay-screen', {
-            page: 'update',
-            assetId: assetId,
-          });
-          await handleReset();
-          await dispatch(
-            getAssetDetailsProcess({
-              data: {
-                portfolioId: defaultPortfolioId,
-                assetId: assetId,
-                type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
-                  ?.type,
-                name: name,
-                numberOfDays: 2,
-              },
-            }),
-          );
-        }}
-        borderColor={
-          PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
-        }
-        tür={PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type}
-        sendItem={
-          PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
-        }
-        hidden={hidden}
-        infoModalOnPress={() => {
-          setAssetInfoItem(item);
-          setIsAssetInfoModal(true);
-        }}
-      />
+      (!especial ||
+        (especial &&
+          PortfolioTypeDetailsData?.assets &&
+          PortfolioTypeDetailsData?.assets.length > 0)) && (
+        <ResizableCard
+          onPress={async (assetId, name) => {
+            console.log('homeassetId', assetId);
+            navigation.navigate('varlikDetay-screen', {
+              page: 'update',
+              assetId: assetId,
+            });
+            await handleReset();
+            await dispatch(
+              getAssetDetailsProcess({
+                data: {
+                  portfolioId: defaultPortfolioId,
+                  assetId: assetId,
+                  type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
+                    ?.type,
+                  name: name,
+                  numberOfDays: 2,
+                },
+              }),
+            );
+          }}
+          borderColor={
+            especial
+              ? 'red'
+              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
+          }
+          tür={
+            especial
+              ? InformSelectedData
+              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type
+          }
+          sendItem={
+            especial
+              ? PortfolioTypeDetailsData?.assets
+              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
+          }
+          hidden={hidden}
+          infoModalOnPress={() => {
+            setAssetInfoItem(item);
+            setIsAssetInfoModal(true);
+          }}
+        />
+      )
     );
   };
+
+  const handleInformPress = async () => {
+    setEspecial(true);
+  };
+
+  useEffect(() => {
+    console.log('InformSelectedData oooo:', InformSelectedData);
+
+    dispatch(
+      getPortfolioTypeDetailsProcess({
+        id: defaultPortfolioId,
+        type:
+          InformSelectedData == 'Döviz'
+            ? 'Currency'
+            : InformSelectedData == 'Hisse Senedi'
+            ? 'Stock'
+            : InformSelectedData == 'Fon'
+            ? 'Fund'
+            : InformSelectedData == 'Kripto'
+            ? 'Crypto'
+            : InformSelectedData == 'Altın'
+            ? 'Gold'
+            : InformSelectedData == 'Türk Lirası'
+            ? 'TurkishLira'
+            : InformSelectedData,
+      }),
+    );
+  }, [InformSelectedData]);
+
+  console.log('PortfolioTypeDetailsData: ', PortfolioTypeDetailsData);
 
   return (
     <LinearGradientContainer>
@@ -297,7 +355,7 @@ export const HomeScreen = () => {
                           ? [100]
                           : series
                       }
-                      sliceColor={especial ? sliceColorEspecial : sliceColor}
+                      sliceColor={especial ? seriesColor : sliceColor}
                       coverRadius={0.5}
                     />
 
@@ -309,19 +367,19 @@ export const HomeScreen = () => {
                             getAssetPercentagesProcess({
                               id: defaultPortfolioId,
                               type:
-                                InformSelectedData == 'Döviz'
+                                header == 'Döviz'
                                   ? 'Currency'
-                                  : InformSelectedData == 'Hisse Senedi'
+                                  : header == 'Hisse Senedi'
                                   ? 'Stock'
-                                  : InformSelectedData == 'Fon'
+                                  : header == 'Fon'
                                   ? 'Fund'
-                                  : InformSelectedData == 'Kripto'
+                                  : header == 'Kripto'
                                   ? 'Crypto'
-                                  : InformSelectedData == 'Altın'
+                                  : header == 'Altın'
                                   ? 'Gold'
-                                  : InformSelectedData == 'Türk Lirası'
+                                  : header == 'Türk Lirası'
                                   ? 'TurkishLira'
-                                  : InformSelectedData,
+                                  : header,
                             }),
                           );
                           setIsAssetDetailsModal(true);
@@ -333,29 +391,7 @@ export const HomeScreen = () => {
 
                   <Inform
                     especial={especial}
-                    onPress={async () => {
-                      console.log('headerrrr:', header);
-                      setEspecial(true);
-                      await dispatch(
-                        getPortfolioTypeDetailsProcess({
-                          id: defaultPortfolioId,
-                          type:
-                            header == 'Döviz'
-                              ? 'Currency'
-                              : header == 'Hisse Senedi'
-                              ? 'Stock'
-                              : header == 'Fon'
-                              ? 'Fund'
-                              : header == 'Kripto'
-                              ? 'Crypto'
-                              : header == 'Altın'
-                              ? 'Gold'
-                              : header == 'Türk Lirası'
-                              ? 'TurkishLira'
-                              : header,
-                        }),
-                      );
-                    }}
+                    onPress={handleInformPress}
                     setColorCallback={setColor}
                     setDegerCallback={setDeger}
                     setHeaderCallback={setHeader}
@@ -379,6 +415,8 @@ export const HomeScreen = () => {
                 <Text style={style.toplamText}>
                   {hidden
                     ? '****TL'
+                    : especial
+                    ? `${PortfolioTypeDetailsData?.totalValue + ' TL'}`
                     : `${
                         PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'
                       }`}

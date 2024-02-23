@@ -23,6 +23,8 @@ export const ResizableCard = ({
   const dispatch = useDispatch();
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
+  console.log('small card itemm:', sendItem);
+
   const [isModalVisible2, setModalVisible2] = useState(false);
   const [modalHeight, setModalHeight] = useState(windowHeight * 0.05); // Modalın başlangıç yüksekliği
   const numItems = sendItem?.length;

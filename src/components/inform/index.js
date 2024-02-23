@@ -1,9 +1,10 @@
 import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import style from './style';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setInformSelectedHeader} from '../../redux/slice/global/inform-selected-header-slice';
+import {getPortfolioTypeDetailsProcess} from '../../api';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -30,12 +31,19 @@ export const Inform = ({
   const dispatch = useDispatch();
 
   const [clickedRow, setClickedRow] = useState(null);
+  const [selected, setselected] = useState('');
+
+  const {data: InformSelectedData} = useSelector(
+    state => state.informSelectedHeader,
+  );
+  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
   const Row = ({backgroundColor, text, deger, start, end}) => {
     return (
       <TouchableOpacity
         onPress={async () => {
           await dispatch(setInformSelectedHeader({data: text}));
+
           setClickedRow({
             start,
             end,
@@ -43,6 +51,7 @@ export const Inform = ({
             text,
             deger,
           });
+
           setColorCallback(backgroundColor);
           setDegerCallback(deger);
           setHeaderCallback(text);

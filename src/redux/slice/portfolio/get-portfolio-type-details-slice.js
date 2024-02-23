@@ -26,7 +26,7 @@ export const getPortfolioTypeDetailsSlice = createSlice({
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
-          (state.data = action.payload?.data?.PortfolioTypeDetails);
+          (state.data = action.payload?.data);
       })
       .addCase(getPortfolioTypeDetailsProcess.rejected, (state, action) => {
         state.isLoading = false;
