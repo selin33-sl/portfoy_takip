@@ -4,6 +4,7 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
@@ -43,6 +44,9 @@ import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-det
 import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
 import {resetAssetDetails} from '../../redux/slice/portfolio/get-asset-details-slice';
 import {resetUpdateAsset} from '../../redux/slice/portfolio/update-asset-slice';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
@@ -354,6 +358,8 @@ export const VarlikDetayScreen = () => {
 
             <View style={style.lineChartContainer}>
               <LineChartt
+                width={windowWidth * 0.75}
+                height={windowHeight * 0.2}
                 lcData={
                   reverseArray(StockDetailData?.data) ||
                   reverseArray(CurrencyDetailData?.data) ||

@@ -154,6 +154,7 @@ export const HomeScreen = () => {
   };
 
   const widthAndHeight = 170;
+
   const series = [
     PortfolioDetailsData?.distribution[5]?.percentage,
     PortfolioDetailsData?.distribution[1]?.percentage,
@@ -162,7 +163,6 @@ export const HomeScreen = () => {
     PortfolioDetailsData?.distribution[2]?.percentage,
     PortfolioDetailsData?.distribution[3]?.percentage,
   ];
-
   const totalPercentage = series.reduce((acc, curr) => acc - curr, 0);
 
   console.log('tootttaalll', totalPercentage);
@@ -184,83 +184,6 @@ export const HomeScreen = () => {
     await dispatch(resetStockDetail());
     await dispatch(resetCurrencyDetail());
     await dispatch(resetGoldDetail());
-  };
-
-  const seriesColor = PortfolioTypeDetailsData?.assets?.map(item => item.color);
-  console.log('seriesColor', seriesColor);
-  const seriesEspecial = PortfolioTypeDetailsData?.assets?.map(
-    item => item.assetPercentage,
-  );
-  console.log('seriesEspecial', seriesEspecial);
-
-  const sliceColorEspecial = [color, 'grey'];
-  const handleHidden = () => {
-    setHidden(!hidden);
-  };
-
-  const renderItem = ({item, index}) => {
-    console.log(
-      'PortfolioTypeDetailsData?.assets',
-      PortfolioTypeDetailsData?.assets,
-    );
-    console.log('şş:', item);
-    console.log(
-      ' PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type',
-      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type,
-    );
-    if (especial && index !== 0) {
-      // Eğer especial true ise ve index 0 değilse (yani sadece ilk öğeyi göster)
-      return null; // Diğer öğeleri gösterme
-    }
-    return (
-      (!especial ||
-        (especial &&
-          PortfolioTypeDetailsData?.assets &&
-          PortfolioTypeDetailsData?.assets.length > 0)) && (
-        <ResizableCard
-          onPress={async (assetId, name) => {
-            console.log('homeassetId', assetId);
-            navigation.navigate('varlikDetay-screen', {
-              page: 'update',
-              assetId: assetId,
-            });
-            await handleReset();
-            await dispatch(
-              getAssetDetailsProcess({
-                data: {
-                  portfolioId: defaultPortfolioId,
-                  assetId: assetId,
-                  type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
-                    ?.type,
-                  name: name,
-                  numberOfDays: 2,
-                },
-              }),
-            );
-          }}
-          borderColor={
-            especial
-              ? 'red'
-              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
-          }
-          tür={
-            especial
-              ? InformSelectedData
-              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type
-          }
-          sendItem={
-            especial
-              ? PortfolioTypeDetailsData?.assets
-              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
-          }
-          hidden={hidden}
-          infoModalOnPress={() => {
-            setAssetInfoItem(item);
-            setIsAssetInfoModal(true);
-          }}
-        />
-      )
-    );
   };
 
   const handleInformPress = async () => {
@@ -290,6 +213,90 @@ export const HomeScreen = () => {
       }),
     );
   }, [InformSelectedData]);
+
+  const handleHidden = () => {
+    setHidden(!hidden);
+  };
+
+  const seriesColor =
+    PortfolioTypeDetailsData?.assets &&
+    PortfolioTypeDetailsData?.assets.length > 0
+      ? PortfolioTypeDetailsData.assets.map(item => item.color)
+      : [];
+  console.log('seriesColor', seriesColor);
+  const seriesEspecial =
+    PortfolioTypeDetailsData?.assets &&
+    PortfolioTypeDetailsData?.assets.length > 0
+      ? PortfolioTypeDetailsData?.assets?.map(item => item.assetPercentage)
+      : [];
+
+  console.log('seriesEspecial', seriesEspecial);
+
+  const renderItem = ({item, index}) => {
+    console.log(
+      'PortfolioTypeDetailsData?.assets',
+      PortfolioTypeDetailsData?.assets,
+    );
+    console.log('şş:', item);
+    console.log(
+      ' PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type',
+      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type,
+    );
+    if (especial && index !== 0) {
+      // Eğer especial true ise ve index 0 değilse (yani sadece ilk öğeyi göster)
+      return null; // Diğer öğeleri gösterme
+    }
+    return (
+      (!especial ||
+        (especial &&
+          PortfolioTypeDetailsData?.assets &&
+          PortfolioTypeDetailsData?.assets?.length > 0)) && (
+        <ResizableCard
+          onPress={async (assetId, name) => {
+            console.log('homeassetId', assetId);
+            navigation.navigate('varlikDetay-screen', {
+              page: 'update',
+              assetId: assetId,
+            });
+            await handleReset();
+            await dispatch(
+              getAssetDetailsProcess({
+                data: {
+                  portfolioId: defaultPortfolioId,
+                  assetId: assetId,
+                  type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
+                    ?.type,
+                  name: name,
+                  numberOfDays: 2,
+                },
+              }),
+            );
+          }}
+          borderColor={
+            especial
+              ? 'white'
+              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.color
+          }
+          tür={
+            especial
+              ? InformSelectedData
+              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type
+          }
+          sendItem={
+            especial && PortfolioTypeDetailsData?.assets.length > 0
+              ? PortfolioTypeDetailsData?.assets
+              : PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets
+          }
+          hidden={hidden}
+          infoModalOnPress={() => {
+            setAssetInfoItem(item);
+            setIsAssetInfoModal(true);
+          }}
+          especial={especial}
+        />
+      )
+    );
+  };
 
   console.log('PortfolioTypeDetailsData: ', PortfolioTypeDetailsData);
 
@@ -393,7 +400,6 @@ export const HomeScreen = () => {
                     especial={especial}
                     onPress={handleInformPress}
                     setColorCallback={setColor}
-                    setDegerCallback={setDeger}
                     setHeaderCallback={setHeader}
                     borderColor1={PortfolioDetailsData?.distribution[5]?.color}
                     borderColor2={PortfolioDetailsData?.distribution[1]?.color}

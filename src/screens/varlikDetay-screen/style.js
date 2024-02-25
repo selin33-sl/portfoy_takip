@@ -51,7 +51,6 @@ export default StyleSheet.create({
     width: windowWidth,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: 'red',
   },
   text: {
     fontSize: windowHeight * 0.02,

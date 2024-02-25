@@ -25,18 +25,11 @@ export const Inform = ({
   especial,
   setHeaderCallback,
   setColorCallback,
-  setDegerCallback,
 }) => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
 
   const [clickedRow, setClickedRow] = useState(null);
-  const [selected, setselected] = useState('');
-
-  const {data: InformSelectedData} = useSelector(
-    state => state.informSelectedHeader,
-  );
-  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
   const Row = ({backgroundColor, text, deger, start, end}) => {
     return (
@@ -53,7 +46,6 @@ export const Inform = ({
           });
 
           setColorCallback(backgroundColor);
-          setDegerCallback(deger);
           setHeaderCallback(text);
           onPress();
         }}

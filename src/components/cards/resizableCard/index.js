@@ -16,7 +16,7 @@ export const ResizableCard = ({
   sendItem,
   onPress,
   infoModalOnPress,
-  reviews,
+  especial,
   option,
 }) => {
   const {t} = useTranslation();
@@ -47,7 +47,15 @@ export const ResizableCard = ({
   const SmallCard = ({name, price, adet, profit, assetId, item, total}) => {
     return (
       <TouchableOpacity
-        style={style.detailContainer}
+        style={
+          especial
+            ? {
+                ...style.detailContainer,
+                borderColor: item?.color,
+                backgroundColor: item?.color,
+              }
+            : style.detailContainer
+        }
         onPress={() => onPress(assetId, name)}>
         <View style={style.detail1}>
           <Text style={style.textDetailName}>{name}</Text>
@@ -119,6 +127,7 @@ export const ResizableCard = ({
   };
 
   const renderItem = ({item}) => {
+    console.log('İİTTTEEMM', item.color);
     return (
       <SmallCard
         item={item}

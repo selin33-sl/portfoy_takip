@@ -62,6 +62,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 3,
     justifyContent: 'space-between',
+    borderWidth: 2,
   },
   detail1: {
     flexDirection: 'row',
