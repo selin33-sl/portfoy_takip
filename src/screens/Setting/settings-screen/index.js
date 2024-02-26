@@ -13,7 +13,10 @@ import {useNavigation} from '@react-navigation/native';
 import {useTranslation} from 'react-i18next';
 
 const settingsItems = [
-  {text: 'headers.settingsHeaders.notifications', onPress: null},
+  {
+    text: 'headers.settingsHeaders.notifications',
+    onPress: 'notification-screen',
+  },
   {text: 'headers.settingsHeaders.language', onPress: 'settingLanguage-screen'},
   {text: 'headers.settingsHeaders.support', onPress: 'settingDetay-screen'},
   {text: 'headers.settingsHeaders.policy', onPress: 'settingDetay-screen'},
@@ -30,6 +33,7 @@ export const SettingsScreen = () => {
   const navigation = useNavigation();
 
   const handlePress = (screen, header) => {
+    console.log('ne buu', screen);
     if (screen) {
       navigation.navigate(screen, {header});
     } else {

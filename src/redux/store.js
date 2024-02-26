@@ -30,6 +30,7 @@ import {
   getStockDetailSlice,
   informSelectedHeaderSlice,
   loginSlice,
+  notificationPermissionSlice,
   registerSlice,
   searchAssetDataSlice,
   updateAssetSlice,
@@ -65,6 +66,7 @@ const reducer = combineReducers({
   searchAssetData: searchAssetDataSlice,
   getPortfolioTypeDetails: getPortfolioTypeDetailsSlice,
   informSelectedHeader: informSelectedHeaderSlice,
+  notificationPermission: notificationPermissionSlice,
 });
 
 export const store = configureStore({
