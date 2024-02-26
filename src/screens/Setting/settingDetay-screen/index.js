@@ -4,27 +4,27 @@ import React from 'react';
 import {Header, LinearGradientContainer} from '../../../components';
 import style from './style';
 import {useRoute} from '@react-navigation/native';
+import jsonData from '../../../assets/data/data.json';
+import {useTranslation} from 'react-i18next';
 
 export const SettingDetayScreen = () => {
+  const {t} = useTranslation();
   const route = useRoute();
   const {header} = route.params;
+
+  const text =
+    header === t('headers.settingsHeaders.support')
+      ? jsonData.destek
+      : header === t('headers.settingsHeaders.legalWarning')
+      ? jsonData.yasalUyari
+      : header === t('headers.settingsHeaders.policy')
+      ? jsonData.kullaniciSozlesmesi
+      : '';
   return (
     <LinearGradientContainer>
       <Header text={header} backIcon={true} />
       <View style={style.innerContainer}>
-        <Text style={style.text}>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don't look even slightly believable.
-          If you are going to use a passage of Lorem Ipsum, you need to be sure
-          there isn't anything embarrassing hidden in the middle of text. All
-          the Lorem Ipsum generators on the Internet tend to repeat predefined
-          chunks as necessary, making this the first true generator on the
-          Internet. It uses a dictionary of over 200 Latin words, combined with
-          a handful of model sentence structures, to generate Lorem Ipsum which
-          looks reasonable. The generated Lorem Ipsum is therefore always free
-          from repetition, injected humour, or non-characteristic words etc.
-        </Text>
+        <Text style={style.text}>{text}</Text>
       </View>
     </LinearGradientContainer>
   );
