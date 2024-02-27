@@ -35,6 +35,7 @@ export const BildirimScreen = () => {
     const getNotifications = async () => {
       try {
         const notificationsData = await AsyncStorage.getItem('Notifications');
+        console.log('async bildirim', notificationsData);
 
         if (notificationsData) {
           const notificationsArray = JSON.parse(notificationsData);

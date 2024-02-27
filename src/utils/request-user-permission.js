@@ -74,7 +74,6 @@ export const notificationListener = async () => {
     const notifications = await getNotifications();
 
     const uniqueId = generateUniqueId();
-    console.log(uniqueId, 'UUUNNNIIQQQIIIDDDDDDDDDDDDDDDDDDDDD');
 
     // Benzersiz bir kimlik oluşturmak için bir fonksiyon kullanabilirsiniz
     const newNotification = {
@@ -85,13 +84,6 @@ export const notificationListener = async () => {
     };
 
     notifications.push(newNotification);
-
-    // // Yeni bildirimi bildirim listesine ekle
-    // notifications.push({
-
-    //     title: remoteMessage?.notification?.title,
-    //     body: remoteMessage?.notification?.body,
-    // });
 
     // Güncellenmiş bildirim listesini AsyncStorage'e kaydet
     await AsyncStorage.setItem('Notifications', JSON.stringify(notifications));

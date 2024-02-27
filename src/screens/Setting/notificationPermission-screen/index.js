@@ -7,6 +7,7 @@ import {requestUserPermission} from '../../../utils/request-user-permission';
 export const NotificationPermissionScreen = () => {
   const [notificationEnabled, setNotificationEnabled] = useState(false);
 
+  console.log('notificationEnabled', notificationEnabled);
   useEffect(() => {
     // Uygulama yüklendiğinde kullanıcının bildirim iznini kontrol et
     checkNotificationPermission();

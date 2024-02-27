@@ -220,15 +220,15 @@ export const HomeScreen = () => {
 
   const seriesColor =
     PortfolioTypeDetailsData?.assets &&
-    PortfolioTypeDetailsData?.assets.length > 0
-      ? PortfolioTypeDetailsData.assets.map(item => item.color)
-      : [];
+    PortfolioTypeDetailsData?.assets?.length > 0
+      ? PortfolioTypeDetailsData?.assets?.map(item => item.color)
+      : ['grey'];
   console.log('seriesColor', seriesColor);
   const seriesEspecial =
     PortfolioTypeDetailsData?.assets &&
-    PortfolioTypeDetailsData?.assets.length > 0
+    PortfolioTypeDetailsData?.assets?.length > 0
       ? PortfolioTypeDetailsData?.assets?.map(item => item.assetPercentage)
-      : [];
+      : [100];
 
   console.log('seriesEspecial', seriesEspecial);
 
