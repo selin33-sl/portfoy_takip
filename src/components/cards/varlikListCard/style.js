@@ -5,6 +5,11 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  innerContainer: {
     alignItems: 'center',
     flex: 1,
     borderBottomWidth: 0.5,
@@ -15,7 +20,6 @@ export default StyleSheet.create({
     paddingHorizontal: windowWidth * 0.035,
     flexDirection: 'row',
   },
-  innerContainer: {},
 
   row1: {
     alignItems: 'center',

@@ -33,7 +33,6 @@ export const SettingsScreen = () => {
   const navigation = useNavigation();
 
   const handlePress = (screen, header) => {
-    console.log('ne buu', screen);
     if (screen) {
       navigation.navigate(screen, {header});
     } else {

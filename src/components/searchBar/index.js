@@ -8,23 +8,25 @@ export const SearchBar = ({value, onClear, onChangeText}) => {
   const {t} = useTranslation();
 
   return (
-    <View style={style.container}>
-      <TextInput
-        value={value}
-        onChangeText={onChangeText}
-        style={style.searchBar}
-        placeholder={t('common.search')}
-        placeholderTextColor={'grey'}
-      />
-      {value ? (
-        <Icon
-          name="close"
-          size={20}
-          color={'grey'}
-          onPress={onClear}
-          style={style.clearIcon}
+    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={style.container}>
+        <TextInput
+          value={value}
+          onChangeText={onChangeText}
+          style={style.searchBar}
+          placeholder={t('common.search')}
+          placeholderTextColor={'grey'}
         />
-      ) : null}
+        {value ? (
+          <Icon
+            name="close"
+            size={20}
+            color={'grey'}
+            onPress={onClear}
+            style={style.clearIcon}
+          />
+        ) : null}
+      </View>
     </View>
   );
 };

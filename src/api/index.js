@@ -44,7 +44,6 @@ axios.interceptors.request.use(
 const authLogin = createAsyncThunk('auth/login', async data => {
   try {
     const {email, password} = data;
-    console.log(data);
 
     const response = await axios.post(ALTERNATIVE_BASE_URL, data);
     const accessToken = response.data.accessToken;

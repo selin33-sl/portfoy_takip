@@ -1,5 +1,6 @@
 import {View, Text, BackHandler, FlatList} from 'react-native';
-import React, {useState, useEffect, useCallback} from 'react';
+import {FlashList} from '@shopify/flash-list';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
@@ -26,6 +27,7 @@ import {
 
 import {useTranslation} from 'react-i18next';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
+import {colors} from '../../theme';
 
 export const VarliklarListScreen = () => {
   const {t} = useTranslation();
@@ -108,14 +110,9 @@ export const VarliklarListScreen = () => {
     if (assetType == 'stock' && searchTerm != '') {
       await dispatch(getSearchStockProcess({data: searchTerm}));
       setSearchData(SearchStockData?.data);
-
-      console.log('SearchStockData1111,', SearchStockData?.data);
     } else if (assetType == 'currency' && searchTerm != '') {
       await dispatch(getSearchCurrencyProcess({data: searchTerm}));
       setSearchData(SearchCurrencyData?.data);
-
-      // console.log('SearchStockData1111,', SearchStockData?.data);
-      // console.log('SearchCurrencyData,', SearchCurrencyData?.data);
     }
   };
 
@@ -123,6 +120,7 @@ export const VarliklarListScreen = () => {
     search();
   }, [searchTerm]);
 
+  const renderStartTime = useRef(performance.now());
   const renderItem = ({item}) => {
     // // item.rate'den renk ve yuvarlanmış değeri al
     // let rateValue = parseFloat(item?.changePercent);
@@ -138,7 +136,6 @@ export const VarliklarListScreen = () => {
         percentText={item?.changePercent}
         onPress={async () => {
           await navigation.navigate('varlikDetay-screen', {text: text});
-          console.log('item?.name', item?.name);
 
           {
             assetType == 'stock'
@@ -159,34 +156,37 @@ export const VarliklarListScreen = () => {
       />
     );
   };
-
   return (
-    <LinearGradientContainer>
+    <LinearGradient
+      colors={[colors.primary1, colors.primary2]}
+      style={style.container}>
       {SearchCurrencyLoading === true ? (
-        <>
-          <Loader />
-        </>
+        <Loader />
       ) : (
         <>
           <Header text={text} backIcon />
-          <View style={style.innerContainer}>
-            <SearchBar
-              value={searchTerm}
-              onChangeText={setSearchTerm}
-              onClear={() => setSearchTerm('')}
-            />
 
-            <View style={style.listContainer}>
-              <FlatList
-                showsVerticalScrollIndicator={false}
-                data={filteredData}
-                renderItem={renderItem}
-                keyExtractor={item => item._id.toString()}
-              />
-            </View>
+          <SearchBar
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+            onClear={() => setSearchTerm('')}
+          />
+
+          <View style={style.listContainer}>
+            <FlashList
+              showsVerticalScrollIndicator={false}
+              data={filteredData}
+              renderItem={renderItem}
+              estimatedItemSize={200}
+              keyExtractor={item => item._id.toString()}
+              onLayout={() => {
+                const renderEndTime = performance.now();
+                const renderDuration = renderEndTime - renderStartTime.current;
+              }}
+            />
           </View>
         </>
       )}
-    </LinearGradientContainer>
+    </LinearGradient>
   );
 };

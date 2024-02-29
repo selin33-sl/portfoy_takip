@@ -47,8 +47,6 @@ export const PortfoyListModal = ({
     state => state.updatePortfolio,
   );
 
-  console.log('deleteMessage', deleteMessage);
-
   useToast(
     deleteStatus,
     resetDeletePortfolio(),

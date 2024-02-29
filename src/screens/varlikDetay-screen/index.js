@@ -110,11 +110,6 @@ export const VarlikDetayScreen = () => {
   );
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
-  console.log('StockDetailData', StockDetailData);
-  console.log('AssetDetailsLoading', AssetDetailsLoading);
-  // console.log('GoldLastPrice', GoldLastPrice);
-  console.log('defaultPortfolioId,', defaultPortfolioId);
-
   useToast(
     DeleteAssetStatus,
     resetDeleteAsset(),
@@ -151,7 +146,6 @@ export const VarlikDetayScreen = () => {
     } else {
       data = AssetDetailsData;
     }
-    console.log('dataaaa', data);
     if (!AssetDetailsData) {
       setFullName(data?.fullName);
       setDesc(data?.description);
@@ -173,10 +167,7 @@ export const VarlikDetayScreen = () => {
         AssetDetailsData?.assetDetails?.purchasePrice?.split('.');
       const purchasePriceBeforeDot = purchasePriceParts[0];
       const purchasePriceAfterDot = purchasePriceParts[1];
-      console.log(
-        'ddddddddddddddddd',
-        AssetDetailsData?.assetDetails?.purchaseDate,
-      );
+
       const date = AssetDetailsData?.assetDetails?.purchaseDate;
       setMiktar1(quantityBeforeDot);
       setMiktar2(quantityAfterDot);
@@ -212,13 +203,10 @@ export const VarlikDetayScreen = () => {
     navigation.navigate('home-screen');
   };
 
-  console.log('selectedDate seçilen bu: ', selectedDate);
-
   //CALEDAR MODALDA KULLANILAN FORMAT İLE BU FONKSİYONU TEK FONKSİYONDA BİRLEŞTİRECĞİZ
 
   const getCurrentDateFormatted = () => {
     const currentDate = new Date();
-    console.log();
     const day = String(currentDate.getDate()).padStart(2, '0');
     const month = String(currentDate.getMonth() + 1).padStart(2, '0');
     const year = String(currentDate.getFullYear());
@@ -252,7 +240,6 @@ export const VarlikDetayScreen = () => {
       GoldDetailData?.lastPrice,
     );
 
-    console.log('selectedDate', selectedDate);
     const assetData = {
       type:
         text === 'Döviz'

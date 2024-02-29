@@ -26,7 +26,6 @@ export const TextinputCard = ({
   const [isPasswordVisible, setPasswordVisibility] = useState(!secureText);
 
   const togglePasswordVisibility = () => {
-    console.log(secureText);
     setPasswordVisibility(!isPasswordVisible);
   };
   return (

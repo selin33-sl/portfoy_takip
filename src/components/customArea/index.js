@@ -12,7 +12,6 @@ export const CustomArea = ({
   onPress,
   option,
 }) => {
-  console.log('totalChange', totalChange);
   return (
     <View style={style.elips}>
       <TouchableOpacity style={style.headerElips} onPress={onPress}>

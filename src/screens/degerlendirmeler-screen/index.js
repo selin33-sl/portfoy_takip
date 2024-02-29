@@ -32,8 +32,6 @@ export const DegerlendirmelerScreen = () => {
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
-  console.log('değişti mi', defaultPortfolioId);
-
   useEffect(() => {
     if (!isPortfoyListModalVisible) {
       dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));

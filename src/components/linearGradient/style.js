@@ -8,5 +8,6 @@ export default StyleSheet.create({
     width: windowWidth,
     height: windowHeight,
     alignItems: 'center',
+    flex: 1,
   },
 });

@@ -15,8 +15,6 @@ export const AssetInfoModal = ({isModalVisible, setIsModalVisible, item}) => {
     state => state.getAssetDetails,
   );
 
-  console.log('AssetDetailsLoading:', AssetDetailsLoading);
-
   const [name, setName] = useState('');
 
   const Row = ({text1, text2}) => {

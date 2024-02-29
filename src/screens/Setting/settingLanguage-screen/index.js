@@ -23,8 +23,6 @@ export const SettingLanguageScreen = () => {
     retrieveLanguage();
   }, []);
 
-  console.log('LANGUAGE sttting: ', currentLanguage);
-
   const retrieveLanguage = async () => {
     try {
       const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
@@ -81,7 +79,6 @@ export const SettingLanguageScreen = () => {
   };
 
   const renderItem = ({item}) => {
-    console.log('languageitem', item);
     return (
       <BildirimAndLanguageCard
         cartStyle={{

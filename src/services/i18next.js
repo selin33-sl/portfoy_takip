@@ -20,8 +20,6 @@ const retrieveLanguage = async () => {
   try {
     const savedLanguage = await AsyncStorage.getItem('selectedLanguage');
     if (savedLanguage !== null) {
-      console.log('LANGUAGE i18next: ', savedLanguage);
-
       i18next.changeLanguage(savedLanguage);
     }
   } catch (error) {

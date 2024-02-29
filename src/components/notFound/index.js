@@ -4,6 +4,5 @@ import style from './style';
 import {Headline} from 'react-native-paper';
 
 export const NotFound = ({text}) => {
-  console.log('headdlineee');
   return <Headline style={style.text}>{text}</Headline>;
 };

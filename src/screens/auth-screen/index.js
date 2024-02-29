@@ -123,7 +123,6 @@ export const AuthScreen = () => {
   };
 
   const handleLoginorRegister = async formData => {
-    console.log('handleLoginorRegister', formData);
     if (register === true) {
       await dispatch(
         registerProcess({

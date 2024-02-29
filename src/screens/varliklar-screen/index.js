@@ -19,7 +19,6 @@ export const VarliklarScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('çalıştı mı');
     dispatch(getSearchStockProcess({data: ''}));
     dispatch(getSearchCurrencyProcess({data: ''}));
     dispatch(getSearchGoldProcess({data: {searchParam: ''}}));

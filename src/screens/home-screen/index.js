@@ -72,8 +72,6 @@ export const HomeScreen = () => {
     state => state.informSelectedHeader,
   );
 
-  console.log('InformSelectedData:', InformSelectedData);
-
   useEffect(() => {
     dispatch(getAllPortfolioProcess());
 
@@ -89,19 +87,13 @@ export const HomeScreen = () => {
 
         const saveID = await AsyncStorage.getItem('defaultPortfolioId');
 
-        console.log('savee neee 111', saveID);
-
         defaultPortfolioId === undefined && dispatch(savePortfolioId(saveID));
 
         defaultPortfolioId != undefined
-          ? (console.log('bu ilk:', defaultPortfolioId),
-            dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId})))
+          ? dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}))
           : saveID
-          ? (console.log('bu da sonraki:', saveID),
-            dispatch(getPortfolioDetailsProcess({id: saveID})))
+          ? dispatch(getPortfolioDetailsProcess({id: saveID}))
           : null;
-
-        console.log('SAVE:', saveID);
       } catch (error) {
         console.error('Error fetching selectedPortfolioId:', error);
       }
@@ -122,7 +114,6 @@ export const HomeScreen = () => {
 
           const saveID = await AsyncStorage.getItem('defaultPortfolioId');
 
-          console.log('savee neee', saveID);
           dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
         } catch (error) {
           console.error('Error fetching selectedPortfolioId:', error);
@@ -165,8 +156,6 @@ export const HomeScreen = () => {
   ];
   const totalPercentage = series.reduce((acc, curr) => acc - curr, 0);
 
-  console.log('tootttaalll', totalPercentage);
-
   const sliceColor =
     totalPercentage === 0
       ? ['grey']
@@ -191,8 +180,6 @@ export const HomeScreen = () => {
   };
 
   useEffect(() => {
-    console.log('InformSelectedData oooo:', InformSelectedData);
-
     dispatch(
       getPortfolioTypeDetailsProcess({
         id: defaultPortfolioId,
@@ -223,25 +210,13 @@ export const HomeScreen = () => {
     PortfolioTypeDetailsData?.assets?.length > 0
       ? PortfolioTypeDetailsData?.assets?.map(item => item.color)
       : ['grey'];
-  console.log('seriesColor', seriesColor);
   const seriesEspecial =
     PortfolioTypeDetailsData?.assets &&
     PortfolioTypeDetailsData?.assets?.length > 0
       ? PortfolioTypeDetailsData?.assets?.map(item => item.assetPercentage)
       : [100];
 
-  console.log('seriesEspecial', seriesEspecial);
-
   const renderItem = ({item, index}) => {
-    console.log(
-      'PortfolioTypeDetailsData?.assets',
-      PortfolioTypeDetailsData?.assets,
-    );
-    console.log('şş:', item);
-    console.log(
-      ' PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type',
-      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.type,
-    );
     if (especial && index !== 0) {
       // Eğer especial true ise ve index 0 değilse (yani sadece ilk öğeyi göster)
       return null; // Diğer öğeleri gösterme
@@ -253,7 +228,6 @@ export const HomeScreen = () => {
           PortfolioTypeDetailsData?.assets?.length > 0)) && (
         <ResizableCard
           onPress={async (assetId, name) => {
-            console.log('homeassetId', assetId);
             navigation.navigate('varlikDetay-screen', {
               page: 'update',
               assetId: assetId,
@@ -297,8 +271,6 @@ export const HomeScreen = () => {
       )
     );
   };
-
-  console.log('PortfolioTypeDetailsData: ', PortfolioTypeDetailsData);
 
   return (
     <LinearGradientContainer>

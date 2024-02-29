@@ -20,11 +20,8 @@ export const AppStack = () => {
   useEffect(() => {
     const checkTokenExpiration = async () => {
       const accessToken = await AsyncStorage.getItem('accessToken');
-      console.log(accessToken, 'ACCESSTOKEN');
       const tokenCreationTime = await AsyncStorage.getItem('tokenCreationTime');
       const tokenCreationTimeUTC = new Date(parseInt(tokenCreationTime));
-      console.log(tokenCreationTime, 'tokenCreationTime');
-      console.log(tokenCreationTimeUTC, 'tokenCreationTimeUTC');
 
       const tokenCreationTimee = new Date(
         parseInt(tokenCreationTime),
@@ -34,8 +31,6 @@ export const AppStack = () => {
       const expirationTimeUTC = new Date(
         tokenCreationTimeUTC.getTime() + 1 * 24 * 60 * 60 * 1000,
       );
-
-      console.log(expirationTimeUTC, 'expirationTimeUTC');
 
       if (accessToken && tokenCreationTimee) {
         if (currentTimeUTC >= expirationTimeUTC) {
@@ -76,8 +71,6 @@ export const AppStack = () => {
       toastComp('error', 'Lütfen internet bağlantınızı kontrol ediniz..');
     }
   }, [isConnected]);
-
-  console.log('authhhhhhh', isAuthenticated);
 
   return (
     <NavigationContainer>

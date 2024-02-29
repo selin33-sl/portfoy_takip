@@ -8,7 +8,6 @@ export async function requestUserPermission() {
     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
     getFCMToken();
   }
 }
@@ -97,7 +96,6 @@ export const notificationListener = async () => {
           'Notification caused app to open from quit state:',
           remoteMessage.notification,
         );
-        console.log('Image:', remoteMessage?.notification?.android?.imageUrl);
 
         // Önceki bildirimleri al
         const notifications = await getNotifications();
