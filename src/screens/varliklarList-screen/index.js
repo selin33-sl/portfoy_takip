@@ -156,6 +156,8 @@ export const VarliklarListScreen = () => {
       />
     );
   };
+
+  console.log('SearchCurrencyLoading', SearchCurrencyLoading);
   return (
     <LinearGradient
       colors={[colors.primary1, colors.primary2]}

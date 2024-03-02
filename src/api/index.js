@@ -323,6 +323,14 @@ const getPortfolioTypeDetailsProcess = createAsyncThunk(
   },
 );
 
+const getFundDetailProcess = createAsyncThunk(
+  'getFundDetail/getFundDetailProcess',
+  async ({name, day}) => {
+    const res = await axios.get(`getFundDetail/${name}/${day}`);
+    return res;
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -349,4 +357,5 @@ export {
   getSearchCurrencyProcess,
   getSearchGoldProcess,
   getPortfolioTypeDetailsProcess,
+  getFundDetailProcess,
 };

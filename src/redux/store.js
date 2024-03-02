@@ -19,6 +19,7 @@ import {
   getAssetPercentagesSlice,
   getCurrencyDetailSlice,
   getEmtiaSlice,
+  getFundDetailSlice,
   getGoldDetailSlice,
   getGumusSlice,
   getKriptoSlice,
@@ -67,6 +68,7 @@ const reducer = combineReducers({
   getPortfolioTypeDetails: getPortfolioTypeDetailsSlice,
   informSelectedHeader: informSelectedHeaderSlice,
   notificationPermission: notificationPermissionSlice,
+  getFundDetail: getFundDetailSlice,
 });
 
 export const store = configureStore({

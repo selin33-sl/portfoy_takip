@@ -13,5 +13,7 @@ export default StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+
+    paddingBottom: windowHeight * 0.06,
   },
 });
