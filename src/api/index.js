@@ -277,20 +277,25 @@ const updateAssetProcess = createAsyncThunk(
 
 const getSearchStockProcess = createAsyncThunk(
   'searchStock/getSearchStockProcess',
-  async ({data}, {rejectWithValue}) => {
+  async ({data, page}, {rejectWithValue}) => {
     try {
-      const res = await axios.post(`searchStock/${data}`);
+      const res = await axios.post(`searchStock/${data}?page=${page}&limit=10`);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
     }
   },
 );
+
 const getSearchCurrencyProcess = createAsyncThunk(
   'searchCurrency/getSearchCurrencyProcess',
-  async ({data}, {rejectWithValue}) => {
+  async ({data, page}, {rejectWithValue}) => {
     try {
-      const res = await axios.post(`searchCurrency/${data}`);
+      // const res = await axios.post(`searchCurrency/${data}`);
+      const res = await axios.post(
+        `searchCurrency/${data}?page=${page}&limit=10`,
+      );
+
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -331,6 +336,18 @@ const getFundDetailProcess = createAsyncThunk(
   },
 );
 
+const getSearchFundProcess = createAsyncThunk(
+  'searchFund/getSearchFundProcess',
+  async ({data}, {rejectWithValue}) => {
+    try {
+      const res = await axios.post(`searchFund/${data}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -358,4 +375,5 @@ export {
   getSearchGoldProcess,
   getPortfolioTypeDetailsProcess,
   getFundDetailProcess,
+  getSearchFundProcess,
 };
