@@ -10,7 +10,6 @@ import {Loader} from '../../loader';
 export const AssetInfoModal = ({isModalVisible, setIsModalVisible, item}) => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
-
   const {isLoading: AssetDetailsLoading} = useSelector(
     state => state.getAssetDetails,
   );

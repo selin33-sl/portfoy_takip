@@ -103,11 +103,13 @@ export const ResizableCard = ({
 
                     await dispatch(
                       getAssetDetailsProcess({
-                        portfolioId: defaultPortfolioId,
-                        assetId: item?._id,
-                        type: item?.type,
-                        name: item?.name,
-                        day: 1,
+                        data: {
+                          portfolioId: defaultPortfolioId,
+                          assetId: item?._id,
+                          type: item?.type,
+                          name: item?.name,
+                          numberOfDays: 1,
+                        },
                       }),
                     );
                   }}>
