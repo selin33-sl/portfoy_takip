@@ -23,7 +23,6 @@ export default StyleSheet.create({
 
   row1: {
     alignItems: 'center',
-
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: windowWidth * 0.75,
@@ -49,6 +48,13 @@ export default StyleSheet.create({
     fontWeight: '400',
   },
   text2: {
+    maxWidth: windowWidth * 0.55,
+    fontSize: windowHeight * 0.015,
+    color: colors.white,
+    fontWeight: '300',
+  },
+  text3: {
+    maxWidth: windowWidth * 0.2,
     fontSize: windowHeight * 0.015,
     color: colors.white,
     fontWeight: '300',

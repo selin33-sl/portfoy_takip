@@ -30,10 +30,10 @@ export const VarlikListCard = ({
             {percent ? (
               <Text
                 style={{
-                  ...style.text2,
+                  ...style.text3,
                   color: parseFloat(percentText) < 0 ? 'red' : 'green',
                 }}>
-                {percentText} %
+                ({percentText}) %
               </Text>
             ) : null}
           </View>

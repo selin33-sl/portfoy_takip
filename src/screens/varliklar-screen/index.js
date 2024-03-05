@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setAssetData} from '../../redux/slice/global/asset-data-slice';
 import {
   getSearchCurrencyProcess,
+  getSearchFundProcess,
   getSearchGoldProcess,
   getSearchStockProcess,
 } from '../../api';
@@ -19,15 +20,17 @@ export const VarliklarScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSearchStockProcess({data: ''}));
+    dispatch(getSearchStockProcess({data: '', page: 1}));
     dispatch(getSearchCurrencyProcess({data: ''}));
     dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
+    dispatch(getSearchFundProcess({data: ''}));
   }, []);
 
   const {data: AllStockData} = useSelector(state => state.searchStock);
 
   const {data: AllCurrencyData} = useSelector(state => state.searchCurrency);
   const {data: AllGoldData} = useSelector(state => state.searchGold);
+  const {data: AllFundData} = useSelector(state => state.searchFund);
   const {data: AssetData} = useSelector(state => state.assetData);
 
   const data = [
@@ -61,7 +64,7 @@ export const VarliklarScreen = () => {
       iconName: 'file-multiple-outline',
       backgroundColor: '#FF007A',
       type: 'fund',
-      value: AllGoldData,
+      value: AllFundData,
       _id: 4,
     },
     {

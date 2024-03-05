@@ -66,7 +66,8 @@ export const ResizableCard = ({
                   }
                 : style.textDetailPrice
             }>
-            {hidden ? '****' : price} {option == 2 ? 'TL/Adet' : 'TL'}
+            {hidden ? '****' : price}{' '}
+            {option == 2 ? `TL/${t('common.quantity')}` : 'TL'}
           </Text>
         </View>
         <View style={style.detail2}>

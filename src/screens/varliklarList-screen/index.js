@@ -17,9 +17,11 @@ import {
   getAllGoldProcess,
   getAllStockProcess,
   getCurrencyDetailProcess,
+  getFundDetailProcess,
   getGoldDetailProcess,
   getKriptoProcess,
   getSearchCurrencyProcess,
+  getSearchFundProcess,
   getSearchGoldProcess,
   getSearchStockProcess,
   getStockDetailProcess,
@@ -45,20 +47,14 @@ export const VarliklarListScreen = () => {
     dispatch(resetStockDetail());
   }, []);
 
-  const {data: AllStockData, isLoading: AllStockLoading} = useSelector(
-    state => state.getAllStock,
-  );
-  const {data: AllCurrencyData, isLoading: AllCurrencyLoading} = useSelector(
-    state => state.getAllCurrency,
-  );
-  const {data: AllGoldData, isLoading: AllGoldLoading} = useSelector(
-    state => state.getAllGold,
-  );
   const {data: SearchStockData, isLoading: SearchStockLoading} = useSelector(
     state => state.searchStock,
   );
   const {data: SearchCurrencyData, isLoading: SearchCurrencyLoading} =
     useSelector(state => state.searchCurrency);
+  const {data: SearchFundData, isLoading: SearchFundLoading} = useSelector(
+    state => state.searchFund,
+  );
   const {data: assetData, type: assetType} = useSelector(
     state => state.assetData,
   );
@@ -79,6 +75,8 @@ export const VarliklarListScreen = () => {
         await dispatch(getSearchStockProcess({data: searchQuery}));
       } else if (assetType == 'currency') {
         await dispatch(getSearchCurrencyProcess({data: searchQuery}));
+      } else if (assetType == 'currency') {
+        await dispatch(getSearchFundProcess({data: searchQuery}));
       }
     } catch (error) {
       console.error('Error during search:', error);
@@ -95,6 +93,7 @@ export const VarliklarListScreen = () => {
       dispatch(getSearchStockProcess({data: ''}));
       dispatch(getSearchCurrencyProcess({data: ''}));
       dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
+      dispatch(getSearchFundProcess({data: ''}));
     }
   }, [searchTerm]);
 
@@ -113,6 +112,9 @@ export const VarliklarListScreen = () => {
     } else if (assetType == 'currency' && searchTerm != '') {
       await dispatch(getSearchCurrencyProcess({data: searchTerm}));
       setSearchData(SearchCurrencyData?.data);
+    } else if (assetType == 'fund' && searchTerm != '') {
+      await dispatch(getSearchFundProcess({data: searchTerm}));
+      setSearchData(SearchFundData?.data);
     }
   };
 
@@ -122,10 +124,6 @@ export const VarliklarListScreen = () => {
 
   const renderStartTime = useRef(performance.now());
   const renderItem = ({item}) => {
-    // // item.rate'den renk ve yuvarlanmış değeri al
-    // let rateValue = parseFloat(item?.changePercent);
-    // let roundedRate = Math.abs(rateValue).toFixed(1); // Noktadan sonraki 1 basamak
-
     return (
       <VarlikListCard
         fullName
@@ -150,6 +148,10 @@ export const VarliklarListScreen = () => {
               ? await dispatch(
                   getGoldDetailProcess({data: {name: item?.name, day: 2}}),
                 )
+              : assetType == 'fund'
+              ? await dispatch(
+                  getFundDetailProcess({data: {name: item?.name, day: 2}}),
+                )
               : null;
           }
         }}
@@ -157,7 +159,6 @@ export const VarliklarListScreen = () => {
     );
   };
 
-  console.log('SearchCurrencyLoading', SearchCurrencyLoading);
   return (
     <LinearGradient
       colors={[colors.primary1, colors.primary2]}

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {useTranslation} from 'react-i18next';
 import style from './style';
 
 export const CustomArea = ({
@@ -12,6 +12,7 @@ export const CustomArea = ({
   onPress,
   option,
 }) => {
+  const {t} = useTranslation();
   return (
     <View style={style.elips}>
       <TouchableOpacity style={style.headerElips} onPress={onPress}>
@@ -30,7 +31,7 @@ export const CustomArea = ({
         {option == 1 ? (
           <View style={style.rateContainer}>
             <TouchableOpacity style={style.rateButton}>
-              <Text style={style.text1}>Toplam</Text>
+              <Text style={style.text1}>{t('reviewsScreen.total')}</Text>
               <LinearGradient
                 colors={['#746F96', '#AEAEAE']}
                 style={style.innerRate}>
@@ -45,7 +46,7 @@ export const CustomArea = ({
             </TouchableOpacity>
 
             <TouchableOpacity style={style.rateButton}>
-              <Text style={style.text1}>Grafik</Text>
+              <Text style={style.text1}>{t('reviewsScreen.graph')}</Text>
               <LinearGradient
                 colors={['#746F96', '#AEAEAE']}
                 style={style.innerRateGrafik}>
