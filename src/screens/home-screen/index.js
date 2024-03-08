@@ -404,12 +404,16 @@ export const HomeScreen = () => {
                 style={{
                   ...style.totalProfitContainer,
                   backgroundColor:
-                    PortfolioDetailsData?.portfolio?.totalProfitPercentage > 0
+                    PortfolioDetailsData?.portfolio?.totalProfitPercentage ||
+                    PortfolioTypeDetailsData?.totalProfitPercentage > 0
                       ? 'green'
                       : 'red',
                 }}>
                 <Text style={style.profitText}>
-                  {PortfolioDetailsData?.portfolio?.totalProfitPercentage}%
+                  {especial
+                    ? PortfolioTypeDetailsData?.totalProfitPercentage
+                    : PortfolioDetailsData?.portfolio?.totalProfitPercentage}
+                  %
                 </Text>
               </View>
               <View style={style.listContainer}>

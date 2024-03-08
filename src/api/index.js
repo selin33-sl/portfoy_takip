@@ -305,10 +305,10 @@ const getSearchCurrencyProcess = createAsyncThunk(
 
 const getSearchGoldProcess = createAsyncThunk(
   'searchGold/getSearchGoldProcess',
-  async ({data}, {rejectWithValue}) => {
+  async ({data, page}, {rejectWithValue}) => {
     try {
       const {searchParam} = data;
-      const res = await axios.post(`searchGold`, data);
+      const res = await axios.post(`searchGold?page=${page}&limit=10`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);

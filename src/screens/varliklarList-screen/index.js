@@ -58,9 +58,13 @@ export const VarliklarListScreen = () => {
   const {data: SearchFundData, isLoading: SearchFundLoading} = useSelector(
     state => state.searchFund,
   );
+  const {data: SearchGoldData} = useSelector(state => state.searchGold);
+
   const {data: assetData, type: assetType} = useSelector(
     state => state.assetData,
   );
+
+  console.log('SearchGoldData', SearchGoldData);
 
   const searchAsset = async searchQuery => {
     try {
@@ -70,6 +74,10 @@ export const VarliklarListScreen = () => {
         await dispatch(getSearchCurrencyProcess({data: searchQuery}));
       } else if (assetType == 'currency') {
         await dispatch(getSearchFundProcess({data: searchQuery}));
+      } else if (assetType == 'gold') {
+        await dispatch(
+          getSearchGoldProcess({data: {searchParam: searchQuery}}),
+        );
       }
     } catch (error) {
       console.error('Error during search:', error);
@@ -83,16 +91,28 @@ export const VarliklarListScreen = () => {
   useEffect(() => {
     if (searchTerm) {
       if (assetType == 'stock') {
+        console.log('1');
         setFilteredData(SearchStockData?.data);
       } else if (assetType == 'currency') {
         setFilteredData(SearchCurrencyData?.data);
       } else if (assetType == 'fund') {
         setFilteredData(SearchFundData?.data);
+      } else if (assetType == 'gold') {
+        setFilteredData(SearchGoldData?.data);
       }
     } else {
       setFilteredData(assetData?.data);
     }
-  }, [searchTerm, SearchStockData, SearchCurrencyData]);
+  }, [
+    searchTerm,
+    SearchStockData,
+    SearchCurrencyData,
+    SearchFundData,
+    SearchGoldData,
+  ]);
+  console.log('SearchStockData:', SearchStockData?.data);
+  console.log('assetData?.data:', assetData?.data);
+  console.log('assetType:', assetType);
 
   const renderStartTime = useRef(performance.now());
   const renderItem = ({item}) => {
@@ -135,34 +155,28 @@ export const VarliklarListScreen = () => {
     <LinearGradient
       colors={[colors.primary1, colors.primary2]}
       style={style.container}>
-      {SearchCurrencyLoading === true ? (
-        <Loader />
-      ) : (
-        <>
-          <Header text={text} backIcon />
+      <Header text={text} backIcon />
 
-          <SearchBar
-            value={searchTerm}
-            onChangeText={setSearchTerm}
-            onClear={() => setSearchTerm('')}
-          />
+      <SearchBar
+        value={searchTerm}
+        onChangeText={setSearchTerm}
+        onClear={() => setSearchTerm('')}
+      />
 
-          <View style={style.listContainer}>
-            <FlashList
-              showsVerticalScrollIndicator={false}
-              data={filteredData}
-              renderItem={renderItem}
-              estimatedItemSize={200}
-              keyExtractor={item => item._id.toString()}
-              onLayout={() => {
-                const renderEndTime = performance.now();
-                const renderDuration = renderEndTime - renderStartTime.current;
-                console.log(renderDuration);
-              }}
-            />
-          </View>
-        </>
-      )}
+      <View style={style.listContainer}>
+        <FlashList
+          showsVerticalScrollIndicator={false}
+          data={filteredData}
+          renderItem={renderItem}
+          estimatedItemSize={200}
+          keyExtractor={item => item._id.toString()}
+          onLayout={() => {
+            const renderEndTime = performance.now();
+            const renderDuration = renderEndTime - renderStartTime.current;
+            console.log(renderDuration);
+          }}
+        />
+      </View>
     </LinearGradient>
   );
 };
