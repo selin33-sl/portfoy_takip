@@ -4,7 +4,11 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {
   Header,
   LinearGradientContainer,
@@ -35,7 +39,6 @@ export const VarliklarListScreen = () => {
   const {t} = useTranslation();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchData, setSearchData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -59,16 +62,6 @@ export const VarliklarListScreen = () => {
     state => state.assetData,
   );
 
-  const debounce = (func, delay) => {
-    let timer;
-    return function (...args) {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        func.apply(this, args);
-      }, delay);
-    };
-  };
-
   const searchAsset = async searchQuery => {
     try {
       if (assetType == 'stock') {
@@ -80,47 +73,26 @@ export const VarliklarListScreen = () => {
       }
     } catch (error) {
       console.error('Error during search:', error);
-      // Handle error
     }
   };
 
-  const debouncedSearch = useCallback(debounce(searchAsset, 500), []);
-
   useEffect(() => {
-    if (searchTerm != '') {
-      debouncedSearch(searchTerm);
-    } else if (!searchTerm == '') {
-      dispatch(getSearchStockProcess({data: ''}));
-      dispatch(getSearchCurrencyProcess({data: ''}));
-      dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
-      dispatch(getSearchFundProcess({data: ''}));
-    }
+    searchAsset(searchTerm);
   }, [searchTerm]);
 
   useEffect(() => {
     if (searchTerm) {
-      setFilteredData(SearchStockData?.data);
+      if (assetType == 'stock') {
+        setFilteredData(SearchStockData?.data);
+      } else if (assetType == 'currency') {
+        setFilteredData(SearchCurrencyData?.data);
+      } else if (assetType == 'fund') {
+        setFilteredData(SearchFundData?.data);
+      }
     } else {
       setFilteredData(assetData?.data);
     }
-  }, [searchTerm, SearchStockData]);
-
-  const search = async () => {
-    if (assetType == 'stock' && searchTerm != '') {
-      await dispatch(getSearchStockProcess({data: searchTerm}));
-      setSearchData(SearchStockData?.data);
-    } else if (assetType == 'currency' && searchTerm != '') {
-      await dispatch(getSearchCurrencyProcess({data: searchTerm}));
-      setSearchData(SearchCurrencyData?.data);
-    } else if (assetType == 'fund' && searchTerm != '') {
-      await dispatch(getSearchFundProcess({data: searchTerm}));
-      setSearchData(SearchFundData?.data);
-    }
-  };
-
-  useEffect(() => {
-    search();
-  }, [searchTerm]);
+  }, [searchTerm, SearchStockData, SearchCurrencyData]);
 
   const renderStartTime = useRef(performance.now());
   const renderItem = ({item}) => {
@@ -185,6 +157,7 @@ export const VarliklarListScreen = () => {
               onLayout={() => {
                 const renderEndTime = performance.now();
                 const renderDuration = renderEndTime - renderStartTime.current;
+                console.log(renderDuration);
               }}
             />
           </View>

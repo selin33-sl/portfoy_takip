@@ -30,7 +30,7 @@ export const getAllPortfolioSlice = createSlice({
       })
       .addCase(getAllPortfolioProcess.rejected, (state, action) => {
         state.isLoading = false;
-        state.status = action.payload?.errorCode;
+        state.status = action.payload?.status;
         state.message = action.payload?.message;
       });
   },

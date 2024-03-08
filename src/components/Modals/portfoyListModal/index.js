@@ -26,6 +26,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {savePortfolioId} from '../../../redux/slice/auth/login-slice';
 import {Button} from '../../button';
 import {AlertModal} from '../alertModal';
+import {Loader} from '../../loader';
 
 export const PortfoyListModal = ({
   isModalVisible,
@@ -46,6 +47,7 @@ export const PortfoyListModal = ({
   const {status: updateStatus, message: updateMessage} = useSelector(
     state => state.updatePortfolio,
   );
+  const {isLoading: loading} = useSelector(state => state.getAllPortfolio);
 
   useToast(
     deleteStatus,
@@ -145,8 +147,10 @@ export const PortfoyListModal = ({
   };
 
   const renderItem = ({item}) => {
-    return <Cart item={item} />;
+    return loading ? <Loader /> : <Cart item={item} />;
   };
+
+  console.log('loadd', loading);
 
   return (
     <>
@@ -176,13 +180,18 @@ export const PortfoyListModal = ({
                 {t('portfoyListModal.myPortfolio')}
               </Text>
             </View>
-            <FlatList
-              contentContainerStyle={{flexGrow: 1}}
-              showsVerticalScrollIndicator={false}
-              data={data}
-              renderItem={renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
+            {loading ? (
+              <Loader />
+            ) : (
+              <FlatList
+                contentContainerStyle={{flexGrow: 1}}
+                showsVerticalScrollIndicator={false}
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            )}
+
             {list ? null : (
               <Button
                 color1={'#150193'}

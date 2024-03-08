@@ -1,6 +1,6 @@
 import {View, Text, FlatList} from 'react-native';
 import React, {useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {Header, LinearGradientContainer, VarliklarCard} from '../../components';
 import style from './style';
@@ -19,12 +19,15 @@ export const VarliklarScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getSearchStockProcess({data: '', page: 1}));
-    dispatch(getSearchCurrencyProcess({data: ''}));
-    dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
-    dispatch(getSearchFundProcess({data: ''}));
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('oldu muuuu');
+      dispatch(getSearchStockProcess({data: '', page: 1}));
+      dispatch(getSearchCurrencyProcess({data: '', page: 1}));
+      dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
+      dispatch(getSearchFundProcess({data: '', page: 1}));
+    }, []),
+  );
 
   const {data: AllStockData} = useSelector(state => state.searchStock);
 
