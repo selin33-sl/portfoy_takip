@@ -18,6 +18,8 @@ export const SettingLanguageScreen = () => {
   const {header} = route.params;
   const [currentLanguage, setCurrentLanguage] = useState(i18next.language);
 
+  console.log('seçilmiş dil nereden geliyor', i18next.language);
+
   useEffect(() => {
     // Uygulama başladığında kaydedilmiş dil seçimini kontrol et
     retrieveLanguage();

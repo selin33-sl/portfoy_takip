@@ -15,7 +15,7 @@ import {useTranslation} from 'react-i18next';
 const settingsItems = [
   {
     text: 'headers.settingsHeaders.notifications',
-    onPress: 'notification-screen',
+    onPress: 'settingDetay-screen',
   },
   {text: 'headers.settingsHeaders.language', onPress: 'settingLanguage-screen'},
   {text: 'headers.settingsHeaders.support', onPress: 'settingDetay-screen'},

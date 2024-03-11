@@ -24,7 +24,7 @@ export const VarliklarScreen = () => {
       console.log('oldu muuuu');
       dispatch(getSearchStockProcess({data: '', page: 1}));
       dispatch(getSearchCurrencyProcess({data: '', page: 1}));
-      dispatch(getSearchGoldProcess({data: {searchParam: ''}}));
+      dispatch(getSearchGoldProcess({data: {searchParam: ''}, page: 1}));
       dispatch(getSearchFundProcess({data: '', page: 1}));
     }, []),
   );

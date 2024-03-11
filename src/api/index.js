@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import i18next from '../services/i18next';
 import Config from 'react-native-config';
 
 // Accessing individual variables
@@ -30,6 +30,9 @@ axios.interceptors.request.use(
         // Başlıklara erişim belirtecini ekleyin
         config.headers['Authorization'] = `Bearer ${accessToken}`;
       }
+      if (i18next.language) {
+        config.headers['Accept-Language'] = `${i18next.language}`;
+      }
       return config;
     } catch (error) {
       // Hata durumunda yapılacak işlemleri burada ele alabilirsiniz
@@ -46,7 +49,7 @@ const authLogin = createAsyncThunk('auth/login', async data => {
     const {email, password} = data;
 
     const response = await axios.post(ALTERNATIVE_BASE_URL, data);
-    const accessToken = response.data.accessToken;
+    const accessToken = response.data.data.accessToken;
 
     const currentTime = new Date().getTime();
 
@@ -61,7 +64,8 @@ const authLogin = createAsyncThunk('auth/login', async data => {
 
 const registerProcess = createAsyncThunk(
   'register/registerProcess',
-  async data => {
+
+  async (data, {rejectWithValue}) => {
     try {
       const {username, password, email} = data;
       const response = await axios.post('/', data);
@@ -73,7 +77,7 @@ const registerProcess = createAsyncThunk(
       // }
       return response.data;
     } catch (error) {
-      throw error.response.data;
+      throw rejectWithValue(error.response.data);
     }
   },
 );
@@ -279,7 +283,7 @@ const getSearchStockProcess = createAsyncThunk(
   'searchStock/getSearchStockProcess',
   async ({data, page}, {rejectWithValue}) => {
     try {
-      const res = await axios.post(`searchStock/${data}?page=${page}&limit=10`);
+      const res = await axios.post(`searchStock/${data}?page=${page}&limit=20`);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -293,7 +297,7 @@ const getSearchCurrencyProcess = createAsyncThunk(
     try {
       // const res = await axios.post(`searchCurrency/${data}`);
       const res = await axios.post(
-        `searchCurrency/${data}?page=${page}&limit=10`,
+        `searchCurrency/${data}?page=${page}&limit=20`,
       );
 
       return res;
@@ -308,7 +312,7 @@ const getSearchGoldProcess = createAsyncThunk(
   async ({data, page}, {rejectWithValue}) => {
     try {
       const {searchParam} = data;
-      const res = await axios.post(`searchGold?page=${page}&limit=10`, data);
+      const res = await axios.post(`searchGold?page=${page}&limit=20`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -338,9 +342,9 @@ const getFundDetailProcess = createAsyncThunk(
 
 const getSearchFundProcess = createAsyncThunk(
   'searchFund/getSearchFundProcess',
-  async ({data}, {rejectWithValue}) => {
+  async ({data, page}, {rejectWithValue}) => {
     try {
-      const res = await axios.post(`searchFund/${data}`);
+      const res = await axios.post(`searchFund/${data}?page=${page}&limit=20`);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);

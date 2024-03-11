@@ -31,7 +31,7 @@ export const registerSlice = createSlice({
       .addCase(registerProcess.rejected, (state, action) => {
         state.status = action.payload.status;
         state.isLoading = false;
-        state.message = action.error?.message;
+        state.message = action.payload.message;
       });
   },
 });

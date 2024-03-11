@@ -1,29 +1,15 @@
-import {View, Text, BackHandler, FlatList} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import style from './style';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {Header, NotFound, SearchBar, VarlikListCard} from '../../components';
 import {
-  useFocusEffect,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import {
-  Header,
-  LinearGradientContainer,
-  Loader,
-  SearchBar,
-  VarlikListCard,
-} from '../../components';
-import {
-  getAllCurrencyProcess,
-  getAllGoldProcess,
-  getAllStockProcess,
   getCurrencyDetailProcess,
   getFundDetailProcess,
   getGoldDetailProcess,
-  getKriptoProcess,
   getSearchCurrencyProcess,
   getSearchFundProcess,
   getSearchGoldProcess,
@@ -41,6 +27,8 @@ export const VarliklarListScreen = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dataSource, setDataSource] = useState([]);
+  const [offset, setOffset] = useState(1);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -66,17 +54,28 @@ export const VarliklarListScreen = () => {
 
   console.log('SearchGoldData', SearchGoldData);
 
-  const searchAsset = async searchQuery => {
+  const searchAsset = async (searchQuery, pageNum) => {
     try {
+      setLoading(true);
+      console.log('pagenumn', pageNum);
       if (assetType == 'stock') {
-        await dispatch(getSearchStockProcess({data: searchQuery}));
+        await dispatch(
+          getSearchStockProcess({data: searchQuery, page: pageNum}),
+        );
       } else if (assetType == 'currency') {
-        await dispatch(getSearchCurrencyProcess({data: searchQuery}));
-      } else if (assetType == 'currency') {
-        await dispatch(getSearchFundProcess({data: searchQuery}));
+        await dispatch(
+          getSearchCurrencyProcess({data: searchQuery, page: pageNum}),
+        );
+      } else if (assetType == 'fund') {
+        await dispatch(
+          getSearchFundProcess({data: searchQuery, page: pageNum}),
+        );
       } else if (assetType == 'gold') {
         await dispatch(
-          getSearchGoldProcess({data: {searchParam: searchQuery}}),
+          getSearchGoldProcess({
+            data: {searchParam: searchQuery},
+            page: pageNum,
+          }),
         );
       }
     } catch (error) {
@@ -85,20 +84,54 @@ export const VarliklarListScreen = () => {
   };
 
   useEffect(() => {
-    searchAsset(searchTerm);
+    searchAsset(searchTerm, offset);
+  }, [offset]);
+
+  useEffect(() => {
+    setOffset(1);
+    searchAsset(searchTerm, offset);
   }, [searchTerm]);
 
   useEffect(() => {
-    if (searchTerm) {
+    if (searchTerm && offset == 1) {
       if (assetType == 'stock') {
-        console.log('1');
         setFilteredData(SearchStockData?.data);
+        setLoading(false);
       } else if (assetType == 'currency') {
         setFilteredData(SearchCurrencyData?.data);
+        setLoading(false);
       } else if (assetType == 'fund') {
         setFilteredData(SearchFundData?.data);
+        setLoading(false);
       } else if (assetType == 'gold') {
         setFilteredData(SearchGoldData?.data);
+        setLoading(false);
+      }
+    } else if (offset != 1) {
+      if (assetType == 'stock') {
+        setFilteredData(prevData => {
+          console.log('buraya giriyor mu', SearchStockData?.data);
+          return [...prevData, ...SearchStockData?.data];
+        });
+        setLoading(false);
+      } else if (assetType == 'currency') {
+        setFilteredData(prevData => {
+          console.log('buraya giriyor mu', SearchCurrencyData?.data);
+          return [...prevData, ...SearchCurrencyData?.data];
+        });
+        setLoading(false);
+      } else if (assetType == 'fund') {
+        setFilteredData(prevData => {
+          console.log('buraya giriyor mu', SearchFundData?.data);
+          return [...prevData, ...SearchFundData?.data];
+        });
+        setLoading(false);
+      } else if (assetType == 'gold') {
+        setFilteredData(prevData => {
+          console.log('buraya giriyor mu', SearchGoldData?.data);
+          return [...prevData, ...SearchGoldData?.data];
+        });
+        setLoading(false);
       }
     } else {
       setFilteredData(assetData?.data);
@@ -110,9 +143,10 @@ export const VarliklarListScreen = () => {
     SearchFundData,
     SearchGoldData,
   ]);
+
   console.log('SearchStockData:', SearchStockData?.data);
   console.log('assetData?.data:', assetData?.data);
-  console.log('assetType:', assetType);
+  console.log('flteredDATA:', filteredData);
 
   const renderStartTime = useRef(performance.now());
   const renderItem = ({item}) => {
@@ -151,6 +185,29 @@ export const VarliklarListScreen = () => {
     );
   };
 
+  const renderFooter = () => {
+    return (
+      //Footer View with Loader
+      <View
+        style={{
+          padding: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}>
+        {loading ? (
+          <ActivityIndicator color="white" style={{margin: 15}} />
+        ) : null}
+      </View>
+    );
+  };
+
+  const handleLoadMore = () => {
+    console.log('ne zaman çalışıyor', offset);
+
+    console.log('geldi mi');
+    setOffset(offset + 1);
+  };
   return (
     <LinearGradient
       colors={[colors.primary1, colors.primary2]}
@@ -164,18 +221,25 @@ export const VarliklarListScreen = () => {
       />
 
       <View style={style.listContainer}>
-        <FlashList
-          showsVerticalScrollIndicator={false}
-          data={filteredData}
-          renderItem={renderItem}
-          estimatedItemSize={200}
-          keyExtractor={item => item._id.toString()}
-          onLayout={() => {
-            const renderEndTime = performance.now();
-            const renderDuration = renderEndTime - renderStartTime.current;
-            console.log(renderDuration);
-          }}
-        />
+        {filteredData.length > 0 ? (
+          <FlashList
+            showsVerticalScrollIndicator={false}
+            data={filteredData}
+            renderItem={renderItem}
+            estimatedItemSize={200}
+            keyExtractor={item => item._id.toString()}
+            onLayout={() => {
+              const renderEndTime = performance.now();
+              const renderDuration = renderEndTime - renderStartTime.current;
+              console.log(renderDuration);
+            }}
+            ListFooterComponent={renderFooter}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.1}
+          />
+        ) : (
+          <NotFound text={'Aradığınız kriterde bir varlık bulunamadı'} />
+        )}
       </View>
     </LinearGradient>
   );
