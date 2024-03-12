@@ -62,12 +62,12 @@ export const AssetInfoModal = ({isModalVisible, setIsModalVisible, item}) => {
               <Text style={style.text}>{name}</Text>
             </View>
             <View style={style.textContainer}>
-              <Row text1={'Toplam: '} text2={`${item?.totalAssetValue} TL`} />
+              <Row text1={'Toplam: '} text2={`${item?.totalAssetValue} ₺`} />
               <Row text1={'Miktar: '} text2={item?.quantity} />
-              <Row text1={'Adet Fiyatı: '} text2={`${item?.lastPrice} TL`} />
+              <Row text1={'Adet Fiyatı: '} text2={`${item?.lastPrice} ₺`} />
               <Row
                 text1={'Ortalama Maliyet: '}
-                text2={`${item?.purchasePrice} TL`}
+                text2={`${item?.purchasePrice} ₺`}
               />
             </View>
           </LinearGradient>

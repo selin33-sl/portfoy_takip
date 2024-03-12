@@ -11,3 +11,4 @@ export * from './auth-screen';
 export * from './degerlendirmeler-screen';
 export * from './bildirimDetay-screen';
 export * from './splash-screen';
+export * from './budget-screen';

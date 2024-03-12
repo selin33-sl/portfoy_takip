@@ -43,6 +43,7 @@ export const VarliklarScreen = () => {
       type: 'turkisLira',
       iconName: 'currency-try',
       backgroundColor: '#3401FF',
+      screen: 'budget-screen',
       _id: 1,
     },
     {
@@ -51,6 +52,7 @@ export const VarliklarScreen = () => {
       type: 'gold',
       iconName: 'gold',
       backgroundColor: '#FF7A00',
+      screen: 'varliklarList-screen',
       _id: 2,
     },
     {
@@ -60,6 +62,7 @@ export const VarliklarScreen = () => {
       type: 'currency',
       backgroundColor: '#00EFFE',
       doviz: true,
+      screen: 'varliklarList-screen',
       _id: 3,
     },
     {
@@ -68,6 +71,7 @@ export const VarliklarScreen = () => {
       backgroundColor: '#FF007A',
       type: 'fund',
       value: AllFundData,
+      screen: 'varliklarList-screen',
       _id: 4,
     },
     {
@@ -76,6 +80,7 @@ export const VarliklarScreen = () => {
       value: AllStockData,
       type: 'stock',
       backgroundColor: '#BCFE00',
+      screen: 'varliklarList-screen',
       _id: 5,
     },
     {
@@ -84,6 +89,7 @@ export const VarliklarScreen = () => {
       backgroundColor: '#DB00FF',
       type: 'crypto',
       value: AllGoldData,
+      screen: 'varliklarList-screen',
       _id: 6,
     },
   ];
@@ -92,7 +98,7 @@ export const VarliklarScreen = () => {
     return (
       <VarliklarCard
         onPress={() => {
-          navigation.navigate('varliklarList-screen', {
+          navigation.navigate(item.screen, {
             text: item.text,
             value: item.value,
           });

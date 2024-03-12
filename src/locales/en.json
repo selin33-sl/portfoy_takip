@@ -17,7 +17,7 @@
     "quantity": " Quantity"
   },
   "assets": {
-    "turkisLira": "Turkish Lira",
+    "turkisLira": "Budget",
     "goldSilver": "Gold",
     "foreignCurrency": "Currency",
     "fund": "Fund",
@@ -77,7 +77,7 @@
       "aboutApp": "About the App"
     },
     "assetsHeaders": {
-      "turkisLira": "Turkish Lira",
+      "turkisLira": "Budget",
       "goldSilver": "Gold",
       "foreignCurrency": "Currency",
       "fund": "Fund",

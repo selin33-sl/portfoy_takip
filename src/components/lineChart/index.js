@@ -91,7 +91,7 @@ export const LineChartt = ({lcData, width, height, maxValue}) => {
                     color: 'black',
                     fontSize: windowHeight * 0.015,
                   }}>
-                  {items[0].value + ' TL'}
+                  {items[0].value + ' ₺'}
                 </Text>
               </View>
             </View>

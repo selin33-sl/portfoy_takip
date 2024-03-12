@@ -67,7 +67,7 @@ export const ResizableCard = ({
                 : style.textDetailPrice
             }>
             {hidden ? '****' : price}{' '}
-            {option == 2 ? `TL/${t('common.quantity')}` : 'TL'}
+            {option == 2 ? `₺/${t('common.quantity')}` : '₺'}
           </Text>
         </View>
         <View style={style.detail2}>
@@ -85,7 +85,7 @@ export const ResizableCard = ({
                 <Text style={style.profitText}>{profit}%</Text>
               </View>
             ) : option == 2 ? (
-              <Text style={style.textDetailNumber}>{total} TL</Text>
+              <Text style={style.textDetailNumber}>{total} ₺</Text>
             ) : (
               <>
                 <View

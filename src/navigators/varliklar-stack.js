@@ -1,6 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
+  BudgetScreen,
   VarlikDetayScreen,
   VarliklarListScreen,
   VarliklarScreen,
@@ -17,6 +18,7 @@ export const VarliklarStack = () => {
         component={VarliklarListScreen}
       />
       <Stack.Screen name="varlikDetay-screen" component={VarlikDetayScreen} />
+      <Stack.Screen name="budget-screen" component={BudgetScreen} />
     </Stack.Navigator>
   );
 };

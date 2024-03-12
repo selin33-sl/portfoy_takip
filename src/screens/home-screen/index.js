@@ -292,7 +292,7 @@ export const HomeScreen = () => {
                     style={style.shareContainer}
                     // onPress={captureScreen}
                     onPress={() => setIsModalVisible(true)}>
-                    <Text style={style.birimText}>TL</Text>
+                    <Text style={style.birimText}>₺</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={style.shareContainer}
@@ -392,11 +392,11 @@ export const HomeScreen = () => {
               <View style={style.toplamContainer}>
                 <Text style={style.toplamText}>
                   {hidden
-                    ? '****TL'
+                    ? '****₺'
                     : especial
-                    ? `${PortfolioTypeDetailsData?.totalValue + ' TL'}`
+                    ? `${PortfolioTypeDetailsData?.totalValue + ' ₺'}`
                     : `${
-                        PortfolioDetailsData?.portfolio?.totalAssetValue + ' TL'
+                        PortfolioDetailsData?.portfolio?.totalAssetValue + ' ₺'
                       }`}
                 </Text>
               </View>

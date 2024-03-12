@@ -1,9 +1,13 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useRef} from 'react';
+import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import LinearGradient from 'react-native-linear-gradient';
 import {useTranslation} from 'react-i18next';
 import style from './style';
+import Carousel from 'react-native-snap-carousel';
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 export const CustomArea = ({
   portfoyName,
@@ -13,6 +17,25 @@ export const CustomArea = ({
   option,
 }) => {
   const {t} = useTranslation();
+  const isCarousel = useRef(null);
+
+  const data = [{text: 'aaaa'}, {text: 'bbbb'}];
+
+  const renderItem = ({item, index}) => {
+    console.log(item);
+    return (
+      <View
+        key={index}
+        style={{
+          backgroundColor: 'black',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text>{item.text}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={style.elips}>
       <TouchableOpacity style={style.headerElips} onPress={onPress}>
@@ -26,9 +49,9 @@ export const CustomArea = ({
             ...style.numberText,
             color: totalAmount > 0 ? '#00ff83' : 'red',
           }}>
-          {totalAmount} TL
+          {totalAmount} ₺
         </Text>
-        {option == 1 ? (
+        {option === 1 ? (
           <View style={style.rateContainer}>
             <TouchableOpacity style={style.rateButton}>
               <Text style={style.text1}>{t('reviewsScreen.total')}</Text>
@@ -53,6 +76,30 @@ export const CustomArea = ({
                 <Icon name={'chart-line'} size={22} color={'#00ff83'} />
               </LinearGradient>
             </TouchableOpacity>
+          </View>
+        ) : option === 3 ? (
+          <View
+            style={{
+              backgroundColor: 'red',
+              height: windowHeight * 0.05,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Carousel
+              autoplay={true}
+              autoplayInterval={3000} // Otomatik kaydırma arasındaki gecikme (ms)
+              autoplayDelay={500} // İlk otomatik kaydırma başlangıç gecikmesi (ms)
+              enableSnap={true} // Otomatik kaydırma sırasında kullanıcının manuel kaydırmasını etkinleştirir
+              layout={'default'}
+              layoutCardOffset={`1`}
+              sliderWidth={windowWidth / 2}
+              itemWidth={windowWidth / 2}
+              ref={isCarousel}
+              data={data}
+              renderItem={renderItem}
+              loop={true}
+              activeSlideAlignment={'start'}
+            />
           </View>
         ) : null}
       </View>

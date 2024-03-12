@@ -28,7 +28,7 @@ export const CurrencyModal = ({isModalVisible, setIsModalVisible}) => {
           </View>
           <View style={style.optionsContainer}>
             <TouchableOpacity style={style.optionContainer}>
-              <Text style={style.text}>TL - Türk Lirası</Text>
+              <Text style={style.text}>₺ - Türk Lirası</Text>
             </TouchableOpacity>
             <TouchableOpacity style={style.optionContainer}>
               <Text style={style.text}>USD - Amerikan Doları</Text>

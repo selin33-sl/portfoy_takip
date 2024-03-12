@@ -46,7 +46,7 @@ export const loginSlice = createSlice({
         state.status = action.payload.status;
         state.isAuthenticated = '1';
         state.isLoading = false;
-        state.portfolioId = action.payload.data.defaultPortfolioId;
+        state.portfolioId = action.payload.data.data.defaultPortfolioId;
         state.message = action.payload?.message;
       })
       .addCase(authLogin.rejected, (state, action) => {

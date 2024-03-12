@@ -17,7 +17,7 @@
     "quantity": " Adet"
   },
   "assets": {
-    "turkisLira": "Türk Lirası",
+    "turkisLira": "Cüzdan",
     "goldSilver": "Altın",
     "foreignCurrency": "Döviz",
     "fund": "Fon",
@@ -79,7 +79,7 @@
       "aboutApp": "Uygulama Hakkında"
     },
     "assetsHeaders": {
-      "turkisLira": "Türk Lirası",
+      "turkisLira": "Cüzdan",
       "goldSilver": "Altın",
       "foreignCurrency": "Döviz",
       "fund": "Fon",

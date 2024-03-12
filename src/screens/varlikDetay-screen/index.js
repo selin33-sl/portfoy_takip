@@ -385,7 +385,7 @@ export const VarlikDetayScreen = () => {
               />
               <InputContainer
                 text={t('assetDetailScreen.price')}
-                typeText={'TL'}
+                typeText={'₺'}
                 value1={fiyat1}
                 onChangeText1={setFiyat1}
                 value2={fiyat2}

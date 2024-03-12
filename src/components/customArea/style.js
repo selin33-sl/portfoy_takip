@@ -82,7 +82,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.rgbMid,
-    elevation: 30,
+    elevation: 20,
   },
 
   listContainer: {

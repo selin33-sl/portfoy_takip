@@ -8,7 +8,6 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-
   optionsContainer: {
     paddingHorizontal: windowWidth * 0.01,
     width: windowWidth * 0.96,
@@ -21,18 +20,20 @@ export default StyleSheet.create({
     elevation: 10,
   },
   elipsContainer: {
+    marginTop: windowHeight * 0.01,
     width: windowWidth,
     height: windowHeight * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  listContainer: {
+  inputAreaContainer: {
+    elevation: 20,
     alignItems: 'center',
-    justifyContent: 'center',
-    // maxHeight: windowHeight * 0.32,
-    height: 'auto',
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    paddingTop: 30,
     width: windowWidth,
-    paddingBottom: windowHeight * 0.08,
+    height: windowHeight * 0.54,
+    alignItems: 'center',
   },
 });
