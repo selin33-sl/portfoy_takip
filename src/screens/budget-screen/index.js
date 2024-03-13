@@ -4,6 +4,7 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import {
+  Button,
   Header,
   InputContainer,
   LinearGradientContainer,
@@ -64,6 +65,24 @@ export const BudgetScreen = () => {
                   value2={miktar2}
                   onChangeText2={setMiktar2}
                 />
+                <View style={style.buttonContainer}>
+                  <Button
+                    color1={'#150193'}
+                    color2={'#6354BA'}
+                    text={'Güncelle'}
+                    textStyle={style.buttonText}
+                    buttonStyle={style.buttonStyle}
+                    onPress={() => setIsModalVisible(false)}
+                  />
+                  {/* <Button
+                    color1={'#150193'}
+                    color2={'#6354BA'}
+                    text={'Çıkar'}
+                    textStyle={style.buttonText}
+                    buttonStyle={style.buttonStyle}
+                    onPress={() => setIsModalVisible(false)}
+                  /> */}
+                </View>
               </LinearGradient>
             </ScrollView>
           </View>

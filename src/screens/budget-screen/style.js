@@ -36,4 +36,19 @@ export default StyleSheet.create({
     height: windowHeight * 0.54,
     alignItems: 'center',
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: windowWidth * 0.9,
+    marginTop: windowHeight * 0.03,
+  },
+  buttonStyle: {
+    width: windowWidth * 0.4,
+    height: windowHeight * 0.05,
+  },
+  buttonText: {
+    fontSize: windowHeight * 0.023,
+    color: colors.white,
+  },
 });

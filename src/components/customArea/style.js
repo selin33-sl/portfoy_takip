@@ -21,6 +21,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  carouselText: {
+    fontSize: windowHeight * 0.02,
+    marginTop: windowHeight * 0.005,
+    color: colors.white,
+  },
 
   rateButton: {
     justifyContent: 'center',
@@ -29,7 +34,8 @@ export default StyleSheet.create({
     marginLeft: windowWidth * 0.02,
   },
   text1: {
-    fontSize: windowHeight * 0.01,
+    fontSize: windowHeight * 0.013,
+    marginTop: windowHeight * 0.008,
     fontWeight: '200',
     color: colors.white,
   },
@@ -43,7 +49,7 @@ export default StyleSheet.create({
   },
   numberText: {
     color: colors.white,
-    fontSize: windowHeight * 0.025,
+    fontSize: windowHeight * 0.029,
   },
   innerElips: {
     height: windowHeight * 0.25,

@@ -19,7 +19,10 @@ export const CustomArea = ({
   const {t} = useTranslation();
   const isCarousel = useRef(null);
 
-  const data = [{text: 'aaaa'}, {text: 'bbbb'}];
+  const data = [
+    {text: 'Toplam Kar/Zarar', value: '200'},
+    {text: 'Toplam Kar/Zarar Yüzdesi', value: '20%'},
+  ];
 
   const renderItem = ({item, index}) => {
     console.log(item);
@@ -27,11 +30,13 @@ export const CustomArea = ({
       <View
         key={index}
         style={{
-          backgroundColor: 'black',
+          flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
+          width: 'auto',
         }}>
-        <Text>{item.text}</Text>
+        <Text style={style.text1}>{item.text}</Text>
+        <Text style={style.carouselText}>{item.value}</Text>
       </View>
     );
   };
@@ -80,16 +85,17 @@ export const CustomArea = ({
         ) : option === 3 ? (
           <View
             style={{
-              backgroundColor: 'red',
               height: windowHeight * 0.05,
               justifyContent: 'center',
               alignItems: 'center',
+              marginTop: windowHeight * 0.02,
+              width: 'auto',
             }}>
             <Carousel
               autoplay={true}
-              autoplayInterval={3000} // Otomatik kaydırma arasındaki gecikme (ms)
-              autoplayDelay={500} // İlk otomatik kaydırma başlangıç gecikmesi (ms)
-              enableSnap={true} // Otomatik kaydırma sırasında kullanıcının manuel kaydırmasını etkinleştirir
+              autoplayInterval={3000}
+              autoplayDelay={500}
+              enableSnap={true}
               layout={'default'}
               layoutCardOffset={`1`}
               sliderWidth={windowWidth / 2}
