@@ -352,6 +352,18 @@ const getSearchFundProcess = createAsyncThunk(
   },
 );
 
+const getBudgetDetailsProcess = createAsyncThunk(
+  'getBudget/getBudgetDetailsProcess',
+  async ({rejectWithValue}) => {
+    try {
+      const res = await axios.get(`getBudget`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -380,4 +392,5 @@ export {
   getPortfolioTypeDetailsProcess,
   getFundDetailProcess,
   getSearchFundProcess,
+  getBudgetDetailsProcess,
 };
