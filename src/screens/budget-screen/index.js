@@ -26,9 +26,10 @@ export const BudgetScreen = () => {
 
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
   const {data: AllPortfolioData} = useSelector(state => state.getAllPortfolio);
+  const {data: BudgetDetailsData} = useSelector(state => state.getBudget);
   const {data: PortfolioDetailsData, isLoading: PortfolioDetailsLoading} =
     useSelector(state => state.getPortfolioDetails);
-  console.log('PortfolioDetailsData', PortfolioDetailsData);
+  console.log('BudgetDetailsData', BudgetDetailsData);
 
   useEffect(() => {
     if (!isPortfoyListModalVisible) {
@@ -47,9 +48,17 @@ export const BudgetScreen = () => {
             <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
               <View style={style.elipsContainer}>
                 <CustomArea
+                  totalProfitValue={BudgetDetailsData?.budget?.totalProfitValue}
+                  totalProfitPercentage={
+                    BudgetDetailsData?.budget?.totalProfitPercentage
+                  }
                   option={3}
                   portfoyName={PortfolioDetailsData?.portfolio?.name}
-                  totalAmount={'10000'}
+                  totalAmount={
+                    BudgetDetailsData
+                      ? BudgetDetailsData?.budget?.totalValue
+                      : '10000'
+                  }
                   totalChange={'10000'}
                   onPress={() => setIsPortfoyListModalVisible(true)}
                 />

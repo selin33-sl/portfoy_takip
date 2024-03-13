@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAssetData} from '../../redux/slice/global/asset-data-slice';
 import {
+  getBudgetDetailsProcess,
   getSearchCurrencyProcess,
   getSearchFundProcess,
   getSearchGoldProcess,
@@ -97,12 +98,17 @@ export const VarliklarScreen = () => {
   const renderItem = ({item}) => {
     return (
       <VarliklarCard
-        onPress={() => {
+        onPress={async () => {
           navigation.navigate(item.screen, {
             text: item.text,
             value: item.value,
           });
           dispatch(setAssetData({data: item.value, type: item.type}));
+          {
+            item.screen == 'budget-screen'
+              ? await dispatch(getBudgetDetailsProcess())
+              : null;
+          }
         }}
         backgroundColor={item.backgroundColor}
         text={item.text}

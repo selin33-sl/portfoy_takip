@@ -15,13 +15,15 @@ export const CustomArea = ({
   totalChange,
   onPress,
   option,
+  totalProfitValue,
+  totalProfitPercentage,
 }) => {
   const {t} = useTranslation();
   const isCarousel = useRef(null);
 
   const data = [
-    {text: 'Toplam Kar/Zarar', value: '200'},
-    {text: 'Toplam Kar/Zarar Yüzdesi', value: '20%'},
+    {text: 'Toplam Kar/Zarar', value: totalProfitPercentage},
+    {text: 'Toplam Kar/Zarar Yüzdesi', value: `${totalProfitValue} %`},
   ];
 
   const renderItem = ({item, index}) => {
@@ -35,8 +37,14 @@ export const CustomArea = ({
           alignItems: 'center',
           width: 'auto',
         }}>
-        <Text style={style.text1}>{item.text}</Text>
-        <Text style={style.carouselText}>{item.value}</Text>
+        <Text style={{...style.text1}}>{item.text}</Text>
+        <Text
+          style={{
+            ...style.carouselText,
+            color: totalProfitValue > 0 ? '#00ff83' : 'red',
+          }}>
+          {item.value}
+        </Text>
       </View>
     );
   };

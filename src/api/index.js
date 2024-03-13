@@ -354,7 +354,7 @@ const getSearchFundProcess = createAsyncThunk(
 
 const getBudgetDetailsProcess = createAsyncThunk(
   'getBudget/getBudgetDetailsProcess',
-  async ({rejectWithValue}) => {
+  async (args, {rejectWithValue}) => {
     try {
       const res = await axios.get(`getBudget`);
       return res;
