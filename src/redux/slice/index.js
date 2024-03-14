@@ -24,6 +24,7 @@ export {default as updateAssetSlice} from './portfolio/update-asset-slice';
 export {default as getSearchStockSlice} from './varliklar/Search/get-search-stock-slice';
 export {default as getSearchFundSlice} from './varliklar/Search/get-search-fund-slice';
 export {default as getSearchCurrencySlice} from './varliklar/Search/get-search-currency-slice';
+export {default as getSearchCryptoSlice} from './varliklar/Search/get-search-crypto-slice';
 export {default as getSearchGoldSlice} from './varliklar/Search/get-search-gold-slice';
 export {default as assetDataSlice} from './global/asset-data-slice';
 export {default as searchAssetDataSlice} from './global/search-asset-data-slice';

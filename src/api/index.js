@@ -114,6 +114,14 @@ const getCurrencyDetailProcess = createAsyncThunk(
   },
 );
 
+const getCryptoDetailProcess = createAsyncThunk(
+  'getCryptoDetail/getCryptoDetailProcess',
+  async ({name, day}) => {
+    const res = await axios.get(`getCryptoDetail/${name}/${day}`);
+    return res;
+  },
+);
+
 const getAllGoldProcess = createAsyncThunk(
   'getAllGold/getAllGoldProcess',
   async () => {
@@ -307,6 +315,21 @@ const getSearchCurrencyProcess = createAsyncThunk(
   },
 );
 
+const getSearchCryptoProcess = createAsyncThunk(
+  'searchCrypto/getSearchCryptoProcess',
+  async ({data, page}, {rejectWithValue}) => {
+    try {
+      const res = await axios.post(
+        `searchCrypto/${data}?page=${page}&limit=20`,
+      );
+
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 const getSearchGoldProcess = createAsyncThunk(
   'searchGold/getSearchGoldProcess',
   async ({data, page}, {rejectWithValue}) => {
@@ -388,9 +411,11 @@ export {
   updateAssetProcess,
   getSearchStockProcess,
   getSearchCurrencyProcess,
+  getSearchCryptoProcess,
   getSearchGoldProcess,
   getPortfolioTypeDetailsProcess,
   getFundDetailProcess,
   getSearchFundProcess,
   getBudgetDetailsProcess,
+  getCryptoDetailProcess,
 };

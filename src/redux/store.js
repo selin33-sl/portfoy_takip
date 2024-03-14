@@ -26,6 +26,7 @@ import {
   getKriptoSlice,
   getPortfolioDetailsSlice,
   getPortfolioTypeDetailsSlice,
+  getSearchCryptoSlice,
   getSearchCurrencySlice,
   getSearchFundSlice,
   getSearchGoldSlice,
@@ -73,6 +74,7 @@ const reducer = combineReducers({
   getFundDetail: getFundDetailSlice,
   searchFund: getSearchFundSlice,
   getBudget: getBudgetDetailsSlice,
+  searchCrypto: getSearchCryptoSlice,
 });
 
 export const store = configureStore({
