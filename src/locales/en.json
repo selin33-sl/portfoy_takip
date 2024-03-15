@@ -9,6 +9,10 @@
     "userName": "Username",
     "repeatPasword": "Repeat Password"
   },
+  "budget": {
+    "totalProfit/Loss": "Total Profit/Loss",
+    "totalProfit/LossPercentage": "Total Profit/Loss Percentage"
+  },
   "common": {
     "login": "Login",
     "register": "Register",

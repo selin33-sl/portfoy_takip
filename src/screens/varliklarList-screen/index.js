@@ -7,6 +7,7 @@ import style from './style';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {Header, NotFound, SearchBar, VarlikListCard} from '../../components';
 import {
+  getCryptoDetailProcess,
   getCurrencyDetailProcess,
   getFundDetailProcess,
   getGoldDetailProcess,
@@ -20,6 +21,10 @@ import {
 import {useTranslation} from 'react-i18next';
 import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-detail-slice';
 import {colors} from '../../theme';
+import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
+import {resetGoldDetail} from '../../redux/slice/varliklar/Detail/get-gold-detail-slice';
+import {resetFundDetail} from '../../redux/slice/varliklar/Detail/get-fund-detail-slice';
+import {resetCryptoDetail} from '../../redux/slice/varliklar/Detail/get-crypto-detail-slice';
 
 export const VarliklarListScreen = () => {
   const {t} = useTranslation();
@@ -36,6 +41,10 @@ export const VarliklarListScreen = () => {
 
   useEffect(() => {
     dispatch(resetStockDetail());
+    dispatch(resetCurrencyDetail());
+    dispatch(resetGoldDetail());
+    dispatch(resetFundDetail());
+    dispatch(resetCryptoDetail());
   }, []);
 
   const {data: SearchStockData, isLoading: SearchStockLoading} = useSelector(
@@ -43,6 +52,8 @@ export const VarliklarListScreen = () => {
   );
   const {data: SearchCurrencyData, isLoading: SearchCurrencyLoading} =
     useSelector(state => state.searchCurrency);
+  const {data: SearchCryptoData} = useSelector(state => state.searchCrypto);
+
   const {data: SearchFundData, isLoading: SearchFundLoading} = useSelector(
     state => state.searchFund,
   );
@@ -100,6 +111,9 @@ export const VarliklarListScreen = () => {
       } else if (assetType == 'currency') {
         setFilteredData(SearchCurrencyData?.data);
         setLoading(false);
+      } else if (assetType == 'crypto') {
+        setFilteredData(SearchCryptoData?.data);
+        setLoading(false);
       } else if (assetType == 'fund') {
         setFilteredData(SearchFundData?.data);
         setLoading(false);
@@ -118,6 +132,12 @@ export const VarliklarListScreen = () => {
         setFilteredData(prevData => {
           console.log('buraya giriyor mu', SearchCurrencyData?.data);
           return [...prevData, ...SearchCurrencyData?.data];
+        });
+        setLoading(false);
+      } else if (assetType == 'crypto') {
+        setFilteredData(prevData => {
+          console.log('buraya giriyor mu', SearchCryptoData?.data);
+          return [...prevData, ...SearchCryptoData?.data];
         });
         setLoading(false);
       } else if (assetType == 'fund') {
@@ -142,9 +162,10 @@ export const VarliklarListScreen = () => {
     SearchCurrencyData,
     SearchFundData,
     SearchGoldData,
+    SearchCryptoData,
   ]);
 
-  console.log('SearchStockData:', SearchStockData?.data);
+  console.log('SearchCryptoData:', SearchCryptoData?.data);
   console.log('assetData?.data:', assetData?.data);
   console.log('flteredDATA:', filteredData);
 
@@ -170,14 +191,16 @@ export const VarliklarListScreen = () => {
               ? await dispatch(
                   getCurrencyDetailProcess({name: item?.name, day: 2}),
                 )
+              : assetType == 'crypto'
+              ? await dispatch(
+                  getCryptoDetailProcess({name: item?.name, day: 2}),
+                )
               : assetType == 'gold'
               ? await dispatch(
                   getGoldDetailProcess({data: {name: item?.name, day: 2}}),
                 )
               : assetType == 'fund'
-              ? await dispatch(
-                  getFundDetailProcess({data: {name: item?.name, day: 2}}),
-                )
+              ? await dispatch(getFundDetailProcess({name: item?.name, day: 2}))
               : null;
           }
         }}

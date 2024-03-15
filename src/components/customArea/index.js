@@ -20,10 +20,13 @@ export const CustomArea = ({
 }) => {
   const {t} = useTranslation();
   const isCarousel = useRef(null);
-
+  console.log('option:', option);
   const data = [
-    {text: 'Toplam Kar/Zarar', value: totalProfitPercentage},
-    {text: 'Toplam Kar/Zarar Yüzdesi', value: `${totalProfitValue} %`},
+    {text: t('budget.totalProfit/Loss'), value: `${totalProfitValue} ₺`},
+    {
+      text: t('budget.totalProfit/LossPercentage'),
+      value: `${totalProfitPercentage} %`,
+    },
   ];
 
   const renderItem = ({item, index}) => {
@@ -64,7 +67,7 @@ export const CustomArea = ({
           }}>
           {totalAmount} ₺
         </Text>
-        {option === 1 ? (
+        {option == 1 ? (
           <View style={style.rateContainer}>
             <TouchableOpacity style={style.rateButton}>
               <Text style={style.text1}>{t('reviewsScreen.total')}</Text>
@@ -90,7 +93,7 @@ export const CustomArea = ({
               </LinearGradient>
             </TouchableOpacity>
           </View>
-        ) : option === 3 ? (
+        ) : option == 3 ? (
           <View
             style={{
               height: windowHeight * 0.05,

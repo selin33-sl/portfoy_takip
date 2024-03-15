@@ -28,7 +28,9 @@ import {
   addAssetProcess,
   deleteAssetProcess,
   getAssetDetailsProcess,
+  getCryptoDetailProcess,
   getCurrencyDetailProcess,
+  getFundDetailProcess,
   getGoldDetailProcess,
   getPortfolioDetailsProcess,
   getStockDetailProcess,
@@ -44,6 +46,8 @@ import {resetStockDetail} from '../../redux/slice/varliklar/Detail/get-stock-det
 import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-currency-detail-slice';
 import {resetAssetDetails} from '../../redux/slice/portfolio/get-asset-details-slice';
 import {resetUpdateAsset} from '../../redux/slice/portfolio/update-asset-slice';
+import {resetCryptoDetail} from '../../redux/slice/varliklar/Detail/get-crypto-detail-slice';
+import {resetFundDetail} from '../../redux/slice/varliklar/Detail/get-fund-detail-slice';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -68,7 +72,7 @@ export const VarlikDetayScreen = () => {
   const [miktar2, setMiktar2] = useState('');
   const [fiyat1, setFiyat1] = useState('');
   const [fiyat2, setFiyat2] = useState('');
-  const [loading, setlLoading] = useState(false);
+  // const [loading, setlLoading] = useState(false);
   // const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
 
   const {
@@ -85,6 +89,21 @@ export const VarlikDetayScreen = () => {
     isLoading: CurrencyLoading,
     // description: CurrencyDescription,
   } = useSelector(state => state.getCurrencyDetail);
+  const {
+    data: CryptoDetailData,
+    // lastPrice: CryptoLastPrice,
+    // name: CryptoName,
+    isLoading: CryptoLoading,
+    // description: CryptoDescription,
+  } = useSelector(state => state.getCryptoDetail);
+
+  const {
+    data: FundDetailData,
+    // lastPrice: FundLastPrice,
+    // name: FundName,
+    isLoading: FundLoading,
+    // description: FundDescription,
+  } = useSelector(state => state.getFundDetail);
 
   const {
     data: GoldDetailData,
@@ -109,6 +128,8 @@ export const VarlikDetayScreen = () => {
     state => state.getAssetDetails,
   );
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
+
+  console.log('FundDetailData', FundDetailData?.name);
 
   useToast(
     DeleteAssetStatus,
@@ -141,6 +162,10 @@ export const VarlikDetayScreen = () => {
       data = StockDetailData;
     } else if (CurrencyDetailData) {
       data = CurrencyDetailData;
+    } else if (CryptoDetailData) {
+      data = CryptoDetailData;
+    } else if (FundDetailData) {
+      data = FundDetailData;
     } else if (GoldDetailData) {
       data = GoldDetailData;
     } else {
@@ -155,7 +180,14 @@ export const VarlikDetayScreen = () => {
       setDesc(data?.assetDetails?.description);
       setCode(data?.assetDetails?.name);
     }
-  }, [StockDetailData, CurrencyDetailData, GoldDetailData, AssetDetailsData]);
+  }, [
+    StockDetailData,
+    CurrencyDetailData,
+    GoldDetailData,
+    AssetDetailsData,
+    CryptoDetailData,
+    FundDetailData,
+  ]);
 
   useEffect(() => {
     if (AssetDetailsData?.assetDetails && page == 'update') {
@@ -184,10 +216,20 @@ export const VarlikDetayScreen = () => {
       dispatch(resetStockDetail());
     } else if (page == 'update' && CurrencyDetailData) {
       dispatch(resetCurrencyDetail());
+    } else if (page == 'update' && FundDetailData) {
+      dispatch(resetFundDetail());
     } else if (page != 'update' && AssetDetailsData) {
       dispatch(resetAssetDetails());
+    } else if (page == 'update' && CryptoDetailData) {
+      dispatch(resetCryptoDetail());
     }
-  }, [StockDetailData, CurrencyDetailData, AssetDetailsData]);
+  }, [
+    StockDetailData,
+    CurrencyDetailData,
+    AssetDetailsData,
+    CryptoDetailData,
+    FundDetailData,
+  ]);
 
   const handleDeleteAsset = async () => {
     await dispatch(
@@ -223,10 +265,17 @@ export const VarlikDetayScreen = () => {
     StokLastPrice,
     CurrencyLastPrice,
     GoldLastPrice,
+    CryptoLastPrice,
+    FundLastPrice,
   ) => {
     return fiyat1 || fiyat2
       ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
-      : StokLastPrice || CurrencyLastPrice || GoldLastPrice || '0.0';
+      : StokLastPrice ||
+          CurrencyLastPrice ||
+          GoldLastPrice ||
+          CryptoLastPrice ||
+          FundLastPrice ||
+          '0.0';
   };
 
   const handleAddOrUpdateAsset = async isUpdate => {
@@ -238,6 +287,8 @@ export const VarlikDetayScreen = () => {
       StockDetailData?.lastPrice,
       CurrencyDetailData?.lastPrice,
       GoldDetailData?.lastPrice,
+      CryptoDetailData?.lastPrice,
+      FundDetailData?.lastPrice,
     );
 
     const assetData = {
@@ -300,6 +351,14 @@ export const VarlikDetayScreen = () => {
           await dispatch(
             getCurrencyDetailProcess({name: code, day: selectedValue}),
           );
+        } else if (CryptoDetailData) {
+          await dispatch(
+            getCryptoDetailProcess({name: code, day: selectedValue}),
+          );
+        } else if (FundDetailData) {
+          await dispatch(
+            getFundDetailProcess({name: code, day: selectedValue}),
+          );
         } else if (GoldDetailData) {
           await dispatch(
             getGoldDetailProcess({day: selectedValue, data: {name: code}}),
@@ -334,6 +393,7 @@ export const VarlikDetayScreen = () => {
         {StokLoading === true ||
         CurrencyLoading === true ||
         GoldLoading === true ||
+        CryptoLoading === true ||
         AssetDetailsLoading === true ? (
           <Loader />
         ) : (
@@ -350,7 +410,9 @@ export const VarlikDetayScreen = () => {
                 lcData={
                   reverseArray(StockDetailData?.data) ||
                   reverseArray(CurrencyDetailData?.data) ||
+                  reverseArray(CryptoDetailData?.data) ||
                   reverseArray(GoldDetailData?.data) ||
+                  reverseArray(FundDetailData?.data) ||
                   reverseArray(AssetDetailsData?.historicalData)
                 }
               />
@@ -477,6 +539,8 @@ export const VarlikDetayScreen = () => {
         lcData={
           reverseArray(StockDetailData?.data) ||
           reverseArray(CurrencyDetailData?.data) ||
+          reverseArray(CryptoDetailData?.data) ||
+          reverseArray(FundDetailData?.data) ||
           reverseArray(GoldDetailData?.data) ||
           reverseArray(AssetDetailsData?.historicalData)
         }

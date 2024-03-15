@@ -9,6 +9,10 @@
     "userName": "Kullanıcı Adı",
     "repeatPasword": "Şifre Tekrar"
   },
+  "budget": {
+    "totalProfit/Loss": "Toplam Kar/Zarar",
+    "totalProfit/LossPercentage": "Toplam Kar/Zarar Yüzdesi"
+  },
   "common": {
     "login": "Giriş",
     "register": "Kayıt",
