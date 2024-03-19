@@ -25,6 +25,14 @@ export default StyleSheet.create({
     borderColor: colors.pale,
     borderRadius: 20,
   },
+  buttonStyle: {
+    width: windowWidth * 0.3,
+    height: windowHeight * 0.05,
+  },
+  buttonText: {
+    fontSize: windowHeight * 0.023,
+    color: colors.white,
+  },
   buttonsContainer: {
     width: windowWidth * 0.9,
     justifyContent: 'center',

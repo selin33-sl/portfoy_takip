@@ -10,9 +10,10 @@ export const Button = ({
   textStyle,
   color1,
   color2,
+  disabled,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <LinearGradient
         colors={[color1, color2]}
         style={[style.button, buttonStyle]}>

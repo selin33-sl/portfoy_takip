@@ -13,7 +13,7 @@ import {
 } from '../../components';
 import style from './style';
 import {CustomArea} from '../../components/customArea';
-import {getPortfolioDetailsProcess} from '../../api';
+import {getBudgetDetailsProcess, getPortfolioDetailsProcess} from '../../api';
 
 export const BudgetScreen = () => {
   const {t} = useTranslation();
@@ -36,6 +36,12 @@ export const BudgetScreen = () => {
       dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
     }
   }, [isPortfoyListModalVisible]);
+
+  useEffect(() => {
+    console.log('ÇALIŞTI');
+    dispatch(getBudgetDetailsProcess({id: defaultPortfolioId}));
+  }, [defaultPortfolioId]);
+
   return (
     <LinearGradientContainer>
       {PortfolioDetailsLoading ? (

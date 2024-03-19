@@ -18,7 +18,8 @@
     "register": "Register",
     "password": "Password",
     "search": "Search",
-    "quantity": " Quantity"
+    "quantity": " Quantity",
+    "sales": "sales"
   },
   "assets": {
     "turkisLira": "Budget",

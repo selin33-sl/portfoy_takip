@@ -31,9 +31,8 @@ export const VarliklarScreen = () => {
       dispatch(getSearchFundProcess({data: '', page: 1}));
     }, []),
   );
-
+  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
   const {data: SearchStockData} = useSelector(state => state.searchStock);
-
   const {data: SearchCurrencyData} = useSelector(state => state.searchCurrency);
   const {data: SearchCryptoData} = useSelector(state => state.searchCrypto);
   const {data: SearchGoldData} = useSelector(state => state.searchGold);
@@ -108,11 +107,6 @@ export const VarliklarScreen = () => {
             value: item.value,
           });
           dispatch(setAssetData({data: item.value, type: item.type}));
-          {
-            item.screen == 'budget-screen'
-              ? await dispatch(getBudgetDetailsProcess())
-              : null;
-          }
         }}
         backgroundColor={item.backgroundColor}
         text={item.text}

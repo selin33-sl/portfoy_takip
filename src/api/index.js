@@ -377,9 +377,21 @@ const getSearchFundProcess = createAsyncThunk(
 
 const getBudgetDetailsProcess = createAsyncThunk(
   'getBudget/getBudgetDetailsProcess',
-  async (args, {rejectWithValue}) => {
+  async ({id}, {rejectWithValue}) => {
     try {
-      const res = await axios.get(`getBudget`);
+      const res = await axios.get(`getBudget/${id}`);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
+const sellAssetProcess = createAsyncThunk(
+  'sellAsset/sellAssetProcess',
+  async ({portfolioId, assetId}, {rejectWithValue}) => {
+    try {
+      const res = await axios.post(`sellAsset/${portfolioId}/${assetId}`);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);
@@ -418,4 +430,5 @@ export {
   getSearchFundProcess,
   getBudgetDetailsProcess,
   getCryptoDetailProcess,
+  sellAssetProcess,
 };

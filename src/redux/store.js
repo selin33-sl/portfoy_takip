@@ -38,6 +38,7 @@ import {
   notificationPermissionSlice,
   registerSlice,
   searchAssetDataSlice,
+  sellAssetSlice,
   updateAssetSlice,
   updatePortfolioSlice,
 } from './slice';
@@ -77,6 +78,7 @@ const reducer = combineReducers({
   getBudget: getBudgetDetailsSlice,
   searchCrypto: getSearchCryptoSlice,
   getCryptoDetail: getCryptoDetailSlice,
+  sellAsset: sellAssetSlice,
 });
 
 export const store = configureStore({

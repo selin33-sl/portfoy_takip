@@ -24,13 +24,13 @@ export const addAssetSlice = createSlice({
       .addCase(addAssetProcess.fulfilled, (state, action) => {
         state.isLoading = false;
         (state.status = action.payload?.data?.status),
-          (state.message = action.payload?.data?.message),
-          (state.data = action.payload?.data?.newPortfolioDetail);
+          (state.message = action.payload?.data?.message);
+        // (state.data = action.payload?.data?.newPortfolioDetail);
       })
       .addCase(addAssetProcess.rejected, (state, action) => {
         state.isLoading = false;
-        state.status = action.payload?.data?.status;
-        state.message = action.payload?.data?.message;
+        state.status = action.payload?.status;
+        state.message = action.payload?.message;
       });
   },
 });

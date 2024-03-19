@@ -11,6 +11,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useRoute} from '@react-navigation/native';
 import {
   AlertModal,
+  AssetSellModal,
+  Button,
   CalendarModal,
   FullScreenLineChartModal,
   Header,
@@ -129,7 +131,7 @@ export const VarlikDetayScreen = () => {
   );
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
-  console.log('FundDetailData', FundDetailData?.name);
+  console.log('AddAssetStatus', AddAssetStatus);
 
   useToast(
     DeleteAssetStatus,
@@ -483,7 +485,7 @@ export const VarlikDetayScreen = () => {
                       }
                     : style.buttonsContainer
                 }>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={style.saveButtonContainer}
                   onPress={
                     page == 'update' ? handleUpdateAsset : handleAddAsset
@@ -507,25 +509,56 @@ export const VarlikDetayScreen = () => {
                         : t('assetDetailScreen.save')}
                     </Text>
                   </LinearGradient>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+                <Button
+                  disabled={!miktar1 && !miktar2}
+                  color1={!miktar1 && !miktar2 ? '#007029' : '#05A04D'}
+                  color2={'#007029'}
+                  text={page == 'update' ? 'Alış' : t('assetDetailScreen.save')}
+                  textStyle={[
+                    style.saveButtonText,
+                    !miktar1 &&
+                      !miktar2 && {...style.saveButtonText, color: 'grey'},
+                  ]}
+                  buttonStyle={style.buttonStyle}
+                  onPress={
+                    page == 'update' ? handleUpdateAsset : handleAddAsset
+                  }
+                />
                 {page == 'update' && (
-                  <TouchableOpacity
-                    style={style.deleteContainer}
+                  <Button
+                    color1={'#150193'}
+                    color2={'#6354BA'}
+                    text={'Satış'}
+                    textStyle={style.buttonText}
+                    buttonStyle={style.buttonStyle}
                     onPress={() => {
+                      console.log('tıklandıı');
                       setIsAlertModalVisible(true);
-                    }}>
-                    <Icon
-                      name={'delete-outline'}
-                      color={colors.white}
-                      size={25}
-                    />
-                  </TouchableOpacity>
+                    }}
+                  />
+                  // <TouchableOpacity
+                  //   style={style.deleteContainer}
+                  //   onPress={() => {
+                  //     setIsAlertModalVisible(true);
+                  //   }}>
+                  //   <Icon
+                  //     name={'delete-outline'}
+                  //     color={colors.white}
+                  //     size={25}
+                  //   />
+                  // </TouchableOpacity>
                 )}
               </View>
             </LinearGradient>
           </>
         )}
       </LinearGradientContainer>
+
+      <AssetSellModal
+        isModalVisible={isAlertModalVisible}
+        setIsModalVisible={setIsAlertModalVisible}
+      />
       <CalendarModal
         isDatePickerVisible={isDatePickerVisible}
         setDatePickerVisibility={setDatePickerVisibility}
@@ -554,11 +587,11 @@ export const VarlikDetayScreen = () => {
         setSelectedItem={setTimePeriod}
         setSelectedValue={setSelectedValue}
       />
-      <AlertModal
+      {/* <AlertModal
         handleDelete={handleDeleteAsset}
         isModalVisible={isAlertModalVisible}
         setIsModalVisible={setIsAlertModalVisible}
-      />
+      /> */}
     </ScrollView>
   );
 };

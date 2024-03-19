@@ -18,7 +18,8 @@
     "register": "Kayıt",
     "password": "Şifre",
     "search": "Ara",
-    "quantity": " Adet"
+    "quantity": " Adet",
+    "sales": "Satış"
   },
   "assets": {
     "turkisLira": "Cüzdan",
