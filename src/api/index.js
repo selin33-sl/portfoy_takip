@@ -389,9 +389,10 @@ const getBudgetDetailsProcess = createAsyncThunk(
 
 const sellAssetProcess = createAsyncThunk(
   'sellAsset/sellAssetProcess',
-  async ({portfolioId, assetId}, {rejectWithValue}) => {
+  async ({portfolioId, assetId, data}, {rejectWithValue}) => {
     try {
-      const res = await axios.post(`sellAsset/${portfolioId}/${assetId}`);
+      const {quantity, sellingPrice} = data;
+      const res = await axios.post(`sellAsset/${portfolioId}/${assetId}`, data);
       return res;
     } catch (error) {
       throw rejectWithValue(error.response.data);

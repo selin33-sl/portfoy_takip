@@ -65,26 +65,12 @@ export default StyleSheet.create({
     height: windowHeight * 0.05,
     justifyContent: 'center',
   },
-  cartInnerContainer: {
-    backgroundColor: colors.white,
-    width: windowWidth * 0.8,
-    height: windowHeight * 0.07,
-    borderRadius: 10,
-    marginVertical: windowHeight * 0.005,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  portfoyName: {
+  inputContainer: {
+    // width: windowWidth * 0.7,
+    height: windowHeight * 0.3,
+    // backgroundColor: 'pink',
     justifyContent: 'center',
     alignItems: 'center',
-    color: colors.black,
-    fontSize: windowHeight * 0.023,
-    fontWeight: '400',
-  },
-  portfoyNameContainer: {
-    width: windowWidth * 0.6,
-    height: windowHeight * 0.07,
-    justifyContent: 'center',
-    paddingHorizontal: windowWidth * 0.02,
+    marginLeft: windowWidth * 0.1,
   },
 });

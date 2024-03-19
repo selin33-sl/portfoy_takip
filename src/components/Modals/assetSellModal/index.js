@@ -27,6 +27,7 @@ import {savePortfolioId} from '../../../redux/slice/auth/login-slice';
 import {Button} from '../../button';
 import {AlertModal} from '../alertModal';
 import {Loader} from '../../loader';
+import {InputContainer} from '../../inputContainer';
 
 export const AssetSellModal = ({
   isModalVisible,
@@ -40,6 +41,10 @@ export const AssetSellModal = ({
 
   const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
   const [id, setId] = useState('');
+  const [miktar1, setMiktar1] = useState('');
+  const [miktar2, setMiktar2] = useState('');
+  const [fiyat1, setFiyat1] = useState('');
+  const [fiyat2, setFiyat2] = useState('');
 
   const {status: deleteStatus, message: deleteMessage} = useSelector(
     state => state.deletePortfolio,
@@ -71,83 +76,10 @@ export const AssetSellModal = ({
   //   }
   // }, [deleteStatus]);
 
-  const Cart = ({item}) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedName, setEditedName] = useState(item?.name);
-
-    const handleEditToggle = () => {
-      setIsEditing(true);
-    };
-
-    const handleSaveChanges = async () => {
-      if (isEditing) {
-        await dispatch(
-          updatePortfolioProcess({id: item?._id, data: {name: editedName}}),
-        );
-        await dispatch(resetAllPortfolio());
-        await dispatch(getAllPortfolioProcess());
-
-        await setIsEditing(false);
-      }
-    };
-    const handleNameChange = text => {
-      setEditedName(text);
-    };
-
-    const handleSelectPortfolio = async () => {
-      // await AsyncStorage.setItem('selectedPortfolioId', item?._id);
-      await dispatch(savePortfolioId(item?._id));
-      await setIsModalVisible(false);
-    };
-    return (
-      <TouchableOpacity
-        style={style.cartInnerContainer}
-        onPress={handleSelectPortfolio}>
-        <View style={style.portfoyNameContainer}>
-          <TextInput
-            style={style.portfoyName}
-            value={editedName}
-            onChangeText={handleNameChange}
-            editable={isEditing}
-          />
-        </View>
-        <TouchableOpacity
-          onPress={isEditing ? handleSaveChanges : handleEditToggle}
-          style={style.button}>
-          <Icon
-            name={isEditing ? 'check' : 'pencil-outline'}
-            size={25}
-            style={{
-              color: isEditing ? colors.green : colors.black,
-            }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setId(item?._id);
-            setIsAlertModalVisible(true);
-          }}
-          style={style.button}>
-          <Icon
-            name={'delete-outline'}
-            size={25}
-            style={{
-              color: 'red',
-            }}
-          />
-        </TouchableOpacity>
-      </TouchableOpacity>
-    );
-  };
-
   const handleDeletePortfolio = async () => {
     await dispatch(deletePortfolioProcess(id));
     await dispatch(getAllPortfolioProcess());
     setIsAlertModalVisible(false);
-  };
-
-  const renderItem = ({item}) => {
-    return loading ? <Loader /> : <Cart item={item} />;
   };
 
   console.log('loadd', loading);
@@ -178,6 +110,34 @@ export const AssetSellModal = ({
             <View style={style.headerContainer}>
               <Text style={style.text}>{t('common.sales')}</Text>
             </View>
+            <View style={style.inputContainer}>
+              <InputContainer
+                text={t('assetDetailScreen.amount')}
+                typeText={''}
+                value1={miktar1}
+                onChangeText1={setMiktar1}
+                value2={miktar2}
+                onChangeText2={setMiktar2}
+              />
+              <InputContainer
+                text={t('assetDetailScreen.price')}
+                typeText={'₺'}
+                value1={fiyat1}
+                onChangeText1={setFiyat1}
+                value2={fiyat2}
+                onChangeText2={setFiyat2}
+              />
+            </View>
+
+            <Button
+              color1={'#150193'}
+              color2={'#6354BA'}
+              textStyle={style.addPortfoyText}
+              text={t('common.sales')}
+              buttonStyle={style.addPortfoyContainer}
+              // onPress={() => setIsAddModalVisible(true)}
+            />
+
             {/* {loading ? (
                 <Loader />
               ) : (
