@@ -33,3 +33,4 @@ export {default as getPortfolioTypeDetailsSlice} from './portfolio/get-portfolio
 export {default as informSelectedHeaderSlice} from './global/inform-selected-header-slice';
 export {default as notificationPermissionSlice} from './global/notification-permission-slice';
 export {default as sellAssetSlice} from './portfolio/sell-asset-slice';
+export {default as assetIdSlice} from './global/assetId-slice';

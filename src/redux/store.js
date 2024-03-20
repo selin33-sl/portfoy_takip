@@ -9,6 +9,7 @@ import {
   addAssetSlice,
   addPortfolioSlice,
   assetDataSlice,
+  assetIdSlice,
   deleteAssetSlice,
   deletePortfolioSlice,
   getAllCurrencySlice,
@@ -79,6 +80,7 @@ const reducer = combineReducers({
   searchCrypto: getSearchCryptoSlice,
   getCryptoDetail: getCryptoDetailSlice,
   sellAsset: sellAssetSlice,
+  assetId: assetIdSlice,
 });
 
 export const store = configureStore({

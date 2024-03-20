@@ -16,6 +16,7 @@ import {colors} from '../../../theme';
 import {
   deletePortfolioProcess,
   getAllPortfolioProcess,
+  sellAssetProcess,
   updatePortfolioProcess,
 } from '../../../api';
 import {resetDeletePortfolio} from '../../../redux/slice/portfolio/delete-portfolio-slice';
@@ -29,13 +30,7 @@ import {AlertModal} from '../alertModal';
 import {Loader} from '../../loader';
 import {InputContainer} from '../../inputContainer';
 
-export const AssetSellModal = ({
-  isModalVisible,
-  setIsModalVisible,
-  setIsAddModalVisible,
-  data,
-  list,
-}) => {
+export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
 
@@ -53,6 +48,7 @@ export const AssetSellModal = ({
     state => state.updatePortfolio,
   );
   const {isLoading: loading} = useSelector(state => state.getAllPortfolio);
+  const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
   useToast(
     deleteStatus,
@@ -76,9 +72,8 @@ export const AssetSellModal = ({
   //   }
   // }, [deleteStatus]);
 
-  const handleDeletePortfolio = async () => {
-    await dispatch(deletePortfolioProcess(id));
-    await dispatch(getAllPortfolioProcess());
+  const handleSellAsset = async () => {
+    //  await dispatch(sellAssetProcess({portfolioId:defaultPortfolioId,assetId:}))
     setIsAlertModalVisible(false);
   };
 
@@ -165,7 +160,7 @@ export const AssetSellModal = ({
       </Modal>
 
       <AlertModal
-        handleDelete={handleDeletePortfolio}
+        handleDelete={handleSellAsset}
         isModalVisible={isAlertModalVisible}
         setIsModalVisible={setIsAlertModalVisible}
       />
