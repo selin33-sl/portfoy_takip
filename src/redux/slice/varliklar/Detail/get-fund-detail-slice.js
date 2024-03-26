@@ -26,7 +26,7 @@ export const getFundDetailSlice = createSlice({
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
-          (state.data = action.payload?.data);
+          (state.data = action.payload?.data?.data);
       })
       .addCase(getFundDetailProcess.rejected, (state, action) => {
         state.isLoading = false;

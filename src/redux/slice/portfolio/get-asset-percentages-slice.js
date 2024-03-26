@@ -26,7 +26,7 @@ export const getAssetPercentagesSlice = createSlice({
         state.isLoading = false;
         (state.status = action.payload?.status),
           (state.message = action.payload?.message),
-          (state.data = action.payload?.data?.assetPercentages);
+          (state.data = action.payload?.data?.data?.assetPercentages);
       })
       .addCase(getAssetPercentagesProcess.rejected, (state, action) => {
         state.isLoading = false;

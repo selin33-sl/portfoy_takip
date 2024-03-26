@@ -26,7 +26,7 @@ export const getSearchStockSlice = createSlice({
         state.isLoading = false;
         (state.status = action.payload?.data?.status),
           (state.message = action.payload?.message),
-          (state.data = action.payload?.data);
+          (state.data = action.payload?.data?.data);
       })
       .addCase(getSearchStockProcess.rejected, (state, action) => {
         state.isLoading = false;
