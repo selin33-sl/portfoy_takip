@@ -16,6 +16,7 @@ import {colors} from '../../../theme';
 import {
   deletePortfolioProcess,
   getAllPortfolioProcess,
+  getAssetDetailsProcess,
   sellAssetProcess,
   updatePortfolioProcess,
 } from '../../../api';
@@ -44,12 +45,20 @@ export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
   const {status: deleteStatus, message: deleteMessage} = useSelector(
     state => state.deletePortfolio,
   );
+  const {status: SellAssetStatus, message: SellAssetMessage} = useSelector(
+    state => state.sellAsset,
+  );
+
   const {status: updateStatus, message: updateMessage} = useSelector(
     state => state.updatePortfolio,
   );
   const {isLoading: loading} = useSelector(state => state.getAllPortfolio);
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
-
+  const {
+    data: AssetIdData,
+    type: AssetType,
+    name: AssetName,
+  } = useSelector(state => state.assetId);
   useToast(
     deleteStatus,
     resetDeletePortfolio(),
@@ -72,9 +81,45 @@ export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
   //   }
   // }, [deleteStatus]);
 
+  const calculateTotalQuantity = (miktar1, miktar2) => {
+    return miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
+  };
+
+  const calculateTotalPrice = (fiyat1, fiyat2) => {
+    return fiyat1 || fiyat2 ? `${fiyat1 || '0'}.${fiyat2 || '0'}` : '0.0';
+  };
+  console.log('SellAssetStatus1', SellAssetStatus);
+  useEffect(() => {
+    console.log('SellAssetStatus2', SellAssetStatus);
+    setIsModalVisible(false);
+  }, []);
+
   const handleSellAsset = async () => {
-    //  await dispatch(sellAssetProcess({portfolioId:defaultPortfolioId,assetId:}))
+    const totalQuantity = calculateTotalQuantity(miktar1, miktar2);
+    const totalPrice = calculateTotalPrice(fiyat1, fiyat2);
+    await dispatch(
+      sellAssetProcess({
+        portfolioId: defaultPortfolioId,
+        assetId: AssetIdData,
+        data: {
+          quantity: totalQuantity,
+          sellingPrice: totalPrice,
+        },
+      }),
+    );
     setIsAlertModalVisible(false);
+    await dispatch(
+      getAssetDetailsProcess({
+        data: {
+          portfolioId: defaultPortfolioId,
+          assetId: AssetIdData,
+          type: AssetType,
+          name: AssetName,
+          numberOfDays: 2,
+        },
+      }),
+    );
+    setIsModalVisible(false);
   };
 
   console.log('loadd', loading);
@@ -130,7 +175,7 @@ export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
               textStyle={style.addPortfoyText}
               text={t('common.sales')}
               buttonStyle={style.addPortfoyContainer}
-              // onPress={() => setIsAddModalVisible(true)}
+              onPress={() => setIsAlertModalVisible(true)}
             />
 
             {/* {loading ? (

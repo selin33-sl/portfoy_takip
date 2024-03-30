@@ -35,6 +35,7 @@ import {resetCurrencyDetail} from '../../redux/slice/varliklar/Detail/get-curren
 import {resetGoldDetail} from '../../redux/slice/varliklar/Detail/get-gold-detail-slice';
 import {savePortfolioId} from '../../redux/slice/auth/login-slice';
 import {resetAssetDetails} from '../../redux/slice/portfolio/get-asset-details-slice';
+import {setAssetIdData} from '../../redux/slice/global/assetId-slice';
 
 export const HomeScreen = () => {
   const {t} = useTranslation();
@@ -232,6 +233,14 @@ export const HomeScreen = () => {
               page: 'update',
               assetId: assetId,
             });
+            await dispatch(
+              setAssetIdData({
+                data: assetId,
+                type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
+                  ?.type,
+                name: name,
+              }),
+            );
             await handleReset();
             await dispatch(
               getAssetDetailsProcess({

@@ -58,7 +58,7 @@ export const VarlikDetayScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {t} = useTranslation();
-  const {params: {page = 0, text, assetId} = {}} = useRoute();
+  const {params: {page = 0, text} = {}} = useRoute();
 
   const [desc, setDesc] = useState('');
   const [code, setCode] = useState('');
@@ -76,6 +76,13 @@ export const VarlikDetayScreen = () => {
   const [fiyat2, setFiyat2] = useState('');
   // const [loading, setlLoading] = useState(false);
   // const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
+
+  const {
+    data: AssetIdData,
+    // lastPrice: StokLastPrice,
+    // name: StokName,
+    isLoading: AssetIdLoading,
+  } = useSelector(state => state.assetId);
 
   const {
     data: StockDetailData,
@@ -131,7 +138,7 @@ export const VarlikDetayScreen = () => {
   );
   const {portfolioId: defaultPortfolioId} = useSelector(state => state.auth);
 
-  console.log('AddAssetStatus', AddAssetStatus);
+  console.log('AssetIdData', AssetIdData);
 
   useToast(
     DeleteAssetStatus,
