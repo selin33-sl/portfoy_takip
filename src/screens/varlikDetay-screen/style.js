@@ -28,6 +28,7 @@ export default StyleSheet.create({
   buttonStyle: {
     width: windowWidth * 0.3,
     height: windowHeight * 0.05,
+    borderRadius: 10,
   },
   buttonText: {
     fontSize: windowHeight * 0.023,

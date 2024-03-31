@@ -77,12 +77,8 @@ export const VarlikDetayScreen = () => {
   // const [loading, setlLoading] = useState(false);
   // const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
 
-  const {
-    data: AssetIdData,
-    // lastPrice: StokLastPrice,
-    // name: StokName,
-    isLoading: AssetIdLoading,
-  } = useSelector(state => state.assetId);
+  const {data: AssetIdData} = useSelector(state => state.assetId);
+  const {type: AssetType} = useSelector(state => state.assetData);
 
   const {
     data: StockDetailData,
@@ -175,6 +171,7 @@ export const VarlikDetayScreen = () => {
       data = CryptoDetailData;
     } else if (FundDetailData) {
       data = FundDetailData;
+      console.log('FundDetailData', FundDetailData);
     } else if (GoldDetailData) {
       data = GoldDetailData;
     } else {
@@ -268,83 +265,39 @@ export const VarlikDetayScreen = () => {
     return miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
   };
 
-  const calculateTotalPrice = (
-    fiyat1,
-    fiyat2,
-    StokLastPrice,
-    CurrencyLastPrice,
-    GoldLastPrice,
-    CryptoLastPrice,
-    FundLastPrice,
-  ) => {
-    return fiyat1 || fiyat2
-      ? `${fiyat1 || '0'}.${fiyat2 || '0'}`
-      : StokLastPrice ||
-          CurrencyLastPrice ||
-          GoldLastPrice ||
-          CryptoLastPrice ||
-          FundLastPrice ||
-          '0.0';
+  const calculateTotalPrice = (fiyat1, fiyat2) => {
+    return fiyat1 || fiyat2 ? `${fiyat1 || '0'}.${fiyat2 || '0'}` : '0.0';
   };
 
-  const handleAddOrUpdateAsset = async isUpdate => {
+  const handleAdd = async () => {
     const currentDate = getCurrentDateFormatted();
     const totalQuantity = calculateTotalQuantity(miktar1, miktar2);
-    const totalPrice = calculateTotalPrice(
-      fiyat1,
-      fiyat2,
-      StockDetailData?.lastPrice,
-      CurrencyDetailData?.lastPrice,
-      GoldDetailData?.lastPrice,
-      CryptoDetailData?.lastPrice,
-      FundDetailData?.lastPrice,
-    );
+    const totalPrice = calculateTotalPrice(fiyat1, fiyat2);
 
     const assetData = {
-      type:
-        text === 'Döviz'
-          ? 'Currency'
-          : text === 'Hisse Senedi'
-          ? 'Stock'
-          : text === 'Fon'
-          ? 'Fund'
-          : text === 'Kripto'
-          ? 'Crypto'
-          : text === 'Altın'
-          ? 'Gold'
-          : text === 'Türk Lirası'
-          ? 'TurkishLira'
-          : text,
+      type: AssetType,
       name: fullName,
       quantity: totalQuantity,
       purchasePrice: totalPrice,
       purchaseDate: selectedDate || currentDate,
     };
 
-    const process = isUpdate ? updateAssetProcess : addAssetProcess;
     await dispatch(
-      process({
+      addAssetProcess({
         portfolioId: defaultPortfolioId,
-        assetId: isUpdate ? AssetDetailsData?.assetDetails?.assetId : undefined,
         data: assetData,
       }),
     );
 
-    if (!isUpdate) {
-      setMiktar1('');
-      setMiktar2('');
-      setFiyat1('');
-      setFiyat2('');
-      setSelectedDate('');
-    }
+    setMiktar1('');
+    setMiktar2('');
+    setFiyat1('');
+    setFiyat2('');
+    setSelectedDate('');
   };
 
   const handleAddAsset = async () => {
-    await handleAddOrUpdateAsset(false);
-  };
-
-  const handleUpdateAsset = async () => {
-    await handleAddOrUpdateAsset(true);
+    await handleAdd();
   };
 
   //BU KISIM İÇİN REDUCER OLUŞTURULACAK
@@ -517,7 +470,27 @@ export const VarlikDetayScreen = () => {
                     </Text>
                   </LinearGradient>
                 </TouchableOpacity> */}
+
                 <Button
+                  disabled={(!miktar1 && !miktar2) || (!fiyat1 && !fiyat2)}
+                  color1={
+                    (!miktar1 && !miktar2) || (!fiyat1 && !fiyat2)
+                      ? '#007029'
+                      : '#05A04D'
+                  }
+                  color2={'#007029'}
+                  text={page == 'update' ? 'Alış' : t('assetDetailScreen.save')}
+                  textStyle={[
+                    style.saveButtonText,
+                    ((!miktar1 && !miktar2) || (!fiyat1 && !fiyat2)) && {
+                      ...style.saveButtonText,
+                      color: 'grey',
+                    },
+                  ]}
+                  buttonStyle={style.buttonStyle}
+                  onPress={handleAddAsset}
+                />
+                {/* <Button
                   disabled={!miktar1 && !miktar2}
                   color1={!miktar1 && !miktar2 ? '#007029' : '#05A04D'}
                   color2={'#007029'}
@@ -531,7 +504,7 @@ export const VarlikDetayScreen = () => {
                   onPress={
                     page == 'update' ? handleUpdateAsset : handleAddAsset
                   }
-                />
+                /> */}
                 {page == 'update' && (
                   <Button
                     color1={'#150193'}

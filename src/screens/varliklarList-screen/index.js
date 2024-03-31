@@ -69,19 +69,19 @@ export const VarliklarListScreen = () => {
     try {
       setLoading(true);
       console.log('pagenumn', pageNum);
-      if (assetType == 'stock') {
+      if (assetType == 'Stock') {
         await dispatch(
           getSearchStockProcess({data: searchQuery, page: pageNum}),
         );
-      } else if (assetType == 'currency') {
+      } else if (assetType == 'Currency') {
         await dispatch(
           getSearchCurrencyProcess({data: searchQuery, page: pageNum}),
         );
-      } else if (assetType == 'fund') {
+      } else if (assetType == 'Fund') {
         await dispatch(
           getSearchFundProcess({data: searchQuery, page: pageNum}),
         );
-      } else if (assetType == 'gold') {
+      } else if (assetType == 'Gold') {
         await dispatch(
           getSearchGoldProcess({
             data: {searchParam: searchQuery},
@@ -105,48 +105,48 @@ export const VarliklarListScreen = () => {
 
   useEffect(() => {
     if (searchTerm && offset == 1) {
-      if (assetType == 'stock') {
+      if (assetType == 'Stock') {
         setFilteredData(SearchStockData?.data);
         setLoading(false);
-      } else if (assetType == 'currency') {
+      } else if (assetType == 'Currency') {
         setFilteredData(SearchCurrencyData?.data);
         setLoading(false);
-      } else if (assetType == 'crypto') {
+      } else if (assetType == 'Crypto') {
         setFilteredData(SearchCryptoData?.data);
         setLoading(false);
-      } else if (assetType == 'fund') {
+      } else if (assetType == 'Fund') {
         setFilteredData(SearchFundData?.data);
         setLoading(false);
-      } else if (assetType == 'gold') {
+      } else if (assetType == 'Gold') {
         setFilteredData(SearchGoldData?.data);
         setLoading(false);
       }
     } else if (offset != 1) {
-      if (assetType == 'stock') {
+      if (assetType == 'Stock') {
         setFilteredData(prevData => {
           console.log('buraya giriyor mu', SearchStockData?.data);
           return [...prevData, ...SearchStockData?.data];
         });
         setLoading(false);
-      } else if (assetType == 'currency') {
+      } else if (assetType == 'Currency') {
         setFilteredData(prevData => {
           console.log('buraya giriyor mu', SearchCurrencyData?.data);
           return [...prevData, ...SearchCurrencyData?.data];
         });
         setLoading(false);
-      } else if (assetType == 'crypto') {
+      } else if (assetType == 'Crypto') {
         setFilteredData(prevData => {
           console.log('buraya giriyor mu', SearchCryptoData?.data);
           return [...prevData, ...SearchCryptoData?.data];
         });
         setLoading(false);
-      } else if (assetType == 'fund') {
+      } else if (assetType == 'Fund') {
         setFilteredData(prevData => {
           console.log('buraya giriyor mu', SearchFundData?.data);
           return [...prevData, ...SearchFundData?.data];
         });
         setLoading(false);
-      } else if (assetType == 'gold') {
+      } else if (assetType == 'Gold') {
         setFilteredData(prevData => {
           console.log('buraya giriyor mu', SearchGoldData?.data);
           return [...prevData, ...SearchGoldData?.data];
@@ -183,23 +183,23 @@ export const VarliklarListScreen = () => {
           await navigation.navigate('varlikDetay-screen', {text: text});
 
           {
-            assetType == 'stock'
+            assetType == 'Stock'
               ? await dispatch(
                   getStockDetailProcess({name: item?.name, day: 2}),
                 )
-              : assetType == 'currency'
+              : assetType == 'Currency'
               ? await dispatch(
                   getCurrencyDetailProcess({name: item?.name, day: 2}),
                 )
-              : assetType == 'crypto'
+              : assetType == 'Crypto'
               ? await dispatch(
                   getCryptoDetailProcess({name: item?.name, day: 2}),
                 )
-              : assetType == 'gold'
+              : assetType == 'Gold'
               ? await dispatch(
                   getGoldDetailProcess({data: {name: item?.name, day: 2}}),
                 )
-              : assetType == 'fund'
+              : assetType == 'Fund'
               ? await dispatch(getFundDetailProcess({name: item?.name, day: 2}))
               : null;
           }
