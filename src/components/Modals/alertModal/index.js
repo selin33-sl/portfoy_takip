@@ -8,7 +8,8 @@ import {Button} from '../../button';
 export const AlertModal = ({
   isModalVisible,
   setIsModalVisible,
-  handleDelete,
+  handle,
+  modalBuy,
 }) => {
   return (
     <Modal
@@ -50,9 +51,9 @@ export const AlertModal = ({
               <Button
                 color1={'#8D00FF'}
                 color2={'#B356FF'}
-                text={'Sil'}
+                text={modalBuy ? 'Al' : 'Sat'}
                 buttonStyle={style.deleteButton}
-                onPress={handleDelete}
+                onPress={handle}
               />
             </View>
           </View>

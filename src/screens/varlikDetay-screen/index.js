@@ -74,6 +74,7 @@ export const VarlikDetayScreen = () => {
   const [miktar2, setMiktar2] = useState('');
   const [fiyat1, setFiyat1] = useState('');
   const [fiyat2, setFiyat2] = useState('');
+  const [modalBuy, setmodalBuy] = useState(false);
   // const [loading, setlLoading] = useState(false);
   // const [selectedPortfolioId, setSelectedPortfolioId] = useState('');
 
@@ -488,7 +489,11 @@ export const VarlikDetayScreen = () => {
                     },
                   ]}
                   buttonStyle={style.buttonStyle}
-                  onPress={handleAddAsset}
+                  onPress={() => {
+                    modalBuy
+                      ? (setmodalBuy(true), setIsAlertModalVisible(true))
+                      : handleAddAsset();
+                  }}
                 />
                 {/* <Button
                   disabled={!miktar1 && !miktar2}
@@ -538,6 +543,7 @@ export const VarlikDetayScreen = () => {
       <AssetSellModal
         isModalVisible={isAlertModalVisible}
         setIsModalVisible={setIsAlertModalVisible}
+        modalBuy={modalBuy}
       />
       <CalendarModal
         isDatePickerVisible={isDatePickerVisible}

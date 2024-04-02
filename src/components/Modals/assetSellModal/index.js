@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {colors} from '../../../theme';
 import {
+  addAssetProcess,
   deletePortfolioProcess,
   getAllPortfolioProcess,
   getAssetDetailsProcess,
@@ -31,7 +32,11 @@ import {AlertModal} from '../alertModal';
 import {Loader} from '../../loader';
 import {InputContainer} from '../../inputContainer';
 
-export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
+export const AssetSellModal = ({
+  isModalVisible,
+  setIsModalVisible,
+  modalBuy,
+}) => {
   const dispatch = useDispatch();
   const {t} = useTranslation();
 
@@ -88,12 +93,14 @@ export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
   const calculateTotalPrice = (fiyat1, fiyat2) => {
     return fiyat1 || fiyat2 ? `${fiyat1 || '0'}.${fiyat2 || '0'}` : '0.0';
   };
-  console.log('SellAssetStatus1', SellAssetStatus);
-  useEffect(() => {
-    console.log('SellAssetStatus2', SellAssetStatus);
-    setIsModalVisible(false);
-  }, []);
 
+  const getCurrentDateFormatted = () => {
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const year = String(currentDate.getFullYear());
+    return `${day}-${month}-${year}`;
+  };
   const handleSellAsset = async () => {
     const totalQuantity = calculateTotalQuantity(miktar1, miktar2);
     const totalPrice = calculateTotalPrice(fiyat1, fiyat2);
@@ -107,6 +114,41 @@ export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
         },
       }),
     );
+    setIsAlertModalVisible(false);
+    await dispatch(
+      getAssetDetailsProcess({
+        data: {
+          portfolioId: defaultPortfolioId,
+          assetId: AssetIdData,
+          type: AssetType,
+          name: AssetName,
+          numberOfDays: 2,
+        },
+      }),
+    );
+    setIsModalVisible(false);
+  };
+
+  const handleBuy = async () => {
+    const totalQuantity = calculateTotalQuantity(miktar1, miktar2);
+    const totalPrice = calculateTotalPrice(fiyat1, fiyat2);
+    const currentDate = getCurrentDateFormatted();
+
+    const assetData = {
+      type: AssetType,
+      name: AssetName,
+      quantity: totalQuantity,
+      purchasePrice: totalPrice,
+      purchaseDate: currentDate,
+    };
+
+    await dispatch(
+      addAssetProcess({
+        portfolioId: defaultPortfolioId,
+        data: assetData,
+      }),
+    );
+
     setIsAlertModalVisible(false);
     await dispatch(
       getAssetDetailsProcess({
@@ -205,7 +247,8 @@ export const AssetSellModal = ({isModalVisible, setIsModalVisible}) => {
       </Modal>
 
       <AlertModal
-        handleDelete={handleSellAsset}
+        modalBuy={modalBuy}
+        handle={modalBuy ? handleBuy : handleSellAsset}
         isModalVisible={isAlertModalVisible}
         setIsModalVisible={setIsAlertModalVisible}
       />
