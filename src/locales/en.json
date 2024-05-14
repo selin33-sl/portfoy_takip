@@ -19,7 +19,8 @@
     "password": "Password",
     "search": "Search",
     "quantity": " Quantity",
-    "sales": "sales"
+    "sales": "Sales",
+    "buy": "Buy"
   },
   "assets": {
     "turkisLira": "Budget",

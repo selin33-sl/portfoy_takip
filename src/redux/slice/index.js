@@ -34,3 +34,4 @@ export {default as informSelectedHeaderSlice} from './global/inform-selected-hea
 export {default as notificationPermissionSlice} from './global/notification-permission-slice';
 export {default as sellAssetSlice} from './portfolio/sell-asset-slice';
 export {default as assetIdSlice} from './global/assetId-slice';
+export {default as addMoneyToBudgetSlice} from './portfolio/add-money-to-budget-slice';

@@ -244,7 +244,7 @@ export const VarliklarListScreen = () => {
       />
 
       <View style={style.listContainer}>
-        {filteredData.length > 0 ? (
+        {filteredData?.length > 0 ? (
           <FlashList
             showsVerticalScrollIndicator={false}
             data={filteredData}

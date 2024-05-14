@@ -490,9 +490,11 @@ export const VarlikDetayScreen = () => {
                   ]}
                   buttonStyle={style.buttonStyle}
                   onPress={() => {
-                    modalBuy
-                      ? (setmodalBuy(true), setIsAlertModalVisible(true))
-                      : handleAddAsset();
+                    page == 'update'
+                      ? (console.log('111111111'),
+                        setmodalBuy(true),
+                        setIsAlertModalVisible(true))
+                      : (console.log('2222222'), handleAddAsset());
                   }}
                 />
                 {/* <Button

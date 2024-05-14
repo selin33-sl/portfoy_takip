@@ -190,7 +190,9 @@ export const AssetSellModal = ({
             </View>
 
             <View style={style.headerContainer}>
-              <Text style={style.text}>{t('common.sales')}</Text>
+              <Text style={style.text}>
+                {modalBuy ? t('common.buy') : t('common.sales')}
+              </Text>
             </View>
             <View style={style.inputContainer}>
               <InputContainer
@@ -215,7 +217,7 @@ export const AssetSellModal = ({
               color1={'#150193'}
               color2={'#6354BA'}
               textStyle={style.addPortfoyText}
-              text={t('common.sales')}
+              text={modalBuy ? t('common.buy') : t('common.sales')}
               buttonStyle={style.addPortfoyContainer}
               onPress={() => setIsAlertModalVisible(true)}
             />

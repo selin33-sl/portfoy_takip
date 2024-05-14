@@ -400,6 +400,19 @@ const sellAssetProcess = createAsyncThunk(
   },
 );
 
+const addMoneyToBudgetProcess = createAsyncThunk(
+  'addMoneyToBudget/addMoneyToBudgetProcess',
+  async ({portfolioId, data}, {rejectWithValue}) => {
+    try {
+      const {value} = data;
+      const res = await axios.post(`addMoneyToBudget/${portfolioId}`, data);
+      return res;
+    } catch (error) {
+      throw rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export {
   authLogin,
   registerProcess,
@@ -432,4 +445,5 @@ export {
   getBudgetDetailsProcess,
   getCryptoDetailProcess,
   sellAssetProcess,
+  addMoneyToBudgetProcess,
 };

@@ -7,6 +7,7 @@ import {
 import logger from 'redux-logger';
 import {
   addAssetSlice,
+  addMoneyToBudgetSlice,
   addPortfolioSlice,
   assetDataSlice,
   assetIdSlice,
@@ -81,6 +82,7 @@ const reducer = combineReducers({
   getCryptoDetail: getCryptoDetailSlice,
   sellAsset: sellAssetSlice,
   assetId: assetIdSlice,
+  addMoneyToBudget: addMoneyToBudgetSlice,
 });
 
 export const store = configureStore({
