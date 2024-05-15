@@ -137,8 +137,8 @@ export const AssetSellModal = ({
     const assetData = {
       type: AssetType,
       name: AssetName,
-      quantity: totalQuantity,
-      purchasePrice: totalPrice,
+      quantity: parseFloat(totalQuantity),
+      purchasePrice: parseFloat(totalPrice),
       purchaseDate: currentDate,
     };
 
@@ -214,12 +214,17 @@ export const AssetSellModal = ({
             </View>
 
             <Button
-              color1={'#150193'}
+              color1={
+                (!miktar1 && !miktar2) || (!fiyat1 && !fiyat2)
+                  ? 'red'
+                  : '#150193'
+              }
               color2={'#6354BA'}
               textStyle={style.addPortfoyText}
               text={modalBuy ? t('common.buy') : t('common.sales')}
               buttonStyle={style.addPortfoyContainer}
               onPress={() => setIsAlertModalVisible(true)}
+              disabled={(!miktar1 && !miktar2) || (!fiyat1 && !fiyat2)}
             />
 
             {/* {loading ? (

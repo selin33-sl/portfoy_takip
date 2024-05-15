@@ -218,6 +218,10 @@ export const HomeScreen = () => {
       : [100];
 
   const renderItem = ({item, index}) => {
+    console.log(
+      'PortfolioDetailsData?.portfolio?.portfolioDetails[index]',
+      PortfolioDetailsData?.portfolio?.portfolioDetails[index]?.assets,
+    );
     if (especial && index !== 0) {
       // Eğer especial true ise ve index 0 değilse (yani sadece ilk öğeyi göster)
       return null; // Diğer öğeleri gösterme
@@ -228,7 +232,7 @@ export const HomeScreen = () => {
           PortfolioTypeDetailsData?.assets &&
           PortfolioTypeDetailsData?.assets?.length > 0)) && (
         <ResizableCard
-          onPress={async (assetId, name) => {
+          onPress={async (assetId, name, fullName) => {
             navigation.navigate('varlikDetay-screen', {
               page: 'update',
               assetId: assetId,
@@ -238,7 +242,7 @@ export const HomeScreen = () => {
                 data: assetId,
                 type: PortfolioDetailsData?.portfolio?.portfolioDetails[index]
                   ?.type,
-                name: name,
+                name: fullName,
               }),
             );
             await handleReset();

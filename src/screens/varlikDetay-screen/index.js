@@ -278,8 +278,8 @@ export const VarlikDetayScreen = () => {
     const assetData = {
       type: AssetType,
       name: fullName,
-      quantity: totalQuantity,
-      purchasePrice: totalPrice,
+      quantity: parseFloat(totalQuantity),
+      purchasePrice: parseFloat(totalPrice),
       purchaseDate: selectedDate || currentDate,
     };
 
@@ -521,6 +521,7 @@ export const VarlikDetayScreen = () => {
                     buttonStyle={style.buttonStyle}
                     onPress={() => {
                       console.log('tıklandıı');
+                      setmodalBuy(false);
                       setIsAlertModalVisible(true);
                     }}
                   />

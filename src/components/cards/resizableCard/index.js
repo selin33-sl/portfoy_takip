@@ -42,7 +42,16 @@ export const ResizableCard = ({
     setModalVisible2(!isModalVisible2);
   };
 
-  const SmallCard = ({name, price, adet, profit, assetId, item, total}) => {
+  const SmallCard = ({
+    name,
+    price,
+    adet,
+    profit,
+    assetId,
+    item,
+    total,
+    fullName,
+  }) => {
     return (
       <TouchableOpacity
         style={
@@ -54,7 +63,7 @@ export const ResizableCard = ({
               }
             : style.detailContainer
         }
-        onPress={() => onPress(assetId, name)}>
+        onPress={() => onPress(assetId, name, fullName)}>
         <View style={style.detail1}>
           <Text style={style.textDetailName}>{name}</Text>
           <Text
@@ -130,6 +139,7 @@ export const ResizableCard = ({
   const renderItem = ({item}) => {
     return (
       <SmallCard
+        fullName={item.fullName}
         item={item}
         name={item?.name}
         price={
