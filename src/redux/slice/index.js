@@ -35,3 +35,4 @@ export {default as notificationPermissionSlice} from './global/notification-perm
 export {default as sellAssetSlice} from './portfolio/sell-asset-slice';
 export {default as assetIdSlice} from './global/assetId-slice';
 export {default as addMoneyToBudgetSlice} from './portfolio/add-money-to-budget-slice';
+export {default as decreaseMoneyFromBudgetSlice} from './portfolio/decrease-money-from-budget-slice';

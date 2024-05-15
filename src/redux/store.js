@@ -11,6 +11,7 @@ import {
   addPortfolioSlice,
   assetDataSlice,
   assetIdSlice,
+  decreaseMoneyFromBudgetSlice,
   deleteAssetSlice,
   deletePortfolioSlice,
   getAllCurrencySlice,
@@ -83,6 +84,7 @@ const reducer = combineReducers({
   sellAsset: sellAssetSlice,
   assetId: assetIdSlice,
   addMoneyToBudget: addMoneyToBudgetSlice,
+  decreaseMoneyFromBudget: decreaseMoneyFromBudgetSlice,
 });
 
 export const store = configureStore({
