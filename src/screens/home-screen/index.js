@@ -233,6 +233,7 @@ export const HomeScreen = () => {
           PortfolioTypeDetailsData?.assets?.length > 0)) && (
         <ResizableCard
           onPress={async (assetId, name, fullName) => {
+            console.log('fulllll', fullName);
             navigation.navigate('varlikDetay-screen', {
               page: 'update',
               assetId: assetId,

@@ -13,7 +13,11 @@ import {
 } from '../../components';
 import style from './style';
 import {CustomArea} from '../../components/customArea';
-import {getBudgetDetailsProcess, getPortfolioDetailsProcess} from '../../api';
+import {
+  addMoneyToBudgetProcess,
+  getBudgetDetailsProcess,
+  getPortfolioDetailsProcess,
+} from '../../api';
 
 export const BudgetScreen = () => {
   const {t} = useTranslation();
@@ -41,6 +45,21 @@ export const BudgetScreen = () => {
     console.log('ÇALIŞTI');
     dispatch(getBudgetDetailsProcess({id: defaultPortfolioId}));
   }, [defaultPortfolioId]);
+
+  const calculateTotalQuantity = (miktar1, miktar2) => {
+    return miktar1 || miktar2 ? `${miktar1 || '0'}.${miktar2 || '0'}` : '0.0';
+  };
+
+  const handleAddMoney = async () => {
+    const totalQuantity = calculateTotalQuantity(miktar1, miktar2);
+    await dispatch(
+      addMoneyToBudgetProcess({
+        data: {value: parseFloat(totalQuantity)},
+        portfolioId: defaultPortfolioId,
+      }),
+    ),
+      await dispatch(getBudgetDetailsProcess({id: defaultPortfolioId}));
+  };
 
   return (
     <LinearGradientContainer>
@@ -87,7 +106,7 @@ export const BudgetScreen = () => {
                     text={'Güncelle'}
                     textStyle={style.buttonText}
                     buttonStyle={style.buttonStyle}
-                    onPress={() => setIsModalVisible(false)}
+                    onPress={() => handleAddMoney()}
                   />
                   {/* <Button
                     color1={'#150193'}

@@ -18,6 +18,7 @@ import {
   deletePortfolioProcess,
   getAllPortfolioProcess,
   getAssetDetailsProcess,
+  getPortfolioDetailsProcess,
   sellAssetProcess,
   updatePortfolioProcess,
 } from '../../../api';
@@ -127,6 +128,7 @@ export const AssetSellModal = ({
       }),
     );
     setIsModalVisible(false);
+    await dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
   };
 
   const handleBuy = async () => {
@@ -162,6 +164,7 @@ export const AssetSellModal = ({
       }),
     );
     setIsModalVisible(false);
+    await dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
   };
 
   console.log('loadd', loading);

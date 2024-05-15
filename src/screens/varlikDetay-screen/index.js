@@ -277,7 +277,7 @@ export const VarlikDetayScreen = () => {
 
     const assetData = {
       type: AssetType,
-      name: fullName,
+      name: CurrencyDetailData || CryptoDetailData ? code : fullName,
       quantity: parseFloat(totalQuantity),
       purchasePrice: parseFloat(totalPrice),
       purchaseDate: selectedDate || currentDate,
@@ -299,6 +299,7 @@ export const VarlikDetayScreen = () => {
 
   const handleAddAsset = async () => {
     await handleAdd();
+    await dispatch(getPortfolioDetailsProcess({id: defaultPortfolioId}));
   };
 
   //BU KISIM İÇİN REDUCER OLUŞTURULACAK
